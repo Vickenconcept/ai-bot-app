@@ -1,5 +1,6 @@
 <x-app-layout>
     <div class="grid grid-cols-1 lg:grid-cols-8 h-full relative" x-data="{ closeSidebar: true, openModal: false, conversation: '' }">
+        
         <div class="col-span-2">
             <div class="col-span-2 p-3 bg-blue-900  h-screen fixed  lg:block  lg:w-[315px] space-y-5 {{ request()->routeIs('conversations.show') ? 'hidden' : 'w-full' }}"
                 x-show="closeSidebar">

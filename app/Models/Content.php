@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Document;
+use App\Models\Scopes\DataAccessScope;
 
 class Content extends Model
 {
@@ -18,5 +19,12 @@ class Content extends Model
     }
     public function documents(){
         return $this->hasMany(Document::class);
+    }
+
+    protected static function boot()
+    {
+        parent::boot();
+
+        static::addGlobalScope(new DataAccessScope);
     }
 }

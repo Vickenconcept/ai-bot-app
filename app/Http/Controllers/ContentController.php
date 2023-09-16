@@ -12,7 +12,8 @@ class ContentController extends Controller
      */
     public function index()
     {
-        //
+        $contents =  Content::latest()->get();
+        return view('contents.content' ,compact('contents'));
     }
 
     /**
@@ -28,7 +29,11 @@ class ContentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $title = 'content #' . rand(0, 99999);
+
+        auth()->user()->contents()->create(['title' => $title]);
+
+        return back()->with('success', 'content created successfully');
     }
 
     /**
@@ -36,7 +41,11 @@ class ContentController extends Controller
      */
     public function show(Content $content)
     {
-        //
+        $body = Content::findOrfail($content->id)->messages;
+        $contentTitle = Content::findOrfail($content->id);
+        $contents =  Content::latest()->get();
+
+        return view('contents.show', compact('body', 'contentTitle', 'contents'));
     }
 
     /**
@@ -52,14 +61,35 @@ class ContentController extends Controller
      */
     public function update(Request $request, Content $content)
     {
-        //
+        $title = $request->input('title');
+        $contentId = $request->input('contentId');
+        // dd($contentId);
+        $user = auth()->user();
+
+        // Find the specific content by ID
+        $contentToUpdate = $user->contents()->find($contentId);
+
+        if (!$contentToUpdate) {
+            return redirect()->back()->with('error', 'content not found.');
+        }
+
+        // Update the title of the content
+        $contentToUpdate->title = $title;
+        $contentToUpdate->update();
+
+        return redirect()->back()->with('success', 'content updated successfully.');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Content $content)
+    public function destroy( $content)
     {
-        //
+        $user = auth()->user();
+
+        $content = Content::find($content);
+        $content->delete();
+
+        return redirect()->back()->with('success', 'content deleted successfully.');
     }
 }

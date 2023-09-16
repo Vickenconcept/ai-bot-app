@@ -35,7 +35,7 @@ class ConversationController extends Controller
         // dd('hello');
         auth()->user()->conversations()->create(['title' => $title]);
 
-        return back()->with('success', 'Book save successfully');
+        return back()->with('success', 'Conversation created successfully');
     }
 
     /**

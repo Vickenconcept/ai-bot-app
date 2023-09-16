@@ -28,7 +28,7 @@
                             aria-current="page"> <i class='bx bx-bot text-md mr-2'></i>Chat</a>
                         <a href="{{ route('bots.index') }}"
                             class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Bots</a>
-                        <a href="#"
+                        <a href="{{ route('contents.index') }}"
                             class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Contents</a>
                         <a href="#"
                             class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Account</a>
@@ -89,7 +89,7 @@
                 aria-current="page">Chat</a>
             <a href="{{ route('bots.index') }}"
                 class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Bots</a>
-            <a href="#"
+            <a href="{{ route('contents.index') }}"
                 class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Contents</a>
             <a href="#"
                 class="text-gray-300 hover:bg-gray-700 hover:text-white block rounded-md px-3 py-2 text-base font-medium">Account</a>
