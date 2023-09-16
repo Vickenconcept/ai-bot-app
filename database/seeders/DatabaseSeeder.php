@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 
+use App\Models\Bot;
 use App\Models\Conversation;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -24,6 +25,6 @@ class DatabaseSeeder extends Seeder
 
         User::factory(10)->has(
             Conversation::factory(2)->hasMessages(10)
-        )->create();
+        )->has(Bot::factory(2))->create();
     }
 }

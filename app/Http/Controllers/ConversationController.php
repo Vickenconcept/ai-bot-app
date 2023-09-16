@@ -13,7 +13,7 @@ class ConversationController extends Controller
     public function index()
     {
         $conversation =  Conversation::with('messages')->latest()->get();
-        
+
         return view('conversations.conversations', compact('conversation'));
     }
 
@@ -30,15 +30,10 @@ class ConversationController extends Controller
      */
     public function store(Request $request)
     {
-        $validatedData = $request->validate([
-            'title' => 'conversation',
-            
-            
-        ]);
-        $title = 'conversation #' . rand(0, 99999); 
-        
+        $title = 'conversation #' . rand(0, 99999);
+
         // dd('hello');
-         auth()->user()->conversations()->create(['title' => $title]);
+        auth()->user()->conversations()->create(['title' => $title]);
 
         return back()->with('success', 'Book save successfully');
     }
@@ -52,7 +47,7 @@ class ConversationController extends Controller
         $conversationTitle = Conversation::findOrfail($conversation->id);
         $conversation =  Conversation::latest()->get();
 
-        return view('conversations.show', compact('body', 'conversationTitle','conversation'));
+        return view('conversations.show', compact('body', 'conversationTitle', 'conversation'));
     }
 
     /**
@@ -65,10 +60,25 @@ class ConversationController extends Controller
 
     /**
      * Update the specified resource in storage.
-     */
-    public function update(Request $request, Conversation $conversation)
+     */ public function update(Request $request, $conversation)
     {
-        //
+        $title = $request->input('title');
+        $conversationId = $request->input('conversationId');
+        // dd($conversationId);
+        $user = auth()->user();
+
+        // Find the specific conversation by ID
+        $conversationToUpdate = $user->conversations()->find($conversationId);
+
+        if (!$conversationToUpdate) {
+            return redirect()->back()->with('error', 'Conversation not found.');
+        }
+
+        // Update the title of the conversation
+        $conversationToUpdate->title = $title;
+        $conversationToUpdate->update();
+
+        return redirect()->back()->with('success', 'Conversation updated successfully.');
     }
 
     /**

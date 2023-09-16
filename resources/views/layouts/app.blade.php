@@ -11,19 +11,21 @@
     <script src="https://unpkg.com/boxicons@2.1.4/dist/boxicons.js"></script>
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
+
+    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
+
+
+    @livewireStyles
+    @livewireScripts
     @vite(['resources/css/app.css', 'resources/js/app.js'])
+
+
+
 </head>
 
 <body class="h-full">
-    <div id="app" class="min-h-screen bg-gray- text-gray-700">
-        {{-- <div class=" px-10 py-5 ">
+    <div id="ap" class="min-h-screen bg-gray- text-gray-700">
 
-            <form action="{{ route('auth.logout') }}" method="POST">
-                @csrf
-
-                <a href="javascript:void(0)" onclick="logout(this)">logout</a>
-            </form>c  c   cccv 
-        </div> --}}
         <x-header />
 
         {{ $slot }}
@@ -31,7 +33,6 @@
     </div>
 
 
-    {{-- @vite(['resources/js/frontend.js']) --}}
 </body>
 
 

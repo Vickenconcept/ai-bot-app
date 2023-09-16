@@ -3,7 +3,9 @@
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\MessageController;
 use App\Models\Conversation;
+use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -34,6 +36,7 @@ Route::middleware('guest')->group(function () {
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', [DashboardController::class, 'index'])->name('home');
+    Route::resource('messages', MessageController::class);
     Route::resource('conversations', ConversationController::class);
 
     Route::post('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
@@ -43,7 +46,15 @@ Route::middleware(['auth'])->group(function () {
 Route::get('test', function(){
     $conversation =  Conversation::with('messages')->latest()->get();
     return $conversation;
-    // dd($conversation);
+});
+
+Route::get('/clear', function() {
+    Artisan::call('cache:clear');
+    Artisan::call('route:cache');
+    Artisan::call('view:clear');
+    Artisan::call('config:cache');
+    return  "all cleared ...";
+
 });
 
 

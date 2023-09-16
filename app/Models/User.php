@@ -10,6 +10,7 @@ use Laravel\Sanctum\HasApiTokens;
 use App\Models\Conversation;
 use App\Models\Content;
 use App\Models\Account;
+use App\Models\Bot;
 
 class User extends Authenticatable
 {
@@ -56,5 +57,9 @@ class User extends Authenticatable
     public function account() {
         
         return $this->hasOne(Account::class);
+    }
+    public function bots() {
+        
+        return $this->hasMany(Bot::class);
     }
 }
