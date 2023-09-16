@@ -29,7 +29,18 @@ class BotController extends Controller
      */
     public function store(Request $request)
     {
-        dd($request->all());
+        $user = auth()->user();
+
+        $validated = $request->validate([
+            'name' => 'required',
+            'personality' => 'required',
+            'description' => 'sometimes',
+            'model' => 'required',
+        ]);
+
+        $message = $user->bots()->create( $validated);
+
+        return back()->with('success', 'bot created successfully');
     }
 
     /**
@@ -51,16 +62,33 @@ class BotController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Bot $bot)
+    public function update(Request $request, $bot)
     {
-        //
+        $botId = $request->input('botId');
+        $user = auth()->user();
+        $requiredBot = $user->bots()->find($botId);
+
+        $validated = $request->validate([
+            'name' => 'required',
+            'description' => 'sometimes',
+            'model' => 'required',
+        ]);
+
+        $requiredBot->update($validated);
+
+        return back()->with('success', 'bot updated successfully');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Bot $bot)
+    public function destroy( $bot)
     {
-        //
+        $user = auth()->user();
+
+        $bot = Bot::find($bot);
+        $bot->delete();
+
+        return redirect()->back()->with('success', 'Bot deleted successfully.');
     }
 }

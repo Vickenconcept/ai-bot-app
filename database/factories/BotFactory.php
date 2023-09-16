@@ -19,6 +19,7 @@ class BotFactory extends Factory
         return [
             'name'=> fake()->name(),
             'description' => fake()->text(),
+            'personality' => 'creative',
             'model' => 'Open ai gpt-3',
         ];
     }
