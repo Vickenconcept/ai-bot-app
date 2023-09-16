@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\BotController;
 use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\MessageController;
@@ -38,6 +39,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/home', [DashboardController::class, 'index'])->name('home');
     Route::resource('messages', MessageController::class);
     Route::resource('conversations', ConversationController::class);
+    Route::resource('bots', BotController::class);
 
     Route::post('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });

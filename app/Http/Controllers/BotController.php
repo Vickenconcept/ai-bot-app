@@ -12,7 +12,8 @@ class BotController extends Controller
      */
     public function index()
     {
-        //
+        $bots =  Bot::latest()->get();
+        return view('bot',compact('bots'));
     }
 
     /**
@@ -28,7 +29,7 @@ class BotController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        dd($request->all());
     }
 
     /**
