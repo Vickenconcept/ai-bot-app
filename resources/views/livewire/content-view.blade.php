@@ -11,7 +11,7 @@
             <p class="text-ray-400 text-sm">These are all uploaded documents that Bots can learn from.</p>
         </div>
 
-        <div class="flex flex-col lg:flex-row space-y-3 lg:space-y-0 lg:justify-between lg:space-x-3 ">
+        <div class="flex flex-col lg:flex-row space-y-3 lg:space-y-0 lg:justify-between lg:space-x-3  card-animate">
             <div><x-main-button class="text-gray-50 " onclick="deleteSelectedItems()">Action :</x-main-button></div>
             <form class=" " action="#" method="POST">
                 <div>
@@ -23,7 +23,7 @@
 
     </div>
 
-    <div wire:target="refreshComponent" class=" flex justify-end  {{ $hideComponent }}">
+    <div wire:target="refreshComponent" class="card-animate flex justify-end  {{ $hideComponent }}">
 
         <div role="status">
             <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin fill-blue-600" viewBox="0 0 100 101"
@@ -38,12 +38,12 @@
             <span class="sr-only">Loading...</span>
         </div>
     </div>
-    <div class="relative  shadow-md sm:rounded-lg overflow-x-auto refreshed" id="reloadableSection">
+    <div class="relative  shadow-md sm:rounded-lg overflow-x-auto refreshed card-animate" id="reloadableSection" >
         <table class="w-full text-sm text-left text-gray-500 ">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50  ">
                 <tr>
                     <th scope="col" class="px-6 py-3 ">
-                        <input type="checkbox" name="" id="checkAll"> <span>name</span> 
+                        <input type="checkbox" name="" id="checkAll"> <span>name</span>
                     </th>
                     <th scope="col" class="px-6 py-3">
                         Status
@@ -57,7 +57,7 @@
                     <th scope="col" class="px-6 py-3">
                         <span class="sr-only">Edit</span>
                     </th>
-                    <th></th>
+                    <th class=" md:hidden"></th>
                 </tr>
             </thead>
             <tbody>
@@ -65,8 +65,8 @@
                     <tr class="bg-white border-b  hover:bg-gray-50 ">
                         <th scope="row"
                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap capitalize flex space-x-1">
-                            <input type="checkbox" name="" wire:model="selectedItems" value="{{ $body->id }}"
-                                id="" class="checkBoxClass">
+                            <input type="checkbox" name="" value="{{ $body->id }}" id=""
+                                class="checkBoxClass">
                             <a href="#" class="hover:text-blue-900">{{ $body->title }}</a>
                         </th>
                         <td class="px-6 py-4 capitalize">
@@ -75,10 +75,7 @@
                         </td>
                         <td class="px-6 py-4 capitalize">{{ $body->updated_at }}</td>
                         <td class="px-6 py-4 capitalize">{{ $body->created_at }}</td>
-                        <td class="px-6 py-4 capitalize">
-                            <button wire:click="deleteItem({{ $body->id }})">Delete</button>
-                            <button wire:click="confirm({{ $body->id }})">confirm</button>
-
+                        <td class="px-6 py-4 capitalize  md:hidden">
                             <form action="{{ route('documents.destroy', ['document' => $body->id]) }}" method="post">
                                 @csrf
                                 @method('DELETE')
@@ -94,6 +91,8 @@
     </div>
 
     <script>
+        var deleteSelectedItems;
+
         jQuery.noConflict();
         (function($) {
 
@@ -109,20 +108,14 @@
 
             });
 
-        })(jQuery);
-
-
-        var deleteSelectedItems; 
-
-        jQuery(document).ready(function($) {
-
             deleteSelectedItems = function() {
                 var selectedItems = $('.checkBoxClass:checked').map(function() {
                     return this.value;
                 }).get();
 
+
                 $.ajax({
-                    url: '/documents/' + selectedItems.join(','), 
+                    url: '/documents/' + selectedItems.join(','),
                     type: 'DELETE',
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
@@ -135,23 +128,21 @@
                         console.error('Error deleting items:', error);
                     }
                 });
-
-                console.log(
-                    selectedItems); 
+                setTimeout(function() {
+                    window.location.reload();
+                }, 500);
             };
-        });
+
+        })(jQuery);
 
 
+        // document.addEventListener('livewire:initialized', function() {
+        //     @this.on('confirmDelete', (itemId) => {
 
-
-
-        document.addEventListener('livewire:initialized', function() {
-            @this.on('confirmDelete', (itemId) => {
-
-                if (confirm('Are you sure you want to delete item ' + itemId.itemId + '?')) {
-                    @this.dispatch('deleteItem', itemId.itemId);
-                }
-            });
-        });
+        //         if (confirm('Are you sure you want to delete item ' + itemId.itemId + '?')) {
+        //             @this.dispatch('deleteItem', itemId.itemId);
+        //         }
+        //     });
+        // });
     </script>
 </div>

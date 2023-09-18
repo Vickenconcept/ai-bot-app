@@ -10,10 +10,15 @@ class ContentController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $contents =  Content::latest()->get();
-        return view('contents.content' ,compact('contents'));
+
+        $query = $request->input('query'); // Get the user input from the query parameter
+        $contents = Content::when($query, function ($queryBuilder) use ($query) {
+            return $queryBuilder->where('title', 'like', '%' . $query . '%');
+        })->latest()->get();
+
+        return view('contents.content', compact('contents'));
     }
 
     /**
@@ -43,10 +48,10 @@ class ContentController extends Controller
     {
 
         if (!$content->id) {
-         
+
             return redirect()->route('contents.index');
         }
-        
+
         $body = Content::findOrfail($content->id)->documents()->latest()->get();
         $contentTitle = Content::findOrfail($content->id);
         $contents =  Content::latest()->get();
@@ -89,16 +94,14 @@ class ContentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( $content)
+    public function destroy($content)
     {
         // $user = auth()->user();
 
-        
+
         $content = Content::find($content);
         $content->delete();
 
         return redirect()->to('contents')->with('success', 'content deleted successfully.');
-        
     }
-  
 }

@@ -75,7 +75,6 @@ class DocumentController extends Controller
             session()->flash('error', 'Error deleting items: ' . $e->getMessage());
         }
 
-        // Document::whereIn('id', $document)->delete();
         
     }
 }

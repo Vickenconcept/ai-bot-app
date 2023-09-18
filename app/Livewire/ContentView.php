@@ -27,36 +27,12 @@ class ContentView extends Component
 
     public function deleteItem($itemId)
     {
-        Document::find($itemId)->delete();
-    }
-    public function confirm()
-    {
-        // $this->selectedItems = $this->checked;
-
-        dd($this->selectedItems);
+        // Document::find($itemId)->delete();
         Document::whereIn('id', $this->selectedItems)->delete();
 
         $this->selectedItems = [];
     }
 
-    
-    public function updatedSelectAll($value)
-    {
-        dd($value);
-        if ($value) {
-            $this->selectedItems = Document::pluck('id')->map(function($id) {
-                return (string) $id;
-            });
-        } else {
-            $this->selectedItems = [];
-        }
-    }
-
-    // public function updatedSelectedItems()
-    // {
-    //     dd('hello');
-    //     $this->selectAll = false;
-    // }
 
     public function refreshComponent()
     {

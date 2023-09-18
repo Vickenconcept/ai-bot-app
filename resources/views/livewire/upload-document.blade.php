@@ -1,6 +1,6 @@
 <div class="" x-data="{ activeSection: '', hideSection: true }">
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5" x-show="hideSection">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 card-animate" x-show="hideSection" >
         <div class="rounded-md cursor-pointer hover:bg-blue-100 border border-blue-300  bg-blue-50  p-3"
             @click="activeSection = 'section1'; hideSection = false">
             <h1><i class='bx bx-pen text-2xl'></i></h1>
@@ -27,7 +27,7 @@
         </div>
     </div>
 
-    <div x-show.transition.in="activeSection === 'section1'">
+    <div x-show.transition.in="activeSection === 'section1'" class="card-animate">
         <button class="font-semibold" @click=" hideSection = true, activeSection = '' "><i
                 class='bx bx-chevron-left'></i> Options</button>
 
@@ -53,7 +53,7 @@
         </form>
     </div>
     {{--  --}}
-    <div x-show="activeSection === 'section2'">
+    <div x-show="activeSection === 'section2'" class="card-animate">
         <button class="font-semibold" @click=" hideSection = true, activeSection = '' "><i
                 class='bx bx-chevron-left'></i> Options</button>
         <form class="space-y-3" wire:submit="saveUploadedDocument">
@@ -68,7 +68,7 @@
 
     </div>
     {{--  --}}
-    <div x-show="activeSection === 'section3'">
+    <div x-show="activeSection === 'section3'" class="card-animate">
         <button class="font-semibold" @click=" hideSection = true, activeSection = '' "><i
                 class='bx bx-chevron-left'></i> Options</button>
     </div>
@@ -100,7 +100,7 @@
         function reloadPage() {
             setTimeout(function() {
                 window.location.reload();
-            }, 4000);
+            }, 3000);
         }
     </script>
 </div>

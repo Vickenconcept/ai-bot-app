@@ -8,9 +8,9 @@
 
                
                 <div class="mt-2 flex space-x-3">
-                    <form class=" w-full" action="#" method="POST">
+                    <form class=" w-full" action="{{ route('contents.index') }}" method="GET">
                         <div>
-                            <input id="text" name="sort" type="text" 
+                            <input id="text" name="query" type="text" 
                                 placeholder="Search content" class="form-control">
                         </div>
                     </form>

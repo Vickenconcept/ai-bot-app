@@ -7,6 +7,7 @@ use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\MessageController;
+use App\Models\Content;
 use App\Models\Conversation;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Route;
@@ -49,9 +50,14 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-Route::get('test', function(){
-    $conversation =  Conversation::with('messages')->latest()->get();
-    return $conversation;
+Route::get('test/{id}', function(){
+    $contents =  Content::latest()->get();
+
+    $collection = collect($contents);
+
+    $filtered = $collection->except(['price', 'discount']);
+
+    $filtered->all();
 });
 
 Route::get('/clear', function() {

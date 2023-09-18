@@ -12,9 +12,9 @@
                     <x-main-button class=" text-gray-50 shadow-inner">Guest</x-main-button>
                 </div>
                 <div class="mt-2 flex space-x-3">
-                    <form class=" w-full" action="#" method="POST">
+                    <form class=" w-full" action="{{ route('conversations.index') }}" method="GET">
                         <div>
-                            <input id="text" name="sort" type="text" 
+                            <input id="text" name="query" type="text" 
                                 placeholder="Search conversation" class="form-control">
                         </div>
                     </form>

@@ -10,9 +10,14 @@ class ConversationController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $conversation =  Conversation::with('messages')->latest()->get();
+
+        $query = $request->input('query'); 
+        
+        $conversation = Conversation::when($query, function ($queryBuilder) use ($query) {
+            return $queryBuilder->where('title', 'like', '%' . $query . '%');
+        })->with('messages')->latest()->get();
 
         return view('conversations.conversations', compact('conversation'));
     }
