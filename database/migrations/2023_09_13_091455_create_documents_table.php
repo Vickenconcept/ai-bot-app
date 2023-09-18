@@ -14,6 +14,10 @@ return new class extends Migration
         Schema::create('documents', function (Blueprint $table) {
             $table->id();
             $table->foreignId('content_id')->constrained('contents');
+            $table->text('title');
+            $table->text('content')->nullable();
+            $table->enum('status', ['learned', 'processing'])->default('learned');
+
             $table->timestamps();
         });
     }

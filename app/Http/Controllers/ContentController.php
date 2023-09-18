@@ -41,7 +41,13 @@ class ContentController extends Controller
      */
     public function show(Content $content)
     {
-        $body = Content::findOrfail($content->id)->messages;
+
+        if (!$content->id) {
+         
+            return redirect()->route('contents.index');
+        }
+        
+        $body = Content::findOrfail($content->id)->documents()->latest()->get();
         $contentTitle = Content::findOrfail($content->id);
         $contents =  Content::latest()->get();
 
@@ -85,11 +91,12 @@ class ContentController extends Controller
      */
     public function destroy( $content)
     {
-        $user = auth()->user();
+        // $user = auth()->user();
 
+        
         $content = Content::find($content);
         $content->delete();
 
-        return redirect()->back()->with('success', 'content deleted successfully.');
+        return redirect()->to('contents')->with('success', 'content deleted successfully.');
     }
 }

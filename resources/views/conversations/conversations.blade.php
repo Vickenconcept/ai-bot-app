@@ -27,8 +27,8 @@
                 <ul class="space-y-5">
                     @foreach ($conversation as $conversation)
                         <li class="text-gray-100  flex justify-between text-md tracking-wide capitalize">
-                            <a href="{{ route('conversations.show', $conversation) }}"> <i
-                                    class='bx bx-message-rounded mr-1 text-sm'></i>{{ $conversation->title }}</a>
+                            <a href="{{ route('conversations.show', $conversation) }}"> 
+                                <i class='bx bxs-conversation mr-1 text-sm'></i>{{ $conversation->title }}</a>
                             <x-dropdown>
                                 <x-slot name="trigger">
                                     <button><i class='bx bx-dots-vertical-rounded hover:bg-gray-50 hover:text-blue-900 transition duration-300 p-2 rounded'></i></button>

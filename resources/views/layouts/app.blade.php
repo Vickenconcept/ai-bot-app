@@ -12,14 +12,17 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
 
+    <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
-    @livewireStyles
-    @livewireScripts
+
+    
     @vite(['resources/css/app.css', 'resources/js/app.js'])
-
-
+    
+    @livewireStyles
 
 </head>
 
@@ -33,14 +36,16 @@
     </div>
 
 
+    <script>
+        function logout(e) {
+            localStorage.clear();
+            e.closest('form').submit();
+        }
+    </script>
+    @livewireScripts
+
 </body>
 
 
-<script>
-    function logout(e) {
-        localStorage.clear();
-        e.closest('form').submit();
-    }
-</script>
 
 </html>

@@ -17,14 +17,15 @@
                     <form class="" action="{{ route('contents.store') }}" method="POST">
                         @csrf
                         <button type="submit" class=" bg-gray-100 rounded shadow-sm px-2 py-1" title="Add new content"><i
-                                class='bx bxs-message-add text-blue-900'></i></button>
+                                class='bx bxs-folder text-blue-900'></i></button>
                     </form>
                 </div>
                 <ul class="space-y-5">
                     @foreach ($contents as $content)
                         <li class="text-gray-100  flex justify-between text-md tracking-wide capitalize">
-                            <a href="{{ route('contents.show', $content) }}"> <i
-                                    class='bx bx-message-rounded mr-1 text-sm'></i>{{ $content->title }}</a>
+                            <a href="{{ route('contents.show', $content) }}"> 
+                                <i class='bx bx-folder mr-1' ></i>{{ $content->title }}
+                            </a>
                             <x-dropdown>
                                 <x-slot name="trigger">
                                     <button><i class='bx bx-dots-vertical-rounded hover:bg-gray-50 hover:text-blue-900 transition duration-300 p-2 rounded'></i></button>

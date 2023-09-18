@@ -25,13 +25,13 @@
                 <div class="hidden sm:block">
                     <div class="flex space-x-4">
                         <a href="{{ route('conversations.index') }}" class="bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium"
-                            aria-current="page"> <i class='bx bx-bot text-md mr-2'></i>Chat</a>
+                            aria-current="page"> <i class='bx bxs-bot text-md mr-2'></i>Chat</a>
                         <a href="{{ route('bots.index') }}"
-                            class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Bots</a>
+                            class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"><i class='bx bx-bot mr-1' ></i>Bots</a>
                         <a href="{{ route('contents.index') }}"
-                            class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Contents</a>
+                            class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"> <i class='bx bx-book mr-1'></i>Contents</a>
                         <a href="#"
-                            class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium">Account</a>
+                            class="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"><i class='bx bx-cog mr-1' ></i>Account</a>
                     </div>
                 </div>
             </div>

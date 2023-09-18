@@ -26,7 +26,7 @@
                     class="w-[90%] md:w-[70%] mx-auto  border border-gray-200 rounded-lg bg-gray-50   shadow-md shadow-blue-200 ">
                     <div class="px-4 py-2 bg-white rounded-t-lg ">
     
-                        <form wire:submit.prevent="saveMessage" id="messageForm" wire:ignore>
+                        <form wire:submit="saveMessage" id="messageForm" wire:ignore>
                             @csrf
     
                             <textarea id="message" rows="2"

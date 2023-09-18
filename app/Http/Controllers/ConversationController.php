@@ -91,6 +91,6 @@ class ConversationController extends Controller
         $conversation = Conversation::find($conversation);
         $conversation->delete();
 
-        return redirect()->back()->with('success', 'Conversation deleted successfully.');
+        return redirect()->to('conversations')->with('success', 'Conversation deleted successfully.');
     }
 }

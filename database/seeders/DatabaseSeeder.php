@@ -27,8 +27,8 @@ class DatabaseSeeder extends Seeder
         User::factory(10)->has(
             Conversation::factory(2)->hasMessages(10)
         )
-        ->has(Bot::factory(2))
-        ->has(Content::factory(3))
-        ->create();
+            ->has(Bot::factory(2))
+            ->has(Content::factory(3)->hasDocuments(2))
+            ->create();
     }
 }

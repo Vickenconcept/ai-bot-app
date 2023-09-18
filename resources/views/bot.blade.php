@@ -1,6 +1,6 @@
 <x-app-layout>
 
-    <div class="   m-10 space-y-5" x-data="{ isOpen: false, bot: '', openModal: false }">
+    <div class="   m-4 lg:m-10 space-y-5 " x-data="{ isOpen: false, bot: '', openModal: false }">
         @if ($errors->any())
             <div class="bg-red-50 text-red-300  p-3 border border-red-300 rounded">
                 <ul>
@@ -13,7 +13,7 @@
         <div class="flex justify-end">
             <x-main-button class="text-gray-50 " @click="isOpen = true">+ New Bot</x-main-button>
         </div>
-        <div class="relative  shadow-md sm:rounded-lg">
+        <div class="relative  shadow-md sm:rounded-lg ">
             <table class="w-full text-sm text-left text-gray-500 ">
                 <thead class="text-xs text-gray-700 uppercase bg-gray-50  ">
                     <tr>
@@ -40,7 +40,7 @@
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap capitalize">
                                 {{ $bot->name }}
                             </th>
-                            <td class="px-6 py-4 w-[500px] capitalize">
+                            <td class="px-6 py-4 w-[500px] capitalize line-clamp-1">
                                 {{ $bot->description }}
                             </td>
                             <td class="px-6 py-4 capitalize">
@@ -96,7 +96,7 @@
         <div class="fixed items-center justify-center  overflow-auto flex top-0 left-0 mx-auto w-full h-full bg-gray-600 bg-opacity-20 z-10 transition duration-1000 ease-in-out"
             x-show="isOpen" style="display: none;">
             <div @click.away="isOpen = false"
-                class="bg-white w-[70%]  shadow-inner  border rounded-lg overflow-auto  pb-6 px-5 transition-all relative duration-700">
+                class="bg-white w-[70%] h-screen  shadow-inner   border rounded-lg overflow-auto  pb-6 px-5 transition-all relative duration-700">
                 <div class="space-y-5 pt-5 ">
 
 
