@@ -58,8 +58,24 @@ class DocumentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Document $document)
+    // public function destroy($document)
+    // {
+    //     $document = Document::find($document);
+    //     $document->delete();
+
+    //     return redirect()->back()->with('success', 'document deleted successfully.');
+    // }
+
+    public function destroy( $document)
     {
-        //
+        try {
+            Document::whereIn('id', explode(',', $document))->delete();
+            session()->flash('success', 'Items deleted successfully.');
+        } catch (\Exception $e) {
+            session()->flash('error', 'Error deleting items: ' . $e->getMessage());
+        }
+
+        // Document::whereIn('id', $document)->delete();
+        
     }
 }

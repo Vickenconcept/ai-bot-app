@@ -30,12 +30,10 @@ class UploadDocument extends Component
         $this->title;
         $this->content;
         $this->contentTitle->id;
-        // dd($this->content);
         // sleep(10);
         $user->documents()->create([
             'title' =>  $this->title,
             'content' =>  $this->content,
-            // 'title' =>  $this->title,
 
         ]);
 

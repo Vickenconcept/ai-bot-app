@@ -45,7 +45,7 @@
                 </div>
 
                 <button type="submit" wire:loading.attr="disabled" onclick=" reloadPage()"  @click=" hideSection = true, activeSection = '' "
-                    {{ (!is_null($content) && !empty($content)) || (!is_null($title) && !empty($title)) ? '' : 'disabled' }}
+                    {{ (!is_null($content) && !empty($content)) && (!is_null($title) && !empty($title)) ? '' : 'disabled' }}
                     class="inline-flex items-center bg-blue-600 text-gray-50 py-2.5 px-4 text-xs shadow font-medium text-center  rounded hover:shadow-lg">
                     Create
                 </button>
@@ -58,7 +58,7 @@
                 class='bx bx-chevron-left'></i> Options</button>
         <form class="space-y-3" wire:submit="saveUploadedDocument">
             <x-dropzone />
-            {{-- <input type="file" name="" id="" wire:model.live="file"> --}}
+            <input type="file" name="" id="" wire:model.live="file">
 
             <button wire:click="saveUploadedDocument"
                 class="inline-flex items-center bg-blue-600 text-gray-50 py-2.5 px-4 text-xs shadow font-medium text-center  rounded hover:shadow-lg">
@@ -92,14 +92,12 @@
                     }
                 });
 
-
             });
 
         })(jQuery);
 
 
         function reloadPage() {
-            // window.location.reload();
             setTimeout(function() {
                 window.location.reload();
             }, 4000);

@@ -5,6 +5,7 @@ use App\Http\Controllers\BotController;
 use App\Http\Controllers\ContentController;
 use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\MessageController;
 use App\Models\Conversation;
 use Illuminate\Support\Facades\Artisan;
@@ -42,6 +43,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('conversations', ConversationController::class);
     Route::resource('bots', BotController::class);
     Route::resource('contents', ContentController::class);
+    Route::resource('documents', DocumentController::class);
 
     Route::post('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });

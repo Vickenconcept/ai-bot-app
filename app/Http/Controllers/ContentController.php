@@ -98,5 +98,7 @@ class ContentController extends Controller
         $content->delete();
 
         return redirect()->to('contents')->with('success', 'content deleted successfully.');
+        
     }
+  
 }
