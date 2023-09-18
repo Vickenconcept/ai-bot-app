@@ -13,9 +13,11 @@
 
         <div class="flex flex-col lg:flex-row space-y-3 lg:space-y-0 lg:justify-between lg:space-x-3  card-animate">
             <div><x-main-button class="text-gray-50 " onclick="deleteSelectedItems()">Action :</x-main-button></div>
-            <form class=" " action="#" method="POST">
+            <form class=" " action="{{ route('contents.show', ['content' => $contentTitle->id]) }}"
+                method="GET">
+                @csrf
                 <div>
-                    <input id="text" name="sort" type="text" placeholder="Search documents"
+                    <input id="text" name="query" type="text" placeholder="Search documents"
                         class="form-control">
                 </div>
             </form>
@@ -38,7 +40,7 @@
             <span class="sr-only">Loading...</span>
         </div>
     </div>
-    <div class="relative  shadow-md sm:rounded-lg overflow-x-auto refreshed card-animate" id="reloadableSection" >
+    <div class="relative  shadow-md sm:rounded-lg overflow-x-auto refreshed card-animate" id="reloadableSection">
         <table class="w-full text-sm text-left text-gray-500 ">
             <thead class="text-xs text-gray-700 uppercase bg-gray-50  ">
                 <tr>
@@ -57,11 +59,11 @@
                     <th scope="col" class="px-6 py-3">
                         <span class="sr-only">Edit</span>
                     </th>
-                    <th class=" md:hidden"></th>
+                    <th class=" "></th>
                 </tr>
             </thead>
             <tbody>
-                @foreach ($body as $body)
+                @forelse ($body as $body)
                     <tr class="bg-white border-b  hover:bg-gray-50 ">
                         <th scope="row"
                             class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap capitalize flex space-x-1">
@@ -75,7 +77,7 @@
                         </td>
                         <td class="px-6 py-4 capitalize">{{ $body->updated_at }}</td>
                         <td class="px-6 py-4 capitalize">{{ $body->created_at }}</td>
-                        <td class="px-6 py-4 capitalize  md:hidden">
+                        <td class="px-6 py-4 capitalize  ">
                             <form action="{{ route('documents.destroy', ['document' => $body->id]) }}" method="post">
                                 @csrf
                                 @method('DELETE')
@@ -83,7 +85,11 @@
                             </form>
                         </td>
                     </tr>
-                @endforeach
+
+                @empty
+
+                <td class="px-6 py-4 capitalize text-center" colspan="6">No data found</td>
+                @endforelse
 
             </tbody>
 

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Content;
+use App\Models\Document;
 use Illuminate\Http\Request;
 
 class ContentController extends Controller
@@ -44,7 +45,7 @@ class ContentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Content $content)
+    public function show(Content $content, Request $request)
     {
 
         if (!$content->id) {
@@ -52,7 +53,15 @@ class ContentController extends Controller
             return redirect()->route('contents.index');
         }
 
-        $body = Content::findOrfail($content->id)->documents()->latest()->get();
+        $query = request()->input('query');
+
+        $body = Document::where('content_id', $content->id)
+            ->when($query, function ($queryBuilder) use ($query) {
+                return $queryBuilder->where('title', 'like', '%' . $query . '%');
+            })
+            ->latest()
+            ->get();
+
         $contentTitle = Content::findOrfail($content->id);
         $contents =  Content::latest()->get();
 
