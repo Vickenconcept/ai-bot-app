@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Models\Bot;
 use GuzzleHttp\Psr7\Request;
 use Livewire\Component;
 
@@ -10,19 +11,36 @@ class MessageView extends Component
 
     public $message;
     public $text = '' ;
-    public $body ,$conversationTitle, $conversationonId,$sender;
+    public $body ,$conversationTitle, $conversationonId,$sender, $selectBot;
     public $isDisabled = true;
+
+    public $bot ;
 
 
     public function mount($body , $conversationTitle)
     {
         $this->body = $body;
         $this->conversationTitle = $conversationTitle;
+        $this->bot =  Bot::latest()->get();
       
     }
-    public function updateChatBox()
+    // public function updateChatBox()
+    // {
+    //     $this->body = $this->body;
+        
+      
+    // }
+    public function pickBot()
     {
-        $this->body = $this->body;
+        $this->selectBot;
+        
+        $user = auth()->user();
+        
+        // Find the specific conversation by ID
+        $conversationToUpdate = $user->conversations()->find($this->conversationTitle->id);
+        // dd($this->selectBot);
+        $conversationToUpdate->bot_id = $this->selectBot;
+        $conversationToUpdate->update();
         
       
     }

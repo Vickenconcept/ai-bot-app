@@ -24,7 +24,7 @@
                     @foreach ($contents as $content)
                         <li class="text-gray-100  flex justify-between text-md tracking-wide capitalize">
                             <a href="{{ route('contents.show', $content) }}"> 
-                                <i class='bx bx-folder mr-1' ></i>{{ $content->title }}
+                                <i class='bx bx-folder mr-1' ></i>{{ $content->title }} <span class="text-xs bg-gray-400 px-1 ml-5 rounded-full"> {{ $content->documents->count() }}</span>
                             </a>
                             <x-dropdown>
                                 <x-slot name="trigger">
@@ -62,10 +62,10 @@
                   <div class="space-y-5 pt-5 ">
                       <span class="text-xl font-bold">Rename Content</span>
                       
-                      <form action="{{ route('contents.update', ['content' =>  $content->id]) }}"
+                      <form action="{{ route('updateName') }} "
                           method="POST">
                           @csrf
-                          @method('PUT')
+                          {{-- @method('PUT') --}}
                           <div class="space-y-5">
                               <input type="hidden" :value="content.id" name="contentId" >
                               <input id="content.id" type="text"  name="title"  

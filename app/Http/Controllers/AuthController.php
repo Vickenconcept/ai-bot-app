@@ -17,9 +17,19 @@ class AuthController extends Controller
 
         $user = User::create($request->validated());
 
+        $user = auth()->user();
+
+        $message = $user->bots()->create([
+            'name' => 'bot',
+            'personality' => 'traning',
+            'description' => 'an intelligent bot , for all times',
+            'model' => 'gpt.3.5',
+        ]);
+
+        auth()->logout();
         return $request->wantsJson()
             ? Response::api(['data' => $user])
-            : to_route('register.success');
+            : to_route('login');
     }
 
     public function login(CreateUserRequest $request)

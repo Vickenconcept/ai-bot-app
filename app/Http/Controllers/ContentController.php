@@ -79,7 +79,7 @@ class ContentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Content $content)
+    public function updateName(Request $request)
     {
         $title = $request->input('title');
         $contentId = $request->input('contentId');

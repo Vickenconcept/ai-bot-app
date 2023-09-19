@@ -2,6 +2,8 @@
 
 namespace App\Providers;
 
+use App\Models\Conversation;
+use App\Observers\ConversationObserver;
 use App\Services\ChatGptService;
 use Illuminate\Support\Facades\Schema;
 use Illuminate\Support\ServiceProvider;
@@ -25,5 +27,7 @@ class AppServiceProvider extends ServiceProvider
     public function boot(): void
     {
         Schema::defaultStringLength(191);
+        Conversation::observe(ConversationObserver::class);
+        
     }
 }

@@ -41,8 +41,10 @@ Route::middleware('guest')->group(function () {
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', [DashboardController::class, 'index'])->name('home');
     Route::resource('messages', MessageController::class);
+    Route::post('conversations/update', [ConversationController::class, 'updateConversation'])->name('updateConversation');
     Route::resource('conversations', ConversationController::class);
     Route::resource('bots', BotController::class);
+    Route::post('contents/update', [ContentController::class, 'updateName'])->name('updateName');
     Route::resource('contents', ContentController::class);
     Route::resource('documents', DocumentController::class);
 

@@ -17,7 +17,7 @@ class BotFactory extends Factory
     public function definition(): array
     {
         return [
-            'name'=> fake()->name(),
+            'name'=> 'bot',
             'description' => fake()->text(),
             'personality' => 'creative',
             'model' => 'Open ai gpt-3',

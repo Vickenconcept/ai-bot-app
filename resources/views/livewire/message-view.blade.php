@@ -1,5 +1,5 @@
-<div>
-    <div class="" >
+<div x-data="{ isOpen: false }">
+    <div class="">
         <ul class=" mb-32">
             @foreach ($body as $content)
                 <div class="{{ $content->sender !== 'bot' ? 'bg-white' : 'bg-gray-100' }}">
@@ -17,34 +17,29 @@
                 </div>
             @endforeach
 
-           
+
         </ul>
-    
+
         <div class=" w-[100%] md:w-[75%] bottom-5  fixed ">
             <div class=" w-full flex justify-center container">
                 <div
                     class="w-[90%] md:w-[70%] mx-auto  border border-gray-200 rounded-lg bg-gray-50   shadow-md shadow-blue-200 ">
                     <div class="px-4 py-2 bg-white rounded-t-lg ">
-    
+
                         <form wire:submit="saveMessage" id="messageForm" wire:ignore>
                             @csrf
-    
+
                             <textarea id="message" rows="2"
                                 class="w-full px-2 text-sm text-gray-900 bg-white border-0  focus:ring-transparent focus:outline-none resize-none"
                                 placeholder="Ask Bot" wire:model.live="message"></textarea>
                         </form>
-    
+
                     </div>
                     <div class="flex items-center justify-between px-2  border-t ">
                         <div class="flex pl-0 space-x-1 sm:pl-2">
                             <button type="button"
-                                class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 ">
-                                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none"
-                                    viewBox="0 0 12 20">
-                                    <path stroke="currentColor" stroke-linejoin="round" stroke-width="2"
-                                        d="M1 6v8a5 5 0 1 0 10 0V4.5a3.5 3.5 0 1 0-7 0V13a2 2 0 0 0 4 0V6" />
-                                </svg>
-                                <span class="sr-only">Attach file</span>
+                                class="inline-flex justify-center items-center p-2 text-gray-900 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 ">
+                                <i class='bx bx-cog'></i>
                             </button>
                             <button type="button"
                                 class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 ">
@@ -55,29 +50,59 @@
                                 </svg>
                                 <span class="sr-only">Set location</span>
                             </button>
-                            <button type="button"
-                                class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 ">
-                                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                    fill="currentColor" viewBox="0 0 20 18">
-                                    <path
-                                        d="M18 0H2a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2Zm-5.5 4a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm4.376 10.481A1 1 0 0 1 16 15H4a1 1 0 0 1-.895-1.447l3.5-7A1 1 0 0 1 7.468 6a.965.965 0 0 1 .9.5l2.775 4.757 1.546-1.887a1 1 0 0 1 1.618.1l2.541 4a1 1 0 0 1 .028 1.011Z" />
-                                </svg>
-                                <span class="sr-only">Upload image</span>
-                            </button>
+
+                            <button
+                                class="bg-gray-50 border ml-2 border-gray-300 text-gray-900 text-sm rounded-lg  block  py-1 px-4  "><i
+                                    class='bx bx-target-lock'></i> Target</span></button>
+                            <button
+                                class="bg-gray-50 border ml-2 border-gray-300 text-gray-900 text-sm rounded-lg  block  py-1 px-4  "><i
+                                    class='bx bx-note'></i> Note</span></button>
+                            <button @click="isOpen = true"
+                                class="bg-gray-50 border ml-2 border-gray-300 text-gray-900 text-sm rounded-lg  block  py-1 px-4  ">{{ $conversationTitle->bot->name }}</button>
+
+
+
+
                         </div>
-    
-                        <button wire:click="saveMessage"
-                         {{ !is_null($message) && !empty($message) ? '' : 'disabled' }}
+
+                        <button wire:click="saveMessage" {{ !is_null($message) && !empty($message) ? '' : 'disabled' }}
                             class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-gray-400 rounded-lg hover:text-gray-500">
                             <i class='bx bxs-send text-2xl'></i>
                         </button>
-    
+
                     </div>
                 </div>
             </div>
-    
+
+            <div class="fixed items-center justify-center  overflow-auto flex top-0 left-0 mx-auto w-full h-full bg-gray-600 bg-opacity-20 z-10 transition duration-1000 ease-in-out"
+                x-show="isOpen" style="display: none;">
+                <div @click.away="isOpen = false"
+                    class="bg-white w-[70%] lg:w-[40%] h-80  shadow-inner   border rounded-lg overflow-auto  pb-6 px-5 transition-all relative duration-700">
+                    <div class="space-y-5 p-5 ">
+
+                        <h1>select bot for chat</h1>
+                   
+                        <div class=" space-y-1" x-data="{ selected: null }">
+                            
+                            @foreach ($bot as $bot)
+                                <input type="radio" name="personality" wire:model="selectBot" id="{{ $bot->name }}" value="{{ $bot->id }}"
+                                     x-model="selected"
+                                     wire:change="pickBot"
+                                     onchange="reloadPage()"
+                                     hidden>
+                                <label for="{{ $bot->name }}"
+                                    class="font-semibold upperase w-full block bg-gray-100 border rounded p-2 cursor-pointer  capitalize"
+                                    :class="'{{ $conversationTitle->bot->name }}' === '{{ $bot->name }}' ? 'bg-blue-200 border border-blue-300' : '' "
+                                    :class="{ 'bg-blue-200 border border-blue-300': selected === '{{ $bot->id }}', '': selected !== '{{ $bot->id }}' }">{{ $bot->name }}</label>
+                            @endforeach
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
         </div>
-    
+
         <script>
             // for coping text
             function toCopy(copyDiv) {
@@ -88,59 +113,16 @@
                 document.execCommand("copy");
                 // alert("copied!");
             }
-    
-            var html = ' ';
-    
-            // function refreshDiv() {
-            //     const message = @json($conversationTitle->id)
-    
-            //     fetch(`/messages/${message}`)
-            //         .then(response => response.json())
-            //         .then(data => {
-            //             const {
-            //                 body,
-            //                 conversation,
-            //                 conversationTitle
-            //             } = data;
-            //             // console.log('Body:', body);
-            //             body.forEach(message => {
-            //                 const messageClass = message.sender === 'user' ? 'bg-white' : 'bg-gray-100';
 
-            //                 console.log('Message:', message.message);
-            //                 html = message.message
-            //                 // document.getElementById('refreshDiv').innerHTML = `<li> message.message</li>`
-            //             //     html += ` 
-            //             //     <div class=" ${messageClass}">
-            //             //  <div class="flex justify-between  py-10 w-[90%] md:w-[70%] mx-auto ">
-            //             //  <div class=" flex space-x-5">
-            //             //                             <img class="h-8 w-8 rounded-full"
-            //             //                                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-            //             //                                 alt="">
-            //             //                             <li class="" id="${ message.id }">${ message.message }</li>
-            //             //                         </div>
-            //             //                         <button onclick="toCopy(document.getElementById('${ message.id }'))">
-            //             //                             <i class='bx bx-copy-alt text-gray-400'></i>
-            //             //                         </button>
-            //             //                         </div>
-            //             //                         </div>`;
-                                                
-            //             });
-                        
-            //             document.getElementById('chat-box').innerHTML = html;
-            //         })
-            //         .then(data => {
-            //             // Update the content of the div
-            //             // document.getElementById('refreshDiv').innerHTML = data;
-            //             // console.log(data);
-            //         })
-            //         .catch(error => console.error('Error:', error));
-            // }
-    
-    
-            // refreshDiv();
-    
+
+
             // setInterval(refreshDiv, 1000);
+            function reloadPage() {
+                setTimeout(function() {
+                    window.location.reload();
+                }, 300);
+            }
         </script>
     </div>
-    
+
 </div>

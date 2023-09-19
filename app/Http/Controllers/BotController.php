@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bot;
+use App\Models\Conversation;
 use Illuminate\Http\Request;
 
 class BotController extends Controller
@@ -86,6 +87,16 @@ class BotController extends Controller
     {
         $user = auth()->user();
 
+        $con = Conversation::all();
+        $updateBots = $con->where('bot_id', $bot );
+        
+        foreach ($updateBots as $updateBot) {
+            $updateBot->bot_id = 1 ;
+       
+            $updateBot->update();
+        }
+
+        
         $bot = Bot::find($bot);
         $bot->delete();
 

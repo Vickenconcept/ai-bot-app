@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bot;
 use App\Models\Conversation;
 use Illuminate\Http\Request;
 
@@ -18,6 +19,7 @@ class ConversationController extends Controller
         $conversation = Conversation::when($query, function ($queryBuilder) use ($query) {
             return $queryBuilder->where('title', 'like', '%' . $query . '%');
         })->with('messages')->latest()->get();
+       
 
         return view('conversations.conversations', compact('conversation'));
     }
@@ -36,9 +38,15 @@ class ConversationController extends Controller
     public function store(Request $request)
     {
         $title = 'conversation #' . rand(0, 99999);
+        $defaultBot = Bot::where('name', 'bot')->first();
+        // // dd($defaultBot->id);
+        
 
-        // dd('hello');
-        auth()->user()->conversations()->create(['title' => $title]);
+        // // dd('hello');
+        auth()->user()->conversations()->create([
+            'title' => $title,
+            'bot_id' => $defaultBot->id
+        ]);
 
         return back()->with('success', 'Conversation created successfully');
     }
@@ -65,7 +73,7 @@ class ConversationController extends Controller
 
     /**
      * Update the specified resource in storage.
-     */ public function update(Request $request, $conversation)
+     */ public function updateConversation(Request $request)
     {
         $title = $request->input('title');
         $conversationId = $request->input('conversationId');

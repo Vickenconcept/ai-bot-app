@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Document;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Route;
 
 class DocumentController extends Controller
 {
@@ -34,9 +35,11 @@ class DocumentController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Document $document)
+    public function show($document)
     {
-        //
+
+        $document = Document::findorfail($document);
+        return view('document', compact('document'));
     }
 
     /**
@@ -58,23 +61,20 @@ class DocumentController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    // public function destroy($document)
-    // {
-    //     $document = Document::find($document);
-    //     $document->delete();
 
-    //     return redirect()->back()->with('success', 'document deleted successfully.');
-    // }
 
-    public function destroy( $document)
+    public function destroy($document)
     {
+       
+        dd($document);
         try {
             Document::whereIn('id', explode(',', $document))->delete();
             session()->flash('success', 'Items deleted successfully.');
         } catch (\Exception $e) {
             session()->flash('error', 'Error deleting items: ' . $e->getMessage());
         }
+         
 
-        
+        return redirect()->back()->with('success', 'Document deleted successfully.');
     }
 }

@@ -20,13 +20,13 @@
                         <th scope="col" class="px-6 py-3">
                             Bot name
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" class="px-6 py-3 hidden lg:block">
                             Description
                         </th>
                         <th scope="col" class="px-6 py-3">
                             Model
                         </th>
-                        <th scope="col" class="px-6 py-3">
+                        <th scope="col" class="px-6 py-3 hidden lg:block">
                             Created At
                         </th>
                         <th scope="col" class="px-6 py-3">
@@ -36,21 +36,21 @@
                 </thead>
                 <tbody>
                     @foreach ($bots as $bot)
-                        <tr class="bg-white border-b  hover:bg-gray-50 ">
+                        <tr class="bg-white border-b  hover:bg-gray-50 " >
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap capitalize">
                                 {{ $bot->name }}
                             </th>
-                            <td class="px-6 py-4 w-[500px] capitalize line-clamp-1">
+                            <td class="px-6 py-4 w-[500px] capitalize line-clamp-1 hidden lg:block">
                                 {{ $bot->description }}
                             </td>
                             <td class="px-6 py-4 capitalize">
                                 {{ $bot->model }}
                             </td>
-                            <td class="px-6 py-4 capitalize">
+                            <td class="px-6 py-4 capitalize hidden lg:block">
                                 {{ $bot->created_at }}
                             </td>
-                            <td class="px-6 py-4 text-right ">
-                                <div class="flex rounded border  divide-x divide-slate-300 bg-blue-600  text-white">
+                            <td class="px-6 py-4 text-right " >
+                                <div class="flex rounded border  divide-x divide-slate-300 bg-blue-600  text-white" :class="'{{ $bot->name }}' === 'bot' ? 'hidden' : ''">
                                     <a href="#" class="font-medium  py-1 px-3 hover:bg-blue-700"><i
                                             class='bx bxs-share-alt mr-1'></i>share</a>
                                     <x-dropdown>
@@ -65,8 +65,8 @@
                                                     class="w-full text-left">Edit <i class='bx bxs-edit-alt'></i></div>
 
                                             </x-dropdown-link>
-                                            <x-dropdown-link class="cursor-pointer ">
-                                                <div @click=" openModal= true " class="w-full text-left">Chat <i
+                                            <x-dropdown-link class="cursor-pointer " href="{{ route('conversations.index') }}">
+                                                <div  class="w-full text-left">Chat <i
                                                         class='bx bx-message-rounded mr-1 text-sm'></i></div>
 
                                             </x-dropdown-link>
@@ -207,7 +207,7 @@
                                 </div>
                             </div>
                             <div class="space-x-3">
-                                <x-main-button type="submit" class="text-gray-50">Update</x-main-button>
+                                <x-main-button type="submit" class="text-gray-50">Create</x-main-button>
                                 <x-main-button class="bg-gray-50 text-blue-700 shadow-inner border"
                                     @click="isOpen = false">Cancle</x-main-button>
                             </div>
