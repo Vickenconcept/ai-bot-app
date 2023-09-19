@@ -46,6 +46,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('bots', BotController::class);
     Route::post('contents/update', [ContentController::class, 'updateName'])->name('updateName');
     Route::resource('contents', ContentController::class);
+    // Route::delete('documents/delete', [DocumentController::class, ]);
     Route::resource('documents', DocumentController::class);
 
     Route::post('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');

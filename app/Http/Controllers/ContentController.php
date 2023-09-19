@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Content;
 use App\Models\Document;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class ContentController extends Controller
 {
@@ -105,11 +106,11 @@ class ContentController extends Controller
      */
     public function destroy($content)
     {
-        // $user = auth()->user();
-
+        $user = auth()->user();
+        Log::info('content info:', ['content' => $content]);
 
         $content = Content::find($content);
-        $content->delete();
+        // $content->delete();
 
         return redirect()->to('contents')->with('success', 'content deleted successfully.');
     }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Document;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 class DocumentController extends Controller
@@ -65,8 +66,8 @@ class DocumentController extends Controller
 
     public function destroy($document)
     {
-       
-        dd($document);
+        Log::info('Document info:', ['document' => $document]);
+        // dd($document);
         try {
             Document::whereIn('id', explode(',', $document))->delete();
             session()->flash('success', 'Items deleted successfully.');
@@ -75,6 +76,6 @@ class DocumentController extends Controller
         }
          
 
-        return redirect()->back()->with('success', 'Document deleted successfully.');
+        // return redirect()->back()->with('success', 'Document deleted successfully.');
     }
 }
