@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Document;
+use App\Models\Bot;
 use App\Models\Scopes\DataAccessScope;
 
 class Content extends Model
@@ -17,9 +18,15 @@ class Content extends Model
     public function user(){
         return $this->belongsTo(User::class);
     }
+
+    public function bot() {
+        
+        return $this->belongsTo(Bot::class, 'bot_id');
+    }
     public function documents(){
         return $this->hasMany(Document::class);
     }
+
 
     protected static function boot()
     {

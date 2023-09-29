@@ -5,8 +5,9 @@ namespace App\Models;
 use App\Models\Scopes\DataAccessScope;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use app\Models\User;
-use app\Models\Conversation;
+use App\Models\User;
+use App\Models\Conversation;
+use App\Models\Content;
 
 class Bot extends Model
 {
@@ -21,6 +22,11 @@ class Bot extends Model
     public function conversations() {
         
         return $this->hasMany(Conversation::class);
+    }
+
+    public function contents() {
+        
+        return $this->hasMany(Content::class);
     }
 
     protected static function boot()

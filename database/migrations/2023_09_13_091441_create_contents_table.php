@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('contents', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('bot_id')->nullable()->constrained('bots');
             $table->text('title');
             $table->timestamps();
         });

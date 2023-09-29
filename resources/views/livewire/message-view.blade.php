@@ -1,16 +1,17 @@
-<div x-data="{ isOpen: false }">
+<div x-data="{ isOpen: false }" id="here">
     <div class="">
         <ul class=" mb-32">
             @foreach ($body as $content)
                 <div class="{{ $content->sender !== 'bot' ? 'bg-white' : 'bg-gray-100' }}">
                     <div class="flex justify-between  py-10 w-[90%] md:w-[70%] mx-auto ">
                         <div class=" flex space-x-5">
+                            {{ $content->id }}
                             <img class="h-8 w-8 rounded-full"
                                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                                 alt="">
                             <li class="" id="{{ $content->id }}">{{ $content->message }}</li>
                         </div>
-                        <button onclick="toCopy(document.getElementById('{{ $content->id }}'))">
+                        <button class="block h-8 w-8" onclick="toCopy(document.getElementById('{{ $content->id }}'))">
                             <i class='bx bx-copy-alt text-gray-400'></i>
                         </button>
                     </div>
@@ -19,6 +20,33 @@
 
 
         </ul>
+        {{-- <section class="...">
+            <div class="...">
+                <div class="...">
+                    <div class="...">
+                        <div class="...">
+                            <div class="...">
+                                <div>
+
+                                    <a class="..." href="...">Read tutorial here</a>
+                                    </p>
+                                    <p id="question" class="..."></p>
+                                    <p id="result" class="..."></p>
+                                </div>
+                                <form id="form-question" class="...">
+                                    <input required type="text" name="input" placeholder="Type your question here!"
+                                        class="..." />
+                                    <button type="submit" href="#" class="...">
+                                        Submit
+                                        <span aria-hidden="true"> → </span>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> --}}
 
         <div class=" w-[100%] md:w-[75%] bottom-5  fixed ">
             <div class=" w-full flex justify-center container">
@@ -31,7 +59,7 @@
 
                             <textarea id="message" rows="2"
                                 class="w-full px-2 text-sm text-gray-900 bg-white border-0  focus:ring-transparent focus:outline-none resize-none"
-                                placeholder="Ask Bot" wire:model.live="message"></textarea>
+                                placeholder="Ask {{ $conversationTitle->bot->name }}" wire:model.live="message"></textarea>
                         </form>
 
                     </div>
@@ -55,8 +83,8 @@
                                 class="bg-gray-50 border ml-2 border-gray-300 text-gray-900 text-sm rounded-lg  block  py-1 px-4  "><i
                                     class='bx bx-target-lock'></i> Target</span></button>
                             <button
-                                class="bg-gray-50 border ml-2 border-gray-300 text-gray-900 text-sm rounded-lg  block  py-1 px-4  "><i
-                                    class='bx bx-note'></i> Note</span></button>
+                                class="bg-gray-50 border ml-2 border-gray-300 text-gray-900 text-sm rounded-lg  block  py-1 px-4  "
+                                onclick="updateDiv()"><i class='bx bx-note'></i> Note</span></button>
                             <button @click="isOpen = true"
                                 class="bg-gray-50 border ml-2 border-gray-300 text-gray-900 text-sm rounded-lg  block  py-1 px-4  ">{{ $conversationTitle->bot->name }}</button>
 
@@ -64,8 +92,9 @@
 
 
                         </div>
-
-                        <button wire:click="saveMessage" {{ !is_null($message) && !empty($message) ? '' : 'disabled' }}
+                        <div wire:loading>loading...</div>
+                        <button wire:click="generateContent"
+                            {{ !is_null($message) && !empty($message) ? '' : 'disabled' }}
                             class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-gray-400 rounded-lg hover:text-gray-500">
                             <i class='bx bxs-send text-2xl'></i>
                         </button>
@@ -81,19 +110,22 @@
                     <div class="space-y-5 p-5 ">
 
                         <h1>select bot for chat</h1>
-                   
+
                         <div class=" space-y-1" x-data="{ selected: null }">
-                            
+
                             @foreach ($bot as $bot)
-                                <input type="radio" name="personality" wire:model="selectBot" id="{{ $bot->name }}" value="{{ $bot->id }}"
-                                     x-model="selected"
-                                     wire:change="pickBot"
-                                     onchange="reloadPage()"
-                                     hidden>
+                                <input type="radio" name="personality" wire:model="selectBot" id="{{ $bot->name }}"
+                                    value="{{ $bot->id }}" x-model="selected" wire:change="pickBot"
+                                    onchange="reloadPage()" hidden>
                                 <label for="{{ $bot->name }}"
                                     class="font-semibold upperase w-full block bg-gray-100 border rounded p-2 cursor-pointer  capitalize"
-                                    :class="'{{ $conversationTitle->bot->name }}' === '{{ $bot->name }}' ? 'bg-blue-200 border border-blue-300' : '' "
-                                    :class="{ 'bg-blue-200 border border-blue-300': selected === '{{ $bot->id }}', '': selected !== '{{ $bot->id }}' }">{{ $bot->name }}</label>
+                                    :class="'{{ $conversationTitle->bot->name }}' === '{{ $bot->name }}' ?
+                                    'bg-blue-200 border border-blue-300' : ''"
+                                    :class="{
+                                        'bg-blue-200 border border-blue-300': selected ===
+                                            '{{ $bot->id }}',
+                                        '': selected !== '{{ $bot->id }}'
+                                    }">{{ $bot->name }}</label>
                             @endforeach
                         </div>
                     </div>
@@ -122,6 +154,33 @@
                     window.location.reload();
                 }, 300);
             }
+
+            window.onload = function() {
+                // window.scrollTo(0, document.body.scrollHeight);
+                document.body.scrollTop = document.body.scrollHeight;
+                document.documentElement.scrollTop = document.documentElement.scrollHeight;
+            };
+
+            function updateDiv() {
+                // window.scrollTo(0, document.body.scrollHeight);
+                $("#here").load(window.location.href + " #here");
+                document.body.scrollTop = document.body.scrollHeight;
+                document.documentElement.scrollTop = document.documentElement.scrollHeight;
+                console.log('hello');
+            }
+
+
+
+           
+            document.addEventListener('livewire:initialized', function() {
+                @this.on('refreshComponent', (data) => {
+                    console.log(data);
+                    // if (confirm('Are you sure you want to delete item ' + itemId.itemId + '?')) {
+                    //     @this.dispatch('deleteItem', itemId.itemId);
+                    // }
+                    $("#here").load(window.location.href + " #here");
+                });
+            });
         </script>
     </div>
 

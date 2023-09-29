@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Bot;
 use App\Models\Content;
 use App\Models\Document;
 use Illuminate\Http\Request;
@@ -37,6 +38,7 @@ class ContentController extends Controller
     public function store(Request $request)
     {
         $title = 'content #' . rand(0, 99999);
+        // $defaultBot = Bot::where('name', 'bot')->first();
 
         auth()->user()->contents()->create(['title' => $title]);
 

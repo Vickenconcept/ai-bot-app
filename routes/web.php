@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AskController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BotController;
 use App\Http\Controllers\ContentController;
@@ -48,6 +49,7 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('contents', ContentController::class);
     // Route::delete('documents/delete', [DocumentController::class, ]);
     Route::resource('documents', DocumentController::class);
+    Route::get("/ask", AskController::class);
 
     Route::post('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });

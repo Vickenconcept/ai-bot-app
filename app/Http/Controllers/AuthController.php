@@ -16,8 +16,11 @@ class AuthController extends Controller
     {
 
         $user = User::create($request->validated());
-
+        
+        Auth::login($user);
+        
         $user = auth()->user();
+
 
         $message = $user->bots()->create([
             'name' => 'bot',
