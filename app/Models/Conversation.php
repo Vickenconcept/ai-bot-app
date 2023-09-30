@@ -7,11 +7,12 @@ use Illuminate\Database\Eloquent\Model;
 use APP\Models\User;
 use App\Models\Message;
 use App\Models\Bot;
-use App\Models\Scopes\DataAccessScope;
+use App\Models\Scopes\ExemptionAccessScope;
+use App\Models\Trait\CourseSluggable;
 
 class Conversation extends Model
 {
-    use HasFactory;
+    use HasFactory, CourseSluggable;
 
       public $guarded = [];
 
@@ -36,6 +37,6 @@ class Conversation extends Model
     {
         parent::boot();
 
-        static::addGlobalScope(new DataAccessScope);
+        static::addGlobalScope(new ExemptionAccessScope);
     }
 }

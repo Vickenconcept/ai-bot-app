@@ -4,28 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Bot;
 use App\Models\Conversation;
-use App\Models\Message;
 use Illuminate\Http\Request;
 
-class ConversationController extends Controller
+class GuestController extends Controller
 {
-    /**
-     * Display a listing of the resource.
-     */
     public function index(Request $request)
     {
-
-        $query = $request->input('query');
-
-        $conversation = Conversation::when($query, function ($queryBuilder) use ($query) {
-            return $queryBuilder->where('title', 'like', '%' . $query . '%');
-        })->where('type','user')->with('messages')->latest()->get();
-
-        $guest = Conversation::when($query, function ($queryBuilder) use ($query) {
-            return $queryBuilder->where('title', 'like', '%' . $query . '%');
-        })->where('type','guest')->with('messages')->latest()->get();
-
-        return view('conversations.conversations', compact('conversation','guest'));
+       return;
     }
 
     /**
@@ -41,20 +26,18 @@ class ConversationController extends Controller
      */
     public function store(Request $request)
     {
-        $title = 'conversation #' . rand(0, 99999);
+        $title = 'guest #' . rand(0, 99999);
         $defaultBot = Bot::where('name', 'bot')->first();
-        // // dd($defaultBot->id);
-
-
-        // // dd('hello');
+   
         auth()->user()->conversations()->create([
             'title' => $title,
-            'type' => 'user',
+            'type' => 'guest',
             'bot_id' => $defaultBot->id
         ]);
 
         return back()->with('success', 'Conversation created successfully');
     }
+
 
     /**
      * Display the specified resource.
@@ -63,14 +46,13 @@ class ConversationController extends Controller
     {
         $body = Conversation::where('slug', $slug)->firstOrFail()->messages;
         $conversationTitle = Conversation::where('slug', $slug)->firstOrFail();
-        // $body = Conversation::findOrfail($conversation->id)->messages;
-        // $conversationTitle = Conversation::findOrfail($conversation->id);
-        $conversation =  Conversation::where('type','user')->latest()->get();
+        // $body = Conversation::findOrfail($id)->messages;
+        // $conversationTitle = Conversation::findOrfail($id);
+        // dd($conversationTitle->bot);
+        $conversation =  Conversation::where('type','guest')->latest()->get();
         $guest = Conversation::where('type','guest')->with('messages')->latest()->get();
 
-
-
-        return view('conversations.show', compact('body', 'conversationTitle', 'conversation','guest'));
+        return view('conversations.show-guest', compact('body', 'conversationTitle', 'conversation'));
     }
 
     /**

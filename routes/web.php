@@ -7,6 +7,7 @@ use App\Http\Controllers\ContentController;
 use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
+use App\Http\Controllers\GuestController;
 use App\Http\Controllers\MessageController;
 use App\Models\Content;
 use App\Models\Conversation;
@@ -32,17 +33,19 @@ Route::middleware('guest')->group(function () {
     Route::view('login', 'auth.login')->name('login');
     Route::view('register', 'auth.register')->name('register');
     // Route::view('register/success', 'auth.success')->name('register.success');
-
+    
     Route::controller(AuthController::class)->prefix('auth')->name('auth.')->group(function () {
         Route::post('/register', 'register')->name('register');
         Route::post('/login', 'login')->name('login');
     });
 });
+Route::resource('guests', GuestController::class);
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', [DashboardController::class, 'index'])->name('home');
     Route::resource('messages', MessageController::class);
     Route::post('conversations/update', [ConversationController::class, 'updateConversation'])->name('updateConversation');
+    // Route::post('conversations/guest', [ConversationController::class, 'guest'])->name('guest');
     Route::resource('conversations', ConversationController::class);
     Route::resource('bots', BotController::class);
     Route::post('contents/update', [ContentController::class, 'updateName'])->name('updateName');
@@ -73,6 +76,9 @@ Route::get('/clear', function() {
     return  "all cleared ...";
 
 });
+Route::get('test', function(){
+    return Conversation::findOrfail(29);
+})->withoutMiddleware(['auth']);;
 
 
 

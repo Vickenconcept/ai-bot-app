@@ -53,10 +53,10 @@
 
 
 
-        // function logout(e) {
-        //     localStorage.clear();
-        //     e.closest('form').submit();
-        // }
+        function logout(e) {
+            localStorage.clear();
+            e.closest('form').submit();
+        }
 
 
         const form = document.querySelector("#form-question");

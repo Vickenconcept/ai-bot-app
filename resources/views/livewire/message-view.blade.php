@@ -1,11 +1,10 @@
-<div x-data="{ isOpen: false }" id="here">
+<div x-data="{ isOpen: false }" id="here" class="mb-32">
     <div class="">
         <ul class=" mb-32">
             @foreach ($body as $content)
                 <div class="{{ $content->sender !== 'bot' ? 'bg-white' : 'bg-gray-100' }}">
                     <div class="flex justify-between  py-10 w-[90%] md:w-[70%] mx-auto ">
                         <div class=" flex space-x-5">
-                            {{ $content->id }}
                             <img class="h-8 w-8 rounded-full"
                                 src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                                 alt="">
@@ -171,14 +170,13 @@
 
 
 
-           
+
             document.addEventListener('livewire:initialized', function() {
                 @this.on('refreshComponent', (data) => {
-                    console.log(data);
-                    // if (confirm('Are you sure you want to delete item ' + itemId.itemId + '?')) {
-                    //     @this.dispatch('deleteItem', itemId.itemId);
-                    // }
+
                     $("#here").load(window.location.href + " #here");
+                    document.body.scrollTop = document.body.scrollHeight;
+                    document.documentElement.scrollTop = document.documentElement.scrollHeight;
                 });
             });
         </script>

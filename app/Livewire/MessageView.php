@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\Bot;
 use App\Models\Content;
+use App\Models\Conversation;
 use App\Models\Document;
 use App\Services\ChatGptService;
 use GuzzleHttp\Psr7\Request;
@@ -33,9 +34,10 @@ class MessageView extends Component
     {
         $this->selectBot;
 
-        $user = auth()->user();
+        // $user = auth()->user();
 
-        $conversationToUpdate = $user->conversations()->find($this->conversationTitle->id);
+        $conversationToUpdate = Conversation::find($this->conversationTitle->id);
+        // $conversationToUpdate = $user->conversations()->find($this->conversationTitle->id);
 
         $conversationToUpdate->bot_id = $this->selectBot;
         $conversationToUpdate->update();
@@ -49,7 +51,8 @@ class MessageView extends Component
         $this->sender = 'user';
 
 
-        $conversation = auth()->user()->conversations()->find($this->conversationTitle->id);
+        $conversation = Conversation::find($this->conversationTitle->id);
+        // $conversation = auth()->user()->conversations()->find($this->conversationTitle->id);
 
         if (!$conversation) {
             return back()->with('error', 'No conversation found for the user.');
@@ -64,7 +67,8 @@ class MessageView extends Component
 
     public function generateContent(ChatGptService $chatGptService)
     {
-        $conversation = auth()->user()->conversations()->find($this->conversationTitle->id);
+        $conversation = Conversation::find($this->conversationTitle->id);
+        // $conversation = auth()->user()->conversations()->find($this->conversationTitle->id);
         $this->sender = 'user';
 
         $message = $conversation->messages()->create([
