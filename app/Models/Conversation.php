@@ -9,10 +9,11 @@ use App\Models\Message;
 use App\Models\Bot;
 use App\Models\Scopes\ExemptionAccessScope;
 use App\Models\Trait\CourseSluggable;
+use App\Models\Trait\UUID;
 
 class Conversation extends Model
 {
-    use HasFactory, CourseSluggable;
+    use HasFactory, CourseSluggable, UUID;
 
       public $guarded = [];
 

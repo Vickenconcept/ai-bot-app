@@ -10,7 +10,7 @@
                                 alt="">
                             <li class="" id="{{ $content->id }}">{{ $content->message }}</li>
                         </div>
-                        <button class="block h-8 w-8" onclick="toCopy(document.getElementById('{{ $content->id }}'))">
+                        <button class="block h-8 w-8 {{ $content->sender !== 'bot' ? 'hidden' : '' }}" onclick="toCopy(document.getElementById('{{ $content->id }}'))">
                             <i class='bx bx-copy-alt text-gray-400'></i>
                         </button>
                     </div>
@@ -19,38 +19,14 @@
 
 
         </ul>
-        {{-- <section class="...">
-            <div class="...">
-                <div class="...">
-                    <div class="...">
-                        <div class="...">
-                            <div class="...">
-                                <div>
 
-                                    <a class="..." href="...">Read tutorial here</a>
-                                    </p>
-                                    <p id="question" class="..."></p>
-                                    <p id="result" class="..."></p>
-                                </div>
-                                <form id="form-question" class="...">
-                                    <input required type="text" name="input" placeholder="Type your question here!"
-                                        class="..." />
-                                    <button type="submit" href="#" class="...">
-                                        Submit
-                                        <span aria-hidden="true"> → </span>
-                                    </button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section> --}}
 
-        <div class=" w-[100%] md:w-[75%] bottom-5  fixed ">
+        {{--  --}}
+
+        <div class=" w-[100%] md:w-[75%] bottom-5  fixed  " >
             <div class=" w-full flex justify-center container">
                 <div
-                    class="w-[90%] md:w-[70%] mx-auto  border border-gray-200 rounded-lg bg-gray-50   shadow-md shadow-blue-200 ">
+                    class="w-[90%]   mx-auto  border border-gray-200 rounded-lg bg-gray-50 shadow-md shadow-blue-200  ">
                     <div class="px-4 py-2 bg-white rounded-t-lg ">
 
                         <form wire:submit="saveMessage" id="messageForm" wire:ignore>
@@ -62,8 +38,9 @@
                         </form>
 
                     </div>
-                    <div class="flex items-center justify-between px-2  border-t ">
-                        <div class="flex pl-0 space-x-1 sm:pl-2">
+                    <div class="flex items-center justify-between px-2  border-t  ">
+                        <div class=" {{ request()->routeIs('conversations.show') ? 'hidden' : ''  }}" wire:ignore></div>
+                        <div class="flex pl-0 space-x-1 sm:pl-2 {{ request()->routeIs('guests.show') ? 'hidden' : ''  }}" wire:ignore>
                             <button type="button"
                                 class="inline-flex justify-center items-center p-2 text-gray-900 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 ">
                                 <i class='bx bx-cog'></i>
@@ -113,9 +90,9 @@
                         <div class=" space-y-1" x-data="{ selected: null }">
 
                             @foreach ($bot as $bot)
-                                <input type="radio" name="personality" wire:model="selectBot" id="{{ $bot->name }}"
-                                    value="{{ $bot->id }}" x-model="selected" wire:change="pickBot"
-                                    onchange="reloadPage()" hidden>
+                                <input type="radio" name="personality" wire:model="selectBot"
+                                    id="{{ $bot->name }}" value="{{ $bot->id }}" x-model="selected"
+                                    wire:change="pickBot" onchange="reloadPage()" hidden>
                                 <label for="{{ $bot->name }}"
                                     class="font-semibold upperase w-full block bg-gray-100 border rounded p-2 cursor-pointer  capitalize"
                                     :class="'{{ $conversationTitle->bot->name }}' === '{{ $bot->name }}' ?
@@ -133,6 +110,8 @@
 
 
         </div>
+
+
 
         <script>
             // for coping text

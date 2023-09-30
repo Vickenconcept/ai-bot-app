@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Bot;
 use App\Models\Conversation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class GuestController extends Controller
 {
@@ -30,6 +31,7 @@ class GuestController extends Controller
         $defaultBot = Bot::where('name', 'bot')->first();
    
         auth()->user()->conversations()->create([
+            'uuid' => Str::uuid()->toString(),
             'title' => $title,
             'type' => 'guest',
             'bot_id' => $defaultBot->id
@@ -42,10 +44,11 @@ class GuestController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show($slug)
+    public function show($uuid)
     {
-        $body = Conversation::where('slug', $slug)->firstOrFail()->messages;
-        $conversationTitle = Conversation::where('slug', $slug)->firstOrFail();
+        // dd($uuid);
+        $body = Conversation::where('uuid', $uuid)->firstOrFail()->messages;
+        $conversationTitle = Conversation::where('uuid', $uuid)->firstOrFail();
         // $body = Conversation::findOrfail($id)->messages;
         // $conversationTitle = Conversation::findOrfail($id);
         // dd($conversationTitle->bot);

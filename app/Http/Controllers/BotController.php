@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Bot;
 use App\Models\Conversation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class BotController extends Controller
 {
@@ -14,7 +15,7 @@ class BotController extends Controller
     public function index()
     {
         $bots =  Bot::latest()->get();
-        return view('bot',compact('bots'));
+        return view('bots.bot',compact('bots'));
     }
 
     /**
@@ -32,14 +33,36 @@ class BotController extends Controller
     {
         $user = auth()->user();
 
+        $uuid = Str::uuid()->toString();
+        $title = 'Bot #' . rand(0, 99999);
+        $defaultBot = Bot::where('name', 'bot')->first();
+        
+   
+        auth()->user()->conversations()->create([
+            'uuid' => $uuid,
+            'title' => $title,
+            'type' => 'guest',
+            'bot_id' => $defaultBot->id
+        ]);
+
+
         $validated = $request->validate([
             'name' => 'required',
             'personality' => 'required',
             'description' => 'sometimes',
             'model' => 'required',
+            'uuid_chat' => 'sometimes',
         ]);
+        $validated['uuid_chat'] = $uuid;
+        // dd($validated['uuid_chat'] );
 
         $message = $user->bots()->create( $validated);
+
+
+       
+        
+        // $request->session()->put('bot_default_conversation', $uuid);
+        // dd($uuid);
 
         return back()->with('success', 'bot created successfully');
     }
@@ -47,9 +70,16 @@ class BotController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Bot $bot)
+    public function show(Bot $bot, Request $request)
     {
-        //
+        
+        // $uuid = $request->session()->get('bot_default_conversation');
+        $singleBot = Bot::findOrfail($bot->id);
+        $uuid = $singleBot->uuid_chat;
+
+        $guestChat = Conversation::where('uuid', $uuid)->firstOrFail();
+
+        return view('bots.show', compact('singleBot', 'guestChat'));
     }
 
     /**

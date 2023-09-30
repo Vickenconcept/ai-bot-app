@@ -6,6 +6,7 @@ use App\Models\Bot;
 use App\Models\Conversation;
 use App\Models\Message;
 use Illuminate\Http\Request;
+use Illuminate\Support\Str;
 
 class ConversationController extends Controller
 {
@@ -46,8 +47,9 @@ class ConversationController extends Controller
         // // dd($defaultBot->id);
 
 
-        // // dd('hello');
+        // dd(Str::uuid()->toString());
         auth()->user()->conversations()->create([
+            'uuid' => Str::uuid()->toString(),
             'title' => $title,
             'type' => 'user',
             'bot_id' => $defaultBot->id
@@ -92,6 +94,7 @@ class ConversationController extends Controller
 
         // Find the specific conversation by ID
         $conversationToUpdate = $user->conversations()->find($conversationId);
+        
 
         if (!$conversationToUpdate) {
             return redirect()->back()->with('error', 'Conversation not found.');

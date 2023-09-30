@@ -51,7 +51,7 @@
                             </td>
                             <td class="px-6 py-4 text-right " >
                                 <div class="flex rounded border  divide-x divide-slate-300 bg-blue-600  text-white" :class="'{{ $bot->name }}' === 'bot' ? 'hidden' : ''">
-                                    <a href="#" class="font-medium  py-1 px-3 hover:bg-blue-700"><i
+                                    <a href="{{ route('bots.show', $bot) }}" class="font-medium  py-1 px-3 hover:bg-blue-700"><i
                                             class='bx bxs-share-alt mr-1'></i>share</a>
                                     <x-dropdown>
                                         <x-slot name="trigger">

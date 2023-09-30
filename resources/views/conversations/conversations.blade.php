@@ -1,5 +1,5 @@
 <x-app-layout>
-    <div class="grid grid-cols-1 lg:grid-cols-8 h-full relative" x-data="{ closeSidebar: true, openModal: false, conversation: '',guest:'', isGuest: false }">
+    <div class="grid grid-cols-1 lg:grid-cols-8 h-full relative" x-data="{ closeSidebar: true, openModal: false, openModal2: false, conversation: '',guest:'', isGuest: false }">
 
         <div class="col-span-2">
             <div class="col-span-2 p-3 bg-blue-900  h-screen fixed  lg:block  lg:w-[315px] space-y-5 {{ request()->routeIs('conversations.show') ? 'hidden' : 'w-full' }}"
@@ -30,7 +30,7 @@
                     <ul class="space-y-5" >
                         @foreach ($conversation as $conversation)
                             <li class="text-gray-100  flex justify-between text-md tracking-wide capitalize">
-                                <a href="{{ route('conversations.show', $conversation->slug) }}">
+                                <a href="{{ route('conversations.show', $conversation->id) }}">
                                     <i class='bx bxs-conversation mr-1 text-sm'></i>
                                     {{ $conversation->title }}
                                 </a>
@@ -89,7 +89,7 @@
                     <ul class="space-y-5" >
                         @foreach ($guest as $guest)
                             <li class="text-gray-100  flex justify-between text-md tracking-wide capitalize">
-                                <a href="{{ route('guests.show', $guest->slug ) }}">
+                                <a href="{{ route('guests.show', $guest->uuid ) }}">
                                     <i class='bx bxs-conversation mr-1 text-sm'></i>
                                     {{ $guest->title }}
                                 </a>
@@ -102,7 +102,7 @@
                                     <x-slot name="content">
 
                                         <x-dropdown-link class="cursor-pointer ">
-                                            <div @click=" openModal= true; guest = @js($guest) "
+                                            <div @click=" openModal2= true; guest = @js($guest) "
                                                 class="w-full text-left">Rename <i class='bx bxs-edit-alt'></i></div>
 
                                         </x-dropdown-link>
@@ -122,7 +122,6 @@
                             </li>
                         @endforeach
                     </ul>
-                    <li>this is the guest</li>
                 </div>
                 {{--  --}}
 
@@ -146,6 +145,33 @@
                                     <x-main-button type="submit" class="text-gray-50">Update</x-main-button>
                                     <x-main-button class="bg-gray-50 text-blue-700 shadow-inner border"
                                         @click="openModal = false">Cancle</x-main-button>
+                                </div>
+                            </div>
+                        </form>
+
+                    </div>
+                </div>
+            </div>
+
+            {{-- modal for guest--}}
+            <div class="fixed items-center justify-center  flex top-0 left-0 mx-auto w-full h-full bg-gray-600 bg-opacity-20 z-10 transition duration-1000 ease-in-out"
+                x-show="openModal2" style="display: none;">
+                <div @click.away="openModal2 = false"
+                    class="bg-white w-[70%] lg:w-[40%] shadow-inner  border rounded-lg overflow-auto  pb-6 px-5 transition-all relative duration-700">
+                    <div class="space-y-5 pt-5 ">
+                        <span class="text-xl font-bold">Rename Conversation</span>
+                        <form action="{{ route('updateConversation') }}" method="POST">
+                            @csrf
+                            {{-- @method('PUT') --}}
+                            <div class="space-y-5">
+                                <input type="hidden" :value="guest.id" name="conversationId">
+                                <input id="guest.id" type="text" name="title"
+                                    placeholder="Search guest" :value="guest.title" class="form-control"
+                                    autocomplete="false">
+                                <div class="space-x-3">
+                                    <x-main-button type="submit" class="text-gray-50">Update</x-main-button>
+                                    <x-main-button class="bg-gray-50 text-blue-700 shadow-inner border"
+                                        @click="openModal2 = false">Cancle</x-main-button>
                                 </div>
                             </div>
                         </form>

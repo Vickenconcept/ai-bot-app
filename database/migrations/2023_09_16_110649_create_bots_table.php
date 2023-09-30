@@ -18,6 +18,7 @@ return new class extends Migration
             $table->text('description')->nullable();
             $table->text('personality')->nullable();
             $table->text('model');
+            $table->text('uuid_chat')->nullable();
             $table->timestamps();
         });
     }
