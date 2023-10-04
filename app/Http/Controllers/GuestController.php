@@ -9,9 +9,14 @@ use Illuminate\Support\Str;
 
 class GuestController extends Controller
 {
+    public function __construct()
+    {
+
+        $this->middleware('checkRouteStatus')->only('show');
+    }
     public function index(Request $request)
     {
-       return;
+        return;
     }
 
     /**
@@ -29,7 +34,7 @@ class GuestController extends Controller
     {
         $title = 'guest #' . rand(0, 99999);
         $defaultBot = Bot::where('name', 'bot')->first();
-   
+
         auth()->user()->conversations()->create([
             'uuid' => Str::uuid()->toString(),
             'title' => $title,
@@ -44,19 +49,45 @@ class GuestController extends Controller
     /**
      * Display the specified resource.
      */
+
     public function show($uuid)
     {
-        // dd($uuid);
-        $body = Conversation::where('uuid', $uuid)->firstOrFail()->messages;
-        $conversationTitle = Conversation::where('uuid', $uuid)->firstOrFail();
-        // $body = Conversation::findOrfail($id)->messages;
-        // $conversationTitle = Conversation::findOrfail($id);
-        // dd($conversationTitle->bot);
-        $conversation =  Conversation::where('type','guest')->latest()->get();
-        $guest = Conversation::where('type','guest')->with('messages')->latest()->get();
+        $body = Conversation::where('uuid', $uuid)->first();
+        $bot = Bot::where('uuid_chat', $uuid)->first();
+        // dd($bot->uuid_chat);
+
+        if (!$body) {
+            if ($bot != null && $bot->uuid_chat === $uuid ) {
+                # code...
+                dd($bot->uuid_chat);
+             
+                $title = 'bot #' . rand(0, 99999);
+                $defaultBot = Bot::where('name', 'bot')->first();
+
+                Conversation::create([
+                    'user_id' => $bot->user->id,
+                    'uuid' => $bot->uuid_chat,
+                    'title' => $title,
+                    'type' => 'guest',
+                    'bot_id' => $defaultBot->id
+                ]);
+                $body = Conversation::where('uuid', $uuid)->firstOrFail()->messages;
+                $conversationTitle = Conversation::where('uuid', $uuid)->firstOrFail();
+            }
+            ;
+           return view('error.404');
+        //    return response()->json('widget canceled');
+        } else {
+            
+            $body = Conversation::where('uuid', $uuid)->firstOrFail()->messages;
+            $conversationTitle = Conversation::where('uuid', $uuid)->firstOrFail();
+            $conversation = Conversation::where('type', 'guest')->latest()->get();
+            $guest = Conversation::where('type', 'guest')->with('messages')->latest()->get();
+        }
 
         return view('conversations.show-guest', compact('body', 'conversationTitle', 'conversation'));
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -68,25 +99,21 @@ class GuestController extends Controller
 
     /**
      * Update the specified resource in storage.
-     */ public function updateConversation(Request $request)
+     */ public function update(Request $request, $conversation)
     {
-        $title = $request->input('title');
-        $conversationId = $request->input('conversationId');
-        // dd($conversationId);
-        $user = auth()->user();
-
+        $status = $request->input('statues');
+        
+        
         // Find the specific conversation by ID
-        $conversationToUpdate = $user->conversations()->find($conversationId);
-
-        if (!$conversationToUpdate) {
-            return redirect()->back()->with('error', 'Conversation not found.');
-        }
+        $conversation = Conversation::find($conversation);
+        // dd($conversation);
+        
 
         // Update the title of the conversation
-        $conversationToUpdate->title = $title;
-        $conversationToUpdate->update();
+        $conversation->enabled = $status;
+        $conversation->update();
 
-        return redirect()->back()->with('success', 'Conversation updated successfully.');
+        return redirect()->back()->with('success', 'Status updated successfully.');
     }
 
     /**

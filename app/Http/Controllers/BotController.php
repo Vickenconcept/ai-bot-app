@@ -15,7 +15,7 @@ class BotController extends Controller
     public function index()
     {
         $bots =  Bot::latest()->get();
-        return view('bots.bot',compact('bots'));
+        return view('bots.bot', compact('bots'));
     }
 
     /**
@@ -36,8 +36,8 @@ class BotController extends Controller
         $uuid = Str::uuid()->toString();
         $title = 'Bot #' . rand(0, 99999);
         $defaultBot = Bot::where('name', 'bot')->first();
-        
-   
+
+
         auth()->user()->conversations()->create([
             'uuid' => $uuid,
             'title' => $title,
@@ -56,11 +56,11 @@ class BotController extends Controller
         $validated['uuid_chat'] = $uuid;
         // dd($validated['uuid_chat'] );
 
-        $message = $user->bots()->create( $validated);
+        $message = $user->bots()->create($validated);
 
 
-       
-        
+
+
         // $request->session()->put('bot_default_conversation', $uuid);
         // dd($uuid);
 
@@ -72,10 +72,25 @@ class BotController extends Controller
      */
     public function show(Bot $bot, Request $request)
     {
-        
+
         // $uuid = $request->session()->get('bot_default_conversation');
         $singleBot = Bot::findOrfail($bot->id);
         $uuid = $singleBot->uuid_chat;
+        $conversation = Conversation::where('uuid', $uuid)->first();
+        
+        if (!$conversation) {
+            // dd('heloo');
+            $title = 'Bot #' . rand(0, 99999);
+            $defaultBot = Bot::where('name', 'bot')->first();
+
+
+            auth()->user()->conversations()->create([
+                'uuid' => $uuid,
+                'title' => $title,
+                'type' => 'guest',
+                'bot_id' => $defaultBot->id
+            ]);
+        }
 
         $guestChat = Conversation::where('uuid', $uuid)->firstOrFail();
 
@@ -113,20 +128,20 @@ class BotController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy( $bot)
+    public function destroy($bot)
     {
         $user = auth()->user();
 
         $con = Conversation::all();
-        $updateBots = $con->where('bot_id', $bot );
-        
+        $updateBots = $con->where('bot_id', $bot);
+
         foreach ($updateBots as $updateBot) {
-            $updateBot->bot_id = 1 ;
-       
+            $updateBot->bot_id = 1;
+
             $updateBot->update();
         }
 
-        
+
         $bot = Bot::find($bot);
         $bot->delete();
 

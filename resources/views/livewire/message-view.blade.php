@@ -10,7 +10,8 @@
                                 alt="">
                             <li class="" id="{{ $content->id }}">{{ $content->message }}</li>
                         </div>
-                        <button class="block h-8 w-8 {{ $content->sender !== 'bot' ? 'hidden' : '' }}" onclick="toCopy(document.getElementById('{{ $content->id }}'))">
+                        <button class="block h-8 w-8 {{ $content->sender !== 'bot' ? 'hidden' : '' }}"
+                            onclick="toCopy(document.getElementById('{{ $content->id }}'))">
                             <i class='bx bx-copy-alt text-gray-400'></i>
                         </button>
                     </div>
@@ -23,24 +24,29 @@
 
         {{--  --}}
 
-        <div class=" w-[100%] md:w-[75%] bottom-5  fixed  " >
+        <div class=" w-[100%] md:w-[75%] bottom-5  fixed  ">
             <div class=" w-full flex justify-center container">
                 <div
                     class="w-[90%]   mx-auto  border border-gray-200 rounded-lg bg-gray-50 shadow-md shadow-blue-200  ">
                     <div class="px-4 py-2 bg-white rounded-t-lg ">
-
-                        <form wire:submit="saveMessage" id="messageForm" wire:ignore>
+                        <form  id="messageForm" wire:ignore>
                             @csrf
-
                             <textarea id="message" rows="2"
                                 class="w-full px-2 text-sm text-gray-900 bg-white border-0  focus:ring-transparent focus:outline-none resize-none"
                                 placeholder="Ask {{ $conversationTitle->bot->name }}" wire:model.live="message"></textarea>
                         </form>
-
                     </div>
+
                     <div class="flex items-center justify-between px-2  border-t  ">
-                        <div class=" {{ request()->routeIs('conversations.show') ? 'hidden' : ''  }}" wire:ignore></div>
-                        <div class="flex pl-0 space-x-1 sm:pl-2 {{ request()->routeIs('guests.show') ? 'hidden' : ''  }}" wire:ignore>
+                        <button @click="isOpen = true"
+                            class="bg-gray-50 border ml-2 border-gray-300 text-gray-900 text-sm rounded-lg  block  py-1 px-4  
+                        {{ request()->routeIs('guests.show') && auth()->user() ? '' : 'hidden' }} "
+                            wire:ignore>{{ $conversationTitle->bot->name }}
+                        </button>
+
+                        <div class=" {{ request()->routeIs('conversations.show') ? 'hidden' : '' }}" wire:ignore></div>
+                        <div class="flex pl-0 space-x-1 sm:pl-2 {{ request()->routeIs('guests.show') ? 'hidden' : '' }}"
+                            wire:ignore>
                             <button type="button"
                                 class="inline-flex justify-center items-center p-2 text-gray-900 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 ">
                                 <i class='bx bx-cog'></i>
@@ -68,12 +74,20 @@
 
 
                         </div>
-                        <div wire:loading>loading...</div>
-                        <button wire:click="generateContent"
-                            {{ !is_null($message) && !empty($message) ? '' : 'disabled' }}
-                            class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-gray-400 rounded-lg hover:text-gray-500">
-                            <i class='bx bxs-send text-2xl'></i>
-                        </button>
+                        <div wire:loading class="text-xl font-bold text-gray-400">
+                            <button wire:click="generateContent"
+                                class="inline-flex items-center py-2.5 px-4 text-2xl font-medium text-center text-gray-400 rounded-lg hover:text-gray-500">
+                                ...
+                            </button>
+                        </div>
+                        <div wire:loading.remove class="text-xl font-bold text-gray-400">
+
+                            <button wire:click="generateContent"
+                                {{ !is_null($message) && !empty($message) ? '' : 'disabled' }}
+                                class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-gray-400 rounded-lg hover:text-gray-500">
+                                <i class='bx bxs-send text-2xl'></i>
+                            </button>
+                        </div>
 
                     </div>
                 </div>

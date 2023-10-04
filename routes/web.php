@@ -40,6 +40,7 @@ Route::middleware('guest')->group(function () {
     });
 });
 Route::resource('guests', GuestController::class);
+// Route::resource('guests', GuestController::class)->middleware('checkRouteStatus:guests.show');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', [DashboardController::class, 'index'])->name('home');
@@ -53,6 +54,7 @@ Route::middleware(['auth'])->group(function () {
     // Route::delete('documents/delete', [DocumentController::class, ]);
     Route::resource('documents', DocumentController::class);
     Route::get("/ask", AskController::class);
+    Route::view('support', 'support')->name('support');
 
     Route::post('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });

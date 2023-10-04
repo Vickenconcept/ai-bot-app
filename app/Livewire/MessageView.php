@@ -67,8 +67,8 @@ class MessageView extends Component
 
     public function generateContent(ChatGptService $chatGptService)
     {
+        // dd($this->conversationTitle->bot->personality);
         $conversation = Conversation::find($this->conversationTitle->id);
-        // $conversation = auth()->user()->conversations()->find($this->conversationTitle->id);
         $this->sender = 'user';
 
         $message = $conversation->messages()->create([
@@ -93,14 +93,15 @@ class MessageView extends Component
         }
 
         $mergedContent = '';
+        $name = $this->conversationTitle->bot->name;
 
         foreach ($allDocumentContents as $contentArray) {
             $mergedContent .= implode("\n", $contentArray);
         }
         $preprocessedDocument = preprocessContent($mergedContent);
         $combinedPrompt = "Document Context:\n" . $preprocessedDocument . "\nUser Prompt:\n" . $userInput;
-        $res = $chatGptService->generateContent($combinedPrompt);
-        // dd($chatGptService);
+        $res = $chatGptService->generateContent($name,$combinedPrompt);
+        // dd($this->conversationTitle->bot->name);
 
 
         $this->sender = 'bot';
@@ -114,28 +115,6 @@ class MessageView extends Component
         return;
     }
         
-
-
-
-
-        // foreach ($contents as $document) {
-        //     # code...
-
-        //     $userInput = 'what is vue js';
-        //     $documents = $document->documents()->pluck('content')->toArray();
-
-        //     dd($documents );
-        //     $htmlContentString = implode("\n", $documents);
-        //     $preprocessedDocument = preprocessContent($htmlContentString);
-        //     $combinedPrompt = "Document Context:\n" . $preprocessedDocument . "\nUser Prompt:\n" . $userInput;
-        //     $res = $this->chatGptService->generateContent($combinedPrompt);
-
-        // }
-
-
-
-
-
         // dd($documents);
         // $documents = Document::pluck('content')->toArray();
 
@@ -145,33 +124,6 @@ class MessageView extends Component
         // $combinedPrompt = "Document Context:\n" . $preprocessedDocument . "\nUser Prompt:\n" . $userInput;
         // $res = $this->chatGptService->generateContent($combinedPrompt);
 
-
-
-
-
-    // }
-
-    // public function preprocessContent($content)
-    // {
-    //     // Tokenize the content into words (you may need a more sophisticated tokenizer)
-    //     $words = str_word_count($content, 1);
-
-    //     // Lemmatize each word (for simplicity, we'll convert to lowercase)
-    //     $processedWords = array_map(function ($word) {
-    //         return $this->lemmatizeWord($word);
-    //     }, $words);
-
-    //     // Join the lemmatized words back into a processed content
-    //     $processedContent = implode(' ', $processedWords);
-
-    //     return $processedContent;
-    // }
-
-    // function lemmatizeWord($word)
-    // {
-    //     // Convert the word to lowercase (a basic form of lemmatization)
-    //     return strtolower($word);
-    // }
 
 
     public function render()

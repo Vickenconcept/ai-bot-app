@@ -30,7 +30,7 @@
                     <ul class="space-y-5" >
                         @foreach ($conversation as $conversation)
                             <li class="text-gray-100  flex justify-between text-md tracking-wide capitalize">
-                                <a href="{{ route('conversations.show', $conversation->id) }}">
+                                <a href="{{ route('conversations.show', $conversation->slug) }}">
                                     <i class='bx bxs-conversation mr-1 text-sm'></i>
                                     {{ $conversation->title }}
                                 </a>

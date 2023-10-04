@@ -24,7 +24,14 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 
     @livewireStyles
+    {{-- <script>
+        window.codySettings = { widget_id: '9a136341-8616-4af5-b6e8-ab72fb2a9dd5' };
+        
+        !function(){var t=window,e=document,a=function(){var t=e.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://trinketsofcody.com/cody-widget.js";var a=e.getElementsByTagName("script")[0];a.parentNode.insertBefore(t,a)};"complete"===document.readyState?a():t.attachEvent?t.attachEvent("onload",a):t.addEventListener("load",a,!1)}();
+        </script> --}}
+      
 
+      
 </head>
 
 <body class="h-full">
@@ -34,13 +41,34 @@
 
         {{ $slot }}
 
-
-
-
+        {{-- <div>
+            <button class="btn" id="toggleIframe" style="
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            color: white;
+            background-color: blue;
+            padding: 8px 10px;
+            box-shadow: 5px 2px 5px gray;
+            border-radius: 10px;"><i class='bx bxs-palette'></i></button>
+            <iframe id="myIframe" src="http://127.0.0.1:8000/guests/42331577-b859-4745-b726-07d107917db6" style="
+            position: fixed;
+            bottom: 70px;
+            right: 20px;
+            box-shadow: 3px 3px 6px lightgray ; 
+            border: 3px solid darkblue; 
+            border-radius: 10px;
+            display: none;
+            background-color: #fff; 
+            box-shadow: 3px 6px 5px gray;"
+                width="300" height="500"></iframe>
+        </div> --}}
+        
     </div>
 
 
     <script>
+        //  initializeEmbed();
         // function createMessageElement(content, role) {
         //     const messageDiv = 'document.createElement('div')';
         //     messageDiv.className = `message ${role}-message`;
@@ -151,46 +179,17 @@
         //     localStorage.setItem('chatMessages', JSON.stringify(messages));
         // });
 
-
-
-
-
-
-        // const form = document.querySelector("#form-question");
-        // const result = document.getElementById("result");
-
-        // form.addEventListener("submit", (event) => {
-        //     event.preventDefault();
-        //     const input = event.target.input.value;
-        //     if (input === "") return;
-        //     const question = document.getElementById("question");
-        //     question.innerText = input;
-        //     event.target.input.value = "";
-        //     const queryQuestion = encodeURIComponent(input);
-        //     const source = new EventSource("/ask?question=" + queryQuestion);
-        //     source.addEventListener("update", function(event) {
-        //         console.log(event);
-        //         if (event.data === "<END_STREAMING_SSE>") {
-        //             source.close();
-        //             return;
-        //         }
-        //         result.innerText += event.data + " \n";
-        //     });
-        //     // -----
-        //     source.onmessage = (event) => {
-        //         console.log('Received data: ', event.data);
-        //         // Handle the received data as needed
-        //         result.innerText += event.data;
-        //         if (event.data === "<END_STREAMING_SSE>") {
-        //             source.close();
-        //             return;
-        //         }
-        //     };
-        //     source.onerror = (error) => {
-        //         console.error('EventSource failed: ', error);
-        //     };
-        // });
     </script>
+
+      {{-- <script type='text/javascript' charset='utf-8'>     
+        var iframe = document.createElement('iframe');       
+        document.body.appendChild(iframe);
+     
+        iframe.src = 'http://127.0.0.1:8000/guests/42331577-b859-4745-b726-07d107917db6';       
+        iframe.width = '400';
+        iframe.height = '500';
+     </script> --}}
+    
 
 
     @livewireScripts

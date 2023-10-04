@@ -19,6 +19,7 @@ return new class extends Migration
             $table->foreignId('bot_id')->nullable()->constrained('bots');
             $table->text('title');
             $table->text('type');
+            $table->boolean('enabled')->default(true);
             $table->timestamps();
         });
     }

@@ -53,6 +53,7 @@
                                 <div class="flex rounded border  divide-x divide-slate-300 bg-blue-600  text-white" :class="'{{ $bot->name }}' === 'bot' ? 'hidden' : ''">
                                     <a href="{{ route('bots.show', $bot) }}" class="font-medium  py-1 px-3 hover:bg-blue-700"><i
                                             class='bx bxs-share-alt mr-1'></i>share</a>
+                                            
                                     <x-dropdown>
                                         <x-slot name="trigger">
                                             <button><i
@@ -70,6 +71,8 @@
                                                         class='bx bx-message-rounded mr-1 text-sm'></i></div>
 
                                             </x-dropdown-link>
+                                            {{-- <p id="{{ $guestChat->id }}" class="w-full  p-2 border text-sm font-semibold shadow-inner border-gray-300 bg-white ">
+                                                {{ route('guests.show', ['guest' => $guestChat->uuid]) }}</p> --}}
                                             <x-dropdown-link>
                                                 <form class="w-full"
                                                     action="{{ route('bots.destroy', ['bot' => $bot->id]) }}"
