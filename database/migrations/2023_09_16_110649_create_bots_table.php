@@ -17,6 +17,7 @@ return new class extends Migration
             $table->text('name');
             $table->text('description')->nullable();
             $table->text('personality')->nullable();
+            $table->text('knowledge');
             $table->text('model');
             $table->text('uuid_chat')->nullable();
             $table->timestamps();

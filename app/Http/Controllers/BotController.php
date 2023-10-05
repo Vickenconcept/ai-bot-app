@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Bot;
+use App\Models\Content;
 use App\Models\Conversation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -15,7 +16,9 @@ class BotController extends Controller
     public function index()
     {
         $bots =  Bot::latest()->get();
-        return view('bots.bot', compact('bots'));
+        // dd($bots);
+        $contents = Content::latest()->get();
+        return view('bots.bot', compact('bots','contents'));
     }
 
     /**
@@ -32,6 +35,7 @@ class BotController extends Controller
     public function store(Request $request)
     {
         $user = auth()->user();
+      
 
         $uuid = Str::uuid()->toString();
         $title = 'Bot #' . rand(0, 99999);
@@ -51,9 +55,11 @@ class BotController extends Controller
             'personality' => 'required',
             'description' => 'sometimes',
             'model' => 'required',
+            'knowledge' => 'required',
             'uuid_chat' => 'sometimes',
         ]);
         $validated['uuid_chat'] = $uuid;
+        $validated['knowledge'] = json_encode($validated['knowledge']);
         // dd($validated['uuid_chat'] );
 
         $message = $user->bots()->create($validated);
@@ -118,7 +124,9 @@ class BotController extends Controller
             'name' => 'required',
             'description' => 'sometimes',
             'model' => 'required',
+            'knowledge' => 'required',
         ]);
+        $validated['knowledge'] = json_encode($validated['knowledge']);
 
         $requiredBot->update($validated);
 

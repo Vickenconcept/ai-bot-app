@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Models\User;
 use App\Models\Document;
 use App\Models\Bot;
-use App\Models\Scopes\DataAccessScope;
+use App\Models\Scopes\ExemptionAccessScope;
 
 class Content extends Model
 {
@@ -32,6 +32,12 @@ class Content extends Model
     {
         parent::boot();
 
-        static::addGlobalScope(new DataAccessScope);
+        static::addGlobalScope(new ExemptionAccessScope);
     }
+    // protected static function boot()
+    // {
+    //     parent::boot();
+
+    //     static::addGlobalScope(new DataAccessScope);
+    // }
 }

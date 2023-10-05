@@ -40,4 +40,8 @@ class Conversation extends Model
 
         static::addGlobalScope(new ExemptionAccessScope);
     }
+    // protected function updatedAt(): Attribute
+    // {
+    //     return Attribute::get(fn ($value) => Carbon::parse($value)->format('F j, Y, g:i A'));
+    // }
 }

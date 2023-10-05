@@ -4,17 +4,17 @@ namespace App\Livewire;
 
 use Illuminate\Support\Facades\Request;
 use Livewire\Component;
-// use Livewire\WithFileUploads;
+use Livewire\WithFileUploads;
 use Spatie\PdfToText\Pdf;
 use PhpOffice\PhpWord\IOFactory;
+use Goutte\Client;
 
 class UploadDocument extends Component
 {
 
+    use WithFileUploads;
 
-    // use WithFileUploads; // Use the trait
-
-    public $file;
+    public $file, $textContent, $webUrl;
 
     public $body, $contentTitle, $title, $content,  $updatedContent;
 
@@ -30,7 +30,6 @@ class UploadDocument extends Component
         $this->title;
         $this->content;
         $this->contentTitle->id;
-        // sleep(10);
         $user->documents()->create([
             'title' =>  $this->title,
             'content' =>  $this->content,
@@ -39,59 +38,79 @@ class UploadDocument extends Component
 
         $this->dispatch('refreshComponent', data: $this->body);
 
-        // Set the loading state back to false after processing
 
     }
-    
-    // public function refreshComponent()
-    // {
-    //     dd('here');
-    //     $this->dispatch('refreshComponent', data: $this->body);
-
-    // }
-
-
-
-
-
 
     public function saveUploadedDocument()
     {
-        // dd($this->file);
-        dd(Request::all());
-
-        $user = auth()->user()->contents()->find($this->contentTitle->id);
-        $this->title;
-        $this->content;
-        $this->contentTitle->id;
-        $user->documents()->create([
-            'title' =>  'title',
-            'content' =>  $this->file,
-            // 'title' =>  $this->title,
-
+        $this->validate([
+            'file' => 'required|mimes:pdf,docx|max:2048', 
         ]);
 
-        // if ('pdf') {
-        //     $pdfFilePath = 'path/to/your/file.pdf';
+        if ($this->file->getClientOriginalExtension() === 'pdf') {
+            $binpath = 'C:/Program Files/Git/mingw64/bin/pdftotext';
+            $this->textContent = Pdf::getText($this->file->getRealPath(), $binpath);
 
-        //     // Extract text from the PDF
-        //     $text = (new Pdf())->setPdf($pdfFilePath)->text();
+        } elseif ($this->file->getClientOriginalExtension() === 'docx') {
+            $doc = IOFactory::load($this->file->getRealPath());
 
-        //     // Output the extracted text
-        //     echo $text;
-        // } elseif ('dox') {
-        //     $docxFilePath = 'path/to/your/file.docx';
 
-        //     // Load the DOCX file
-        //     $phpWord = IOFactory::load($docxFilePath);
+            $doc = IOFactory::load($this->file->getRealPath());
+            foreach ($doc->getSections() as $section) {
+                foreach ($section->getElements() as $element) {
+                    
+                    if ($element instanceof \PhpOffice\PhpWord\Element\TextRun) {
+                        foreach ($element->getElements() as $textElement) {
+                            if ($textElement instanceof \PhpOffice\PhpWord\Element\Text) {
+                                $this->textContent .= $textElement->getText();
+                            }
+                        }
+                    }
+                }
+            }
+        }
 
-        //     // Get the plain text content from the DOCX
-        //     $plainText = $phpWord->getPlainText();
 
-        //     // Output the plain text content
-        //     echo $plainText;
-        // }
+        $user = auth()->user()->contents()->find($this->contentTitle->id);
+       
+        $user->documents()->create([
+            'title' =>  'uploaded ' . rand(0, 99999),
+            'content' =>   $this->textContent,
+
+        ]);
+        $this->dispatch('refreshComponent', data: $this->body);
+        return;
+
     }
+
+
+    public function scrapeWebsite()
+    {
+        // $url = 'https://me.vixblock.com.ng/index.html/';  // Replace with the URL you want to scrape
+
+        $this->validate([
+            'webUrl' => 'required|url',
+        ]);
+        $client = new Client();
+        $crawler = $client->request('GET', $this->webUrl);
+
+        $this->textContent = $crawler->filter('body')->text();
+        // $cleanedText = preg_replace("/[^a-zA-Z0-9\s]/", "", $mainText);
+        // dd($this->textContent);
+
+        $user = auth()->user()->contents()->find($this->contentTitle->id);
+
+        $user->documents()->create([
+            'title' =>  'uploaded ' . rand(0, 99999),
+            'content' =>   $this->textContent,
+
+        ]);
+        $this->dispatch('refreshComponent', data: $this->body);
+        return;
+        
+    }
+
+
 
     public function render()
     {

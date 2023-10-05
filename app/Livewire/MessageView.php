@@ -52,13 +52,11 @@ class MessageView extends Component
 
 
         $conversation = Conversation::find($this->conversationTitle->id);
-        // $conversation = auth()->user()->conversations()->find($this->conversationTitle->id);
 
         if (!$conversation) {
             return back()->with('error', 'No conversation found for the user.');
         }
 
-        // dd($this->message);
         $message = $conversation->messages()->create([
             'message' =>   $this->message,
             'sender' => $this->sender,
@@ -67,10 +65,9 @@ class MessageView extends Component
 
     public function generateContent(ChatGptService $chatGptService)
     {
-        // dd($this->conversationTitle->bot->personality);
         $conversation = Conversation::find($this->conversationTitle->id);
         $this->sender = 'user';
-
+       
         $message = $conversation->messages()->create([
             'message' =>   $this->message,
             'sender' => $this->sender,
@@ -78,13 +75,23 @@ class MessageView extends Component
 
 
         // $this->chatGptService = app(ChatGptService::class);
-        $userInput = 'Give relvant resposnse to this:' . $this->message . ', check if a related response is in the document , then you can also pick some response there, but if there is no related response to ' . $this->message . ' just go ahead and give a nice response but not refrencing the document at all';
-
+        $userInput = 'Give relvant resposnse to this:' . $this->message . ', Please always ignore the document data while giving response, except if ( ' . $this->message . ' ) is related to any data in the document then you pick  from the document and paraphrase what you picked.  just go ahead and give a nice response but not refrencing the document at all, And remeber if there is a greeting or respone pattern for user  in the document try to always use it';
+        // $userInput = 'Give relvant resposnse to this:' . $this->message . ', check if a related response is in the document , then you can also pick some response there, but if there is no related response to ' . $this->message . ' just go ahead and give a nice response but not refrencing the document at all';
 
         $botId = $this->conversationTitle->bot->id;
+        $knowledge = $this->conversationTitle->bot->knowledge;
+        $knowledgeIdsJson = $this->conversationTitle->bot->knowledge;
+
+        $knowledgeIds = json_decode($knowledgeIdsJson, true);
+        if ( $knowledgeIds != null) {
+            $knowledgeIds = array_map('intval', $knowledgeIds);
+            $contents = Content::whereIn('id', $knowledgeIds)->get();
+        }else {
+            $contents = Content::with('documents')->get();
+        }
+        
 
 
-        $contents = Content::with('documents')->get();
         $allDocumentContents = [];
 
         foreach ($contents as $content) {
@@ -99,9 +106,12 @@ class MessageView extends Component
             $mergedContent .= implode("\n", $contentArray);
         }
         $preprocessedDocument = preprocessContent($mergedContent);
-        $combinedPrompt = "Document Context:\n" . $preprocessedDocument . "\nUser Prompt:\n" . $userInput;
-        $res = $chatGptService->generateContent($name,$combinedPrompt);
-        // dd($this->conversationTitle->bot->name);
+        $combinedPrompt = "Document Context:\n" . $mergedContent . "\nUser Prompt:\n" . $userInput;
+        // $combinedPrompt = "Document Context:\n" . $preprocessedDocument . "\nUser Prompt:\n" . $userInput;
+        $res = $chatGptService->generateContent($name, $combinedPrompt);
+        if ($res === 'Connection error. Please try again later.') {
+          return;
+        }
 
 
         $this->sender = 'bot';
@@ -114,15 +124,15 @@ class MessageView extends Component
         $this->dispatch('refreshComponent', data: 'hello i am the payload');
         return;
     }
-        
-        // dd($documents);
-        // $documents = Document::pluck('content')->toArray();
+
+    // dd($documents);
+    // $documents = Document::pluck('content')->toArray();
 
 
-        // $htmlContentString = implode("\n", $documents);
-        // $preprocessedDocument = preprocessContent($htmlContentString);
-        // $combinedPrompt = "Document Context:\n" . $preprocessedDocument . "\nUser Prompt:\n" . $userInput;
-        // $res = $this->chatGptService->generateContent($combinedPrompt);
+    // $htmlContentString = implode("\n", $documents);
+    // $preprocessedDocument = preprocessContent($htmlContentString);
+    // $combinedPrompt = "Document Context:\n" . $preprocessedDocument . "\nUser Prompt:\n" . $userInput;
+    // $res = $this->chatGptService->generateContent($combinedPrompt);
 
 
 

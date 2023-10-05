@@ -3,6 +3,9 @@
         <ul class=" mb-32">
             @foreach ($body as $content)
                 <div class="{{ $content->sender !== 'bot' ? 'bg-white' : 'bg-gray-100' }}">
+                    <div class="text-center text-xs ">
+                        <span class="border-b">{{ $content->created_at }}</span>
+                    </div>
                     <div class="flex justify-between  py-10 w-[90%] md:w-[70%] mx-auto ">
                         <div class=" flex space-x-5">
                             <img class="h-8 w-8 rounded-full"
