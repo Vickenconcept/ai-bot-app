@@ -35,19 +35,10 @@ class BotController extends Controller
     public function store(Request $request)
     {
         $user = auth()->user();
+        $uuid = Str::uuid()->toString();
       
 
-        $uuid = Str::uuid()->toString();
-        $title = 'Bot #' . rand(0, 99999);
-        $defaultBot = Bot::where('name', 'bot')->first();
-
-
-        auth()->user()->conversations()->create([
-            'uuid' => $uuid,
-            'title' => $title,
-            'type' => 'guest',
-            'bot_id' => $defaultBot->id
-        ]);
+       
 
 
         $validated = $request->validate([
@@ -60,9 +51,21 @@ class BotController extends Controller
         ]);
         $validated['uuid_chat'] = $uuid;
         $validated['knowledge'] = json_encode($validated['knowledge']);
-        // dd($validated['uuid_chat'] );
 
         $message = $user->bots()->create($validated);
+
+
+        
+        $title = 'Bot #' . rand(0, 99999);
+        $defaultBot = Bot::where('name', 'bot')->first();
+
+
+        auth()->user()->conversations()->create([
+            'uuid' => $uuid,
+            'title' => $title,
+            'type' => 'guest',
+            'bot_id' => $defaultBot->id
+        ]);
 
 
 

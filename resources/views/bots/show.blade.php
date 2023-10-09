@@ -10,9 +10,9 @@
             <h1 class="font-bold">Share Link</h1>
             <p>When this link is enabled, you can have anyone use this bot by visiting this link.</p>
         </div>
-        <a href="{{ route('bots.index') }}">
+        <a href="{{ route('bots.index') }}" class="z-50" style="z-index: 1000">
             <button class="fixed right-3 md:right-10 top-20 shadow rounded-lg px-3 py-2 bg-blue-700 text-gray-50 ">
-                <i class='bx bx-x text-2xl font-semibold'></i>
+                <i class='bx bx-x text-2xl font-semibold '></i>
             </button>
         </a>
 
@@ -55,20 +55,20 @@
         </div>
 
         <hr>
-        <section class=" pt-10 space-y-5">
+        <section class=" pt-10 space-y-5 ">
             <h1 class="tracking-wider font-bold text-xl ">Embed</h1>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="shadow hover:shadow-lg bg-white  p-4 md:p-10 rounded-lg ">
                     <h3>To get the widget to appear on your webpage simply copy and paste the snippet below somewhere in
                         the body tag.</h3>
-                    <div class="text-xs">
+                    <div class="text-xs ">
                         <div class=" text-right">
                             <button onclick="toCopy(document.getElementById('para3'))"
-                                class="  px-4 py-2 text-blue-600  text-md font-semibold  hover:text-blue-800 ">copy <i
+                                class="  px-4 py-2 text-blue-600  text-md font-semibold  hover:text-blue-800 " {{ $guestChat->enabled === 1 ? '' : 'disabled' }}>copy <i
                                     class='bx bxs-copy-alt'></i></button>
                         </div>
                         <p id="para3"
-                            class="w-full  border  border-gray-700 overflow-auto text-left bg-gray-800 text-gray-50 p-5 rounded shadow-inner"
+                            class="w-full  border  border-gray-700 overflow-auto text-left bg-gray-800 text-gray-50 p-5 rounded shadow-inner {{ $guestChat->enabled === 1 ? '' : 'blur-sm' }}"
                             style="visbility:hidden">
                             &lt;iframe src="{{ route('guests.show', ['guest' => $guestChat->uuid]) }}" width="100%"
                             height="400"&gt;
@@ -87,10 +87,10 @@
                         <h3 class="italic text-sm ">Paste in your body tag</h3>
                         <div class=" text-right">
                             <button onclick="toCopy(document.getElementById('para1'))"
-                                class="  px-4 py-2 text-blue-600  text-md font-semibold  hover:text-blue-800 ">copy <i
+                                class="  px-4 py-2 text-blue-600  text-md font-semibold  hover:text-blue-800 " {{ $guestChat->enabled === 1 ? '' : 'disabled' }}>copy <i
                                     class='bx bxs-copy-alt'></i></button>
                         </div>
-                        <p id="para1" class="bg-gray-800 text-gray-50 p-5 rounded shadow-inner">
+                        <p id="para1" class="bg-gray-800 text-gray-50 p-5 rounded shadow-inner {{ $guestChat->enabled === 1 ? '' : 'blur-sm' }}">
 
                             &lt;div&gt;
                             <br>
@@ -101,19 +101,19 @@
                       <br>
                       bottom: 20px;
                       <br>
-                      right: 20px;
+                      {{ $guestChat->position }}: 20px;
                       <br>
                       color: white;
                       <br>
-                      background-color: blue;
+                      background-color: {{ $guestChat->launcher_color }};
                       <br>
-                      padding: 10px 14px;
+                      padding: {{ $guestChat->launcher_size }};
                       <br>
                       box-shadow: 5px 2px 5px #ccc;
                       <br>
                       border-radius: 50px;"&gt;
                             <br>
-                            &lt;i class='bx bxs-bot'&gt;&lt;/i&gt;&lt;/button&gt;
+                            &lt;i class='bx {{ $guestChat->launcher_icon }}'&gt;&lt;/i&gt;&lt;/button&gt;
 
                             <br>
                             <br>
@@ -126,7 +126,8 @@
                       <br>
                       bottom: 70px;
                       <br>
-                      right: 20px;
+                      
+                      {{ $guestChat->position }}: 20px;
                       <br>
                       box-shadow: 3px 3px 6px lightgray ; 
                       <br>
@@ -148,10 +149,10 @@
                         <h3 class="italic text-sm ">Paste before the end of your body tag</h3>
                         <div class=" text-right">
                             <button onclick="toCopy(document.getElementById('para2'))"
-                                class="  px-4 py-2 text-blue-600  text-md font-semibold  hover:text-blue-800 ">copy <i
+                                class="  px-4 py-2 text-blue-600  text-md font-semibold  hover:text-blue-800 " {{ $guestChat->enabled === 1 ? '' : 'disabled' }}>copy <i
                                     class='bx bxs-copy-alt'></i></button>
                         </div>
-                        <p id="para2" class="bg-gray-800 text-gray-50 p-5 rounded shadow-inner">
+                        <p id="para2" class="bg-gray-800 text-gray-50 p-5 rounded shadow-inner {{ $guestChat->enabled === 1 ? '' : 'blur-sm' }}">
 
                             &lt;script&gt;
                             <br>
@@ -208,6 +209,9 @@
                 </div>
 
             </div>
+        </section>
+        <section>
+            <livewire:customize-view :guestChat="$guestChat"/>
         </section>
     </div>
 

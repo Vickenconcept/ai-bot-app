@@ -1,18 +1,29 @@
 <x-guest-layout>
-    {{-- <div>
-        <livewire:message-view  :body="$body" :conversationTitle="$conversationTitle"/>
-    </div> --}}
+
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <div class="">
         <div class=" ">
-            <nav class="relative flex w-full flex-wrap items-center justify-between bg-blue-900 text-white lg:py-4">
+            {{-- <nav class="relative flex w-full flex-wrap items-center justify-between bg-blue-900 text-white lg:py-4">
                 <div class="flex w-full flex-wrap items-center justify-between px-3">
                     <div class="container ml-36 ">
                         <a class="text-sm text-neutral-800 dark:text-neutral-200" href="#">Hello, Ask me
                             anything</a>
                     </div>
                 </div>
+            </nav> --}}
+            <nav class=" p-5  flex  "
+                style="background-color: {{ $conversationTitle->nav_bg_color }}; color: {{ $conversationTitle->nav_col }}">
+                <img class="h-8 w-8 rounded-full mr-2"
+                    src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
+                    alt="">
+                <div class="flex-grow">
+                    <ul class="capitalize" style="text-align:  {{ $conversationTitle->layout }}">
+                        <li class="font-bold text-xl">{{ $conversationTitle->head_title }}</li>
+                        <li>{{ $conversationTitle->head_subtitle }}</li>
+                    </ul>
+                </div>
+
             </nav>
         </div>
         <div class=" text-gray-700 pb-20 w-full md:w-[75%] mx-auto ">

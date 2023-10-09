@@ -19,6 +19,16 @@ return new class extends Migration
             $table->foreignId('bot_id')->nullable()->constrained('bots');
             $table->text('title');
             $table->text('type');
+            $table->text('layout')->nullable();
+            $table->text('nav_bg_color')->nullable();
+            $table->text('nav_col')->nullable();
+            $table->text('head_title')->nullable();
+            $table->text('head_subtitle')->nullable();
+            $table->text('position')->nullable();
+            $table->text('launcher_size')->nullable();
+            $table->text('launcher_color')->nullable();
+            $table->text('launcher_icon')->nullable();
+            $table->text('logo')->nullable();
             $table->boolean('enabled')->default(true);
             $table->timestamps();
         });

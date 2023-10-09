@@ -34,10 +34,7 @@
     border-radius: 10px;
   }
   
-  /* Handle on hover */
-  /* ::-webkit-scrollbar-thumb:hover {
-    background: #b30000; 
-  } */
+
   /* Handle on hover */
   ::-webkit-scrollbar-thumb:hover {
     background:  rgb(2, 2, 155); 

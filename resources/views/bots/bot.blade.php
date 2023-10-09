@@ -200,16 +200,22 @@
                                     </div>
                                 </div>
                                 <div class="space-y-2 ">
-                                    <h1 class=" font-bold mb-2 underline">Knowledge</h1>
+                                    <h1 class=" font-bold mb-2 underline">Knowledge <span
+                                        class="text-red-400 ml-1">*</span></h1>
 
                                     <div>
                                        
-                                        @foreach ($contents as $content)
+                                        @forelse ($contents as $content)
                                             <input type="checkbox" name="knowledge[]" id="{{ $content->id }}"
                                                 value="{{ $content->id }}">
                                             <label for="{{ $content->id }}"
                                                 class="mr-3 cursor-pointer">{{ $content->title }}</label>
-                                        @endforeach
+                                                @empty
+                                                <div class="text-red-400 bg-red-50 border border-red-400 p-3 rounded  ">
+                                                    <span>Add contents for the bot to function on. </span>
+                                                    <a href="{{ route('contents.index') }}" class="text-gray-700 underline"> Go to contents</a>
+                                                </div>
+                                        @endforelse
                                     </div>
 
 

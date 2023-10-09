@@ -59,7 +59,7 @@ class GuestController extends Controller
         if (!$body) {
             if ($bot != null && $bot->uuid_chat === $uuid ) {
                 # code...
-                dd($bot->uuid_chat);
+                // dd($bot->uuid_chat);
              
                 $title = 'bot #' . rand(0, 99999);
                 $defaultBot = Bot::where('name', 'bot')->first();

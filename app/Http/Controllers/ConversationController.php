@@ -92,7 +92,6 @@ class ConversationController extends Controller
         // dd($conversationId);
         $user = auth()->user();
 
-        // Find the specific conversation by ID
         $conversationToUpdate = $user->conversations()->find($conversationId);
         
 
@@ -100,7 +99,6 @@ class ConversationController extends Controller
             return redirect()->back()->with('error', 'Conversation not found.');
         }
 
-        // Update the title of the conversation
         $conversationToUpdate->title = $title;
         $conversationToUpdate->update();
 
