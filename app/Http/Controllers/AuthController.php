@@ -12,13 +12,35 @@ use Illuminate\Http\Response;
 
 class AuthController extends Controller
 {
-    public function register(CreateUserRequest $request)
-    {
 
-        $user = User::create($request->validated());
-        
+    public function showRegistrationForm(Request $request)
+    {
+        $referralToken = $request->query('ref');
+
+        if ($request->has('ref')) {
+            session(['referrer' => $request->query('ref')]);
+        }
+        return view('auth.register');
+    }
+    public function register(Request $request)
+    {
+        // $referrer = $request->session()->get('referrer');
+        $referrer = User::whereUsername(session()->pull('referrer'))->first();
+
+        $data = $request->validate([
+            'name' => 'required',
+            'email' => 'required|email',
+            'password' => 'required|confirmed',
+            'username' => 'sometimes',
+            'referrer_id' => 'sometimes'
+        ]);
+        $data['referrer_id'] = $referrer ? $referrer->id : null;
+        // dd($data);
+
+        $user = User::create($data);
+
         Auth::login($user);
-        
+
         $user = auth()->user();
 
 
@@ -29,6 +51,7 @@ class AuthController extends Controller
             'knowledge' => '',
             'model' => 'gpt.3.5',
         ]);
+
 
         auth()->logout();
         return $request->wantsJson()
@@ -51,7 +74,7 @@ class AuthController extends Controller
     {
 
         if ($request->wantsJson()) {
-           
+
             return Response::api('logged out successfully');
         }
 

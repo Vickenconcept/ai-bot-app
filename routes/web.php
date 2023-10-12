@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AccountController;
 use App\Http\Controllers\AskController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\BotController;
@@ -8,7 +9,9 @@ use App\Http\Controllers\ConversationController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\GuestController;
+use App\Http\Controllers\InviteController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\ProfileController;
 use App\Models\Content;
 use App\Models\Conversation;
 use Illuminate\Support\Facades\Artisan;
@@ -31,12 +34,13 @@ Route::get('/', function () {
 
 Route::middleware('guest')->group(function () {
     Route::view('login', 'auth.login')->name('login');
-    Route::view('register', 'auth.register')->name('register');
+    // Route::view('register', 'auth.register')->name('register');
     // Route::view('register/success', 'auth.success')->name('register.success');
     
-    Route::controller(AuthController::class)->prefix('auth')->name('auth.')->group(function () {
-        Route::post('/register', 'register')->name('register');
-        Route::post('/login', 'login')->name('login');
+    Route::controller(AuthController::class)->group(function () {
+        Route::get('register', 'showRegistrationForm')->name('register');
+        Route::post('auth/register', 'register')->name('auth.register');
+        Route::post('auth/login', 'login')->name('auth.login');
     });
 });
 Route::resource('guests', GuestController::class);
@@ -51,11 +55,14 @@ Route::middleware(['auth'])->group(function () {
     Route::resource('bots', BotController::class);
     Route::post('contents/update', [ContentController::class, 'updateName'])->name('updateName');
     Route::resource('contents', ContentController::class);
-    // Route::delete('documents/delete', [DocumentController::class, ]);
+    Route::resource('account', AccountController::class);
     Route::resource('documents', DocumentController::class);
+    Route::get('invite', InviteController::class)->name('invite');
     Route::get("/ask", AskController::class);
     Route::view('support', 'support')->name('support');
-
+    Route::view('profile', 'profile')->name('profile');
+    Route::post('profile/name', [ProfileController::class, 'changeName'])->name('changeName');
+    Route::post('profile/password', [ProfileController::class, 'changePassword'])->name('changePassword');
     Route::post('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
 });
 
@@ -79,6 +86,9 @@ Route::get('/clear', function() {
 
 });
 Route::get('test', function(){
+  
+    $user = auth()->user();
+    dd($user->generateReferralLink());
     return Conversation::findOrfail(29);
 })->withoutMiddleware(['auth']);;
 

@@ -55,7 +55,7 @@
         </div>
 
         <hr>
-        <section class=" pt-10 space-y-5 ">
+        <section class=" pt-10 space-y-5 " id="here">
             <h1 class="tracking-wider font-bold text-xl ">Embed</h1>
             <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
                 <div class="shadow hover:shadow-lg bg-white  p-4 md:p-10 rounded-lg ">
@@ -225,5 +225,18 @@
             document.execCommand("copy");
             // alert("copied!");
         }
+
+         function updateDiv() {
+                $("#here").load(window.location.href + " #here");
+            }
+            //  setTimeout(function() {
+            //             // window.location.reload();
+            //         }, 500);
+                    
+                    setInterval(() => {
+                        updateDiv()
+                        
+                    }, 2000);
+
     </script>
 </x-app-layout>

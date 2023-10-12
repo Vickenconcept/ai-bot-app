@@ -24,3 +24,9 @@
     <div x-data="{message: notify(`{{ $msg }}`) }"></div>
 </div>
 @endif
+
+@if (session()->has('error'))
+<div x-data="notification">
+    <div x-data="{message: notify(`{{ $msg }}`) }"></div>
+</div>
+@endif

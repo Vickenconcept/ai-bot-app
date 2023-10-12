@@ -21,11 +21,14 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
-    protected $fillable = [
-        'name',
-        'email',
-        'password',
-    ];
+    protected $guarded = [];
+    // protected $fillable = [
+    //     'name',
+    //     'email',
+    //     'password',
+    //     'referrer_id',
+    //     'username',
+    // ];
 
     /**
      * The attributes that should be hidden for serialization.
@@ -47,19 +50,70 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    public function conversations(){
+    protected $appends = ['referral_link'];
+
+    /**
+     * Get the user's referral link.
+     *
+     * @return string
+     */
+    public function generateReferralLink()
+    {
+
+         $referral_link = route('register', ['ref' => $this->username]);
+        return $this->referral_link = $referral_link;
+
+    }
+
+    public function conversations()
+    {
         return $this->hasMany(Conversation::class);
     }
-    public function contents() {
-        
+    public function contents()
+    {
+
         return $this->hasMany(Content::class);
     }
-    public function account() {
-        
+    public function account()
+    {
+
         return $this->hasOne(Account::class);
     }
-    public function bots() {
-        
+    public function bots()
+    {
+
         return $this->hasMany(Bot::class);
+    }
+
+    // public function generateReferralLink()
+    // {
+    //     $characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+    //     $randomString = '';
+
+    //     // Generate a random string of specified length
+    //     for ($i = 0; $i < 10; $i++) {
+    //         $randomString .= $characters[rand(0, strlen($characters) - 1)];
+    //     }
+
+    //     // Generate the URL using the named route
+    //     $url = route('register'); // Replace with your actual named route
+
+    //     // Combine user's ID with the random string and the URL
+    //     return $url . '?ref=' . $this->id . $randomString;
+    // }
+
+    public function referrer()
+    {
+        return $this->belongsTo(User::class, 'referrer_id', 'id');
+    }
+
+    /**
+     * A user has many referrals.
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function referrals()
+    {
+        return $this->hasMany(User::class, 'referrer_id', 'id');
     }
 }

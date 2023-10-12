@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Account;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class AccountController extends Controller
@@ -12,7 +13,9 @@ class AccountController extends Controller
      */
     public function index()
     {
-        //
+        $referrals = User::where('referrer_id' , auth()->user()->id)->latest()->get();
+        // dd($referrals);
+        return view('account',compact('referrals'));
     }
 
     /**
@@ -50,16 +53,32 @@ class AccountController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Account $account)
+    public function update(Request $request,  $id)
     {
-        //
+        $access = $request->input('access');
+        $user = User::find($id);
+        if ($access === 'owner') {
+            $user->referrer_id = null;
+            $user->update();
+
+        }elseif($access === 'member'){
+            $user->referrer_id = auth()->user()->id;
+            $user->update();
+        }
+        return redirect()->to('account')->with('success', 'Access updated successfully.');
+
+        
+        dd($access);
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Account $account)
+    public function destroy( $id)
     {
-        //
+        $user = User::find($id);
+        $user->delete();
+
+        return redirect()->to('account')->with('success', 'member deleted successfully.');
     }
 }

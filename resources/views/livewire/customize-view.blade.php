@@ -287,9 +287,9 @@
         </div>
         <div class=" lg:p-10 ">
             <div class="rounded-lg lg:sticky top-20 shadow" >
-                <nav class=" p-5 rounded-t-lg flex  "
+                <nav class=" px-5 py-3 rounded-t-lg flex  shadow"
                     style="background-color: {{ $navColor }}; color: {{ $textColor }}">
-                    <img class="h-8 w-8 rounded-full mr-2"
+                    <img class="h-10 w-10 rounded-xl mr-2"
                                         src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
                                         alt="">
                     <div class="flex-grow">
@@ -371,4 +371,5 @@
 
         </div>
     </section>
+   
 </div>

@@ -27,7 +27,9 @@ class CreateUserRequest extends FormRequest
         return [
             'name' => Rule::requiredIf($isRegisterRoute),
             'email' => 'required|email',
-            'password' => ['required', Rule::when($isRegisterRoute, 'confirmed')]
+            'password' => ['required', Rule::when($isRegisterRoute, 'confirmed')],
+            'username' => 'sometimes',
+            'referrer_id' => 'sometimes'
         ];
     }
 }
