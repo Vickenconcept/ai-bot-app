@@ -1,7 +1,7 @@
 <x-app-layout>
     <div class="grid grid-cols-1 lg:grid-cols-8 h-full relative" x-data="{ closeSidebar: true, openModal: false, content: '' }">
         <div class="col-span-2">
-            <div class="col-span-2 p-3 bg-blue-900  h-screen fixed  lg:block  lg:w-[315px] space-y-5 {{ request()->routeIs('contents.show') ? 'hidden' : 'w-full' }}"
+            <div class="col-span-2 p-3 bg-purple-100  h-screen fixed  lg:block  lg:w-[315px] space-y-5 {{ request()->routeIs('contents.show') ? 'hidden' : 'w-full' }}"
                 x-show="closeSidebar">
 
                 <hr class="hidden lg:block">
@@ -17,18 +17,18 @@
                     <form class="" action="{{ route('contents.store') }}" method="POST">
                         @csrf
                         <button type="submit" class=" bg-gray-100 rounded shadow-sm px-2 py-1" title="Add new content"><i
-                                class='bx bxs-folder text-blue-900'></i></button>
+                                class='bx bxs-folder text-purple-900'></i></button>
                     </form>
                 </div>
                 <ul class="space-y-5">
                     @foreach ($contents as $content)
-                        <li class="text-gray-100  flex justify-between text-md tracking-wide capitalize">
+                        <li class="text-purple-900 font-semibold  flex justify-between text-md tracking-wide capitalize">
                             <a href="{{ route('contents.show', $content) }}"> 
                                 <i class='bx bx-folder mr-1' ></i>{{ $content->title }} <span class="text-xs bg-gray-400 px-1 ml-5 rounded-full"> {{ $content->documents->count() }}</span>
                             </a>
                             <x-dropdown>
                                 <x-slot name="trigger">
-                                    <button><i class='bx bx-dots-vertical-rounded hover:bg-gray-50 hover:text-blue-900 transition duration-300 p-2 rounded'></i></button>
+                                    <button><i class='bx bx-dots-vertical-rounded hover:bg-gray-50 hover:text-purple-900 transition duration-300 p-2 rounded'></i></button>
                                 </x-slot>
                                 <x-slot name="content">
 
@@ -72,8 +72,8 @@
                                   placeholder="Search content" :value="content.title" class="form-control" autocomplete="false">
                               <div class="space-x-3">
                                   <x-main-button type="submit" class="text-gray-50">Update</x-main-button>
-                                  <x-main-button class="bg-gray-50 text-blue-700 shadow-inner border"
-                                      @click="openModal = false">Cancle</x-main-button>
+                                  <button class="bg-gray-50 px-2 py-1 rounded hover:shadow text-purple-700 shadow-inner border"
+                                      @click="openModal = false">Cancle</button>
                               </div>
                           </div>
                       </form>
@@ -84,7 +84,7 @@
         <div class="col-span-6 h-full">
             <div
             class=" w-full h-[500px] flex justify-center items-center {{ request()->routeIs('contents.index') ? '' : 'hidden' }}">
-            <div class="flex justify-between text-blue-600 ">
+            <div class="flex justify-between text-purple-600 ">
                 <span class="animate-ping  font-extrabold text-xl mr-2 hidden lg:block"><i class='bx bx-arrow-back'></i></span>
                 <h1 class="text-2xl  font-bold tracking-wider "> Select a folder</h1>
 

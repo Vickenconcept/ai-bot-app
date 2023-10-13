@@ -54,7 +54,7 @@
                 </div>
 
                 <div class="" >
-                    <button type="submit" class=" bg-blue-600 rounded-lg px-4 py-2 text-white hover:shadow">save</button>
+                    <button type="submit" class=" bg-purple-600 rounded-lg px-4 py-2 text-white hover:shadow">save</button>
                 </div>
 
                
@@ -96,7 +96,7 @@
                     </div>
                 </div>
                 <div class="" >
-                    <button type="submit" class=" bg-blue-600 rounded-lg px-4 py-2 text-white hover:shadow">save</button>
+                    <button type="submit" class=" bg-purple-600 rounded-lg px-4 py-2 text-white hover:shadow">save</button>
                 </div>
 
                

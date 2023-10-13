@@ -1,17 +1,18 @@
 <x-app-layout>
+    {{-- <x-notification /> --}}
     <div class="grid grid-cols-1 lg:grid-cols-8 h-full relative" x-data="{ closeSidebar: true, openModal: false, openModal2: false, conversation: '',guest:'', isGuest: false }">
 
         <div class="col-span-2">
-            <div class="col-span-2 p-3 bg-blue-900  h-screen fixed  lg:block  lg:w-[315px] space-y-5 {{ request()->routeIs('conversations.show') ? 'hidden' : 'w-full' }}"
+            <div class="col-span-2 p-3 bg-purple-200  h-screen fixed  lg:block  lg:w-[315px] space-y-5 {{ request()->routeIs('conversations.show') ? 'hidden' : 'w-full' }}"
                 x-show="closeSidebar">
 
                 <hr class="hidden lg:block">
 
-                <div class="space-y-5" x-show="isGuest === false">
-                    <div class="grid grid-cols-2">
-                        <x-main-button class="bg-gray-50 text-blue-700 shadow-inner"
-                            @click="isGuest = false">Yours</x-main-button>
-                        <x-main-button class=" text-gray-50 shadow-inner" @click="isGuest = true">Guest</x-main-button>
+                <div class="space-y-1" x-show="isGuest === false">
+                    <div class="flex ">
+                        <button class="border-b-2 border-white py-1 px-4 font-semibold  text-sm  text-purple-700"
+                            @click="isGuest = false">Yours</button>
+                        <x-main-button class=" text-gray-50 shadow-inner border-b-2  border-white" @click="isGuest = true">Guest</x-main-button>
                     </div>
                     <div class="mt-2 flex space-x-3">
                         <form class=" w-full" action="{{ route('conversations.index') }}" method="GET">
@@ -23,13 +24,13 @@
                         <form class="" action="{{ route('conversations.store') }}" method="POST">
                             @csrf
                             <button type="submit" class=" bg-gray-100 rounded shadow-sm px-2 py-1"
-                                title="Add new conversation"><i class='bx bxs-message-add text-blue-900'></i></button>
+                                title="Add new conversation"><i class='bx bxs-message-add text-purple-900'></i></button>
                         </form>
                     </div>
 
-                    <ul class="space-y-5" >
+                    <ul class="space-y-5 pt-5" >
                         @foreach ($conversation as $conversation)
-                            <li class="text-gray-100  flex justify-between text-md tracking-wide capitalize">
+                            <li class="text-purple-900 font-semibold  flex justify-between text-md tracking-wide capitalize">
                                 <a href="{{ route('conversations.show', $conversation->slug) }}">
                                     <i class='bx bxs-conversation mr-1 text-sm'></i>
                                     {{ $conversation->title }}
@@ -38,7 +39,7 @@
                                 <x-dropdown>
                                     <x-slot name="trigger">
                                         <button><i
-                                                class='bx bx-dots-vertical-rounded hover:bg-gray-50 hover:text-blue-900 transition duration-300 p-2 rounded'></i></button>
+                                                class='bx bx-dots-vertical-rounded hover:bg-gray-50 hover:text-purple-900 transition duration-300 p-2 rounded'></i></button>
                                     </x-slot>
                                     <x-slot name="content">
 
@@ -66,14 +67,14 @@
                 </div>
 
                 {{--  --}}
-                <div x-show="isGuest" class="space-y-5" style="display: none;">
-                    <div class="grid grid-cols-2">
-                        <x-main-button class=" text-gray-50  shadow-inner"
+                <div x-show="isGuest" class="space-y-1" style="display: none;">
+                    <div class="flex">
+                        <x-main-button class=" text-gray-50  shadow-inner border-b-2  border-white"
                             @click="isGuest = false">Yours</x-main-button>
-                        <x-main-button class="bg-gray-50 text-blue-700 shadow-inner" @click="isGuest = true">Guest</x-main-button>
+                        <button class="border-b-2 border-white py-1 px-4 font-semibold  text-sm " @click="isGuest = true">Guest</button>
                     </div>
                     <div class="mt-2 flex space-x-3">
-                        <form class=" w-full" action="{{ route('guests.index') }}" method="GET">
+                        <form class=" w-full" action="{{ route('conversations.index') }}" method="GET">
                             <div>
                                 <input id="text" name="query" type="text" placeholder="Search conversation"
                                     class="form-control">
@@ -82,13 +83,13 @@
                         <form class="" action="{{ route('guests.store') }}" method="POST">
                             @csrf
                             <button type="submit" class=" bg-gray-100 rounded shadow-sm px-2 py-1"
-                                title="Add new conversation"><i class='bx bxs-message-add text-blue-900'></i></button>
+                                title="Add new conversation"><i class='bx bxs-message-add text-purple-900'></i></button>
                         </form>
                     </div>
 
-                    <ul class="space-y-5" >
+                    <ul class="space-y-5 pt-5" >
                         @foreach ($guest as $guest)
-                            <li class="text-gray-100  flex justify-between text-md tracking-wide capitalize">
+                            <li class="text-purple-900 font-semibold  flex justify-between text-md tracking-wide capitalize">
                                 <a href="{{ route('guests.show', $guest->uuid ) }}">
                                     <i class='bx bxs-conversation mr-1 text-sm'></i>
                                     {{ $guest->title }}
@@ -97,7 +98,7 @@
                                 <x-dropdown>
                                     <x-slot name="trigger">
                                         <button><i
-                                                class='bx bx-dots-vertical-rounded hover:bg-gray-50 hover:text-blue-900 transition duration-300 p-2 rounded'></i></button>
+                                                class='bx bx-dots-vertical-rounded hover:bg-gray-50 hover:text-purple-900 transition duration-300 p-2 rounded'></i></button>
                                     </x-slot>
                                     <x-slot name="content">
 
@@ -143,8 +144,8 @@
                                     autocomplete="false">
                                 <div class="space-x-3">
                                     <x-main-button type="submit" class="text-gray-50">Update</x-main-button>
-                                    <x-main-button class="bg-gray-50 text-blue-700 shadow-inner border"
-                                        @click="openModal = false">Cancle</x-main-button>
+                                    <button class="bg-gray-50 rounded hover:shadow-md px-2 py-1 text-purple-700 shadow-inner border"
+                                        @click="openModal = false">Cancle</button>
                                 </div>
                             </div>
                         </form>
@@ -170,8 +171,8 @@
                                     autocomplete="false">
                                 <div class="space-x-3">
                                     <x-main-button type="submit" class="text-gray-50">Update</x-main-button>
-                                    <x-main-button class="bg-gray-50 text-blue-700 shadow-inner border"
-                                        @click="openModal2 = false">Cancle</x-main-button>
+                                    <button class="bg-gray-50 rounded hover:shadow-md px-2 py-1 text-purple-700 shadow-inner border"
+                                        @click="openModal2 = false">Cancle</button>
                                 </div>
                             </div>
                         </form>
@@ -184,7 +185,7 @@
 
             <div
                 class=" w-full h-[500px] flex justify-center items-center {{ request()->routeIs('conversations.index') ? '' : 'hidden' }}">
-                <div class="flex justify-between text-blue-600 ">
+                <div class="flex justify-between text-purple-600 ">
                     <span class="animate-ping  font-extrabold text-xl mr-2 hidden lg:block"><i
                             class='bx bx-arrow-back'></i></span>
                     <h1 class="text-2xl  font-bold tracking-wider "> Start a conversation</h1>

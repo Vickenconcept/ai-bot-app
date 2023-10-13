@@ -50,11 +50,11 @@
                                 {{ $bot->created_at }}
                             </td>
                             <td class="px-6 py-4 text-right ">
-                                <div class="flex rounded border  divide-x divide-slate-300 bg-blue-600  text-white"
+                                <div class="flex rounded border  divide-x divide-slate-300 bg-purple-600  text-white"
                                     :class="'{{ $bot->name }}'
                                     === 'bot' ? 'hidden' : ''">
                                     <a href="{{ route('bots.show', $bot) }}"
-                                        class="font-medium  py-1 px-3 hover:bg-blue-700"><i
+                                        class="font-medium  py-1 px-3 hover:bg-purple-700"><i
                                             class='bx bxs-share-alt mr-1'></i>share</a>
 
                                     <x-dropdown>
@@ -122,7 +122,7 @@
                                 <label for="factual"
                                     class="font-semibold capitalize bg-gray-100 border rounded p-2 cursor-pointer "
                                     :class="{
-                                        'bg-blue-100 border border-blue-300': selected === 'factual',
+                                        'bg-purple-100 border border-purple-300': selected === 'factual',
                                         '': selected !==
                                             'factual'
                                     }">factual</label>
@@ -131,14 +131,14 @@
                                     x-model="selected">
                                 <label for="hr"
                                     class="font-semibold upperase bg-gray-100 border rounded p-2 cursor-pointer"
-                                    :class="{ 'bg-blue-100 border border-blue-300': selected === 'hr', '': selected !== 'hr' }">HR</label>
+                                    :class="{ 'bg-purple-100 border border-purple-300': selected === 'hr', '': selected !== 'hr' }">HR</label>
 
                                 <input type="radio" name="personality" id="creative" value="creative" hidden
                                     x-model="selected">
                                 <label for="creative"
                                     class="font-semibold capitalize bg-gray-100 border rounded p-2 cursor-pointer"
                                     :class="{
-                                        'bg-blue-100 border border-blue-300': selected === 'creative',
+                                        'bg-purple-100 border border-purple-300': selected === 'creative',
                                         '': selected !==
                                             'creative'
                                     }">Creative</label>
@@ -148,7 +148,7 @@
                                 <label for="tranning"
                                     class="font-semibold capitalize bg-gray-100 border rounded p-2 cursor-pointer"
                                     :class="{
-                                        'bg-blue-100 border border-blue-300': selected === 'tranning',
+                                        'bg-purple-100 border border-purple-300': selected === 'tranning',
                                         '': selected !==
                                             'tranning'
                                     }">Tranning</label>
@@ -158,7 +158,7 @@
                                 <label for="itSupport"
                                     class="font-semibold capitalize bg-gray-100 border rounded p-2 cursor-pointer"
                                     :class="{
-                                        'bg-blue-100 border border-blue-300': selected === 'itSupport',
+                                        'bg-purple-100 border border-purple-300': selected === 'itSupport',
                                         '': selected !==
                                             'itSupport'
                                     }">IT
@@ -169,7 +169,7 @@
                                 <label for="custormerSupport"
                                     class="font-semibold capitalize bg-gray-100 border rounded p-2 cursor-pointer"
                                     :class="{
-                                        'bg-blue-100 border border-blue-300': selected ===
+                                        'bg-purple-100 border border-purple-300': selected ===
                                             'custormerSupport',
                                         '': selected !== 'custormerSupport'
                                     }">Custormer
@@ -230,7 +230,7 @@
                             </div>
                             <div class="space-x-3">
                                 <x-main-button type="submit" class="text-gray-50">Create</x-main-button>
-                                <x-main-button class="bg-gray-50 text-blue-700 shadow-inner border"
+                                <x-main-button class="bg-gray-50 text-purple-700 shadow-inner border"
                                     @click="isOpen = false">Cancle</x-main-button>
                             </div>
                         </div>
@@ -304,7 +304,7 @@
                                 </div>
                                 <div class="space-x-3">
                                     <x-main-button type="submit" class="text-gray-50">Update</x-main-button>
-                                    <x-main-button class="bg-gray-50 text-blue-700 shadow-inner border"
+                                    <x-main-button class="bg-gray-50 text-purple-700 shadow-inner border"
                                         @click="isOpen = false">Cancle</x-main-button>
                                 </div>
                             </div>

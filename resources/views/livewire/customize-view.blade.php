@@ -1,18 +1,12 @@
 <div class="space-y-8" wire:poll="selectedCustom">
     {{-- Do your work, then step back. --}}
-    <button wire:click="selectedCustom">click me</button>
+    {{-- <button wire:click="selectedCustom">click me</button> --}}
     <div>
         <h1 class=" font-bold text-xl capitalize">customize</h1>
 
         <p>Customize the appearance of your chat widget. Changes can take a few minutes to appear on your site.</p>
     </div>
 
-    <div class=" text-red-400 bg-red-50 rounded-lg border border-red-400 px-5 py-3 space-y-2">
-        <h3 class=" font-bold text-md"> Preview Only</h3>
-        <p class="text-sm">This is for your preview only, you need Basic or higher subscription plan to apply these
-            customizations.</p>
-        <button class="  bg-red-100 rounded-lg border border-red-200 px-4 py-1 text-sm">subscribe</button>
-    </div>
 
     <section class="grid grid-cols-1 lg:grid-cols-2 space-y-8">
         <div class="space-y-8 ">

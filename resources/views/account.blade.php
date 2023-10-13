@@ -1,8 +1,8 @@
 <x-app-layout>
     <x-notification />
-    <div class="grid grid-cols-1 lg:grid-cols-8 h-full relative text-gray-700" x-data="{ isOpen: false }">
-        <div class="lg:col-span-2 hidden lg:block">
-            <div class="col-span-2 p-3 bg-blue-900  h-screen fixed  lg:block  lg:w-[315px] space-y-5">
+    <div class="grid grid-cols-1 px-5  h-full relative text-gray-700" x-data="{ isOpen: false }">
+        {{-- <div class="lg:col-span-2 hidden lg:block">
+            <div class="col-span-2 p-3 bg-purple-900  h-screen fixed  lg:block  lg:w-[315px] space-y-5">
                 <hr class="hidden lg:block">
                 <ul class="space-y-5">
                     <a href="{{ route('account.index') }}" class="block">
@@ -45,14 +45,14 @@
 
                 </ul>
             </div>
-        </div>
+        </div> --}}
 
-        <div class="col-span-8 lg:hidden ">
+        {{-- <div class="col-span-8 lg:hidden ">
             <hr>
-            <div class=" p-3 bg-blue-900  text-gray-50   lg:w-[315px] space-x-5">
+            <div class=" p-3 bg-purple-900  text-gray-50   lg:w-[315px] space-x-5">
                 <a href="{{ route('account.index') }}" class="">
                     Users
-                </a>
+            </a
                 <a href="#" class="">
                     Billing
                 </a>
@@ -64,9 +64,9 @@
 
             </div>
 
-        </div>
+        </div> --}}
 
-        <section class="lg:col-span-6 h-full space-y-5 p-5 ">
+        <section class=" h-full space-y-5 p-5 ">
             @if (Auth::user()->referrer_id === null)
                 <h1 class="font-bold text-xl">Invitation link</h1>
                 <p>Share this secret link to invite people to this team.
@@ -83,7 +83,7 @@
                         </div>
                         <div class="">
                             <button onclick="toCopy(document.getElementById('invite'))"
-                                class=" bg-blue-800 px-4 py-2 text-white  rounded-tr rounded-br text-sm font-semibold   shadow-sm hover:shadow-md  ">Copy
+                                class=" bg-purple-800 px-4 py-2 text-white  rounded-tr rounded-br text-sm font-semibold   shadow-sm hover:shadow-md  ">Copy
                             </button>
                         </div>
                     </div>
@@ -279,7 +279,7 @@
                                                     <label for="access" class="input-label">Acces</label>
                                                 </div>
                                                 <select id="access" name="access"
-                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 ">
+                                                    class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 ">
 
                                                     <option value="{{ route('register') }}">Owner </option>
                                                     <option value="{{ auth()->user()->generateReferralLink() }}">

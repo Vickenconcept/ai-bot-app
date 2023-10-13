@@ -11,7 +11,7 @@
             <p>When this link is enabled, you can have anyone use this bot by visiting this link.</p>
         </div>
         <a href="{{ route('bots.index') }}" class="z-50" style="z-index: 1000">
-            <button class="fixed right-3 md:right-10 top-20 shadow rounded-lg px-3 py-2 bg-blue-700 text-gray-50 ">
+            <button class="fixed right-3 md:right-10 top-20 shadow rounded-lg px-3 py-2 bg-purple-700 text-gray-50 ">
                 <i class='bx bx-x text-2xl font-semibold '></i>
             </button>
         </a>
@@ -25,7 +25,7 @@
                 </div>
                 <div class="">
                     <button onclick="toCopy(document.getElementById('{{ $guestChat->id }}'))"
-                        class=" bg-blue-800 px-4 py-2 text-white  rounded-tr rounded-br text-sm font-semibold   shadow-sm hover:shadow-md  " {{ $guestChat->enabled === 1 ? '' : 'disabled' }}>Copy
+                        class=" bg-purple-800 px-4 py-2 text-white  rounded-tr rounded-br text-sm font-semibold   shadow-sm hover:shadow-md  " {{ $guestChat->enabled === 1 ? '' : 'disabled' }}>Copy
                         </button>
                 </div>
             </div>
@@ -64,7 +64,7 @@
                     <div class="text-xs ">
                         <div class=" text-right">
                             <button onclick="toCopy(document.getElementById('para3'))"
-                                class="  px-4 py-2 text-blue-600  text-md font-semibold  hover:text-blue-800 " {{ $guestChat->enabled === 1 ? '' : 'disabled' }}>copy <i
+                                class="  px-4 py-2 text-purple-600  text-md font-semibold  hover:text-purple-800 " {{ $guestChat->enabled === 1 ? '' : 'disabled' }}>copy <i
                                     class='bx bxs-copy-alt'></i></button>
                         </div>
                         <p id="para3"
@@ -87,7 +87,7 @@
                         <h3 class="italic text-sm ">Paste in your body tag</h3>
                         <div class=" text-right">
                             <button onclick="toCopy(document.getElementById('para1'))"
-                                class="  px-4 py-2 text-blue-600  text-md font-semibold  hover:text-blue-800 " {{ $guestChat->enabled === 1 ? '' : 'disabled' }}>copy <i
+                                class="  px-4 py-2 text-purple-600  text-md font-semibold  hover:text-purple-800 " {{ $guestChat->enabled === 1 ? '' : 'disabled' }}>copy <i
                                     class='bx bxs-copy-alt'></i></button>
                         </div>
                         <p id="para1" class="bg-gray-800 text-gray-50 p-5 rounded shadow-inner {{ $guestChat->enabled === 1 ? '' : 'blur-sm' }}">
@@ -131,7 +131,7 @@
                       <br>
                       box-shadow: 3px 3px 6px lightgray ; 
                       <br>
-                      border: 3px solid darkblue; 
+                      border: 3px solid darkpurple; 
                       <br>
                       border-radius: 10px;
                       <br>
@@ -149,7 +149,7 @@
                         <h3 class="italic text-sm ">Paste before the end of your body tag</h3>
                         <div class=" text-right">
                             <button onclick="toCopy(document.getElementById('para2'))"
-                                class="  px-4 py-2 text-blue-600  text-md font-semibold  hover:text-blue-800 " {{ $guestChat->enabled === 1 ? '' : 'disabled' }}>copy <i
+                                class="  px-4 py-2 text-purple-600  text-md font-semibold  hover:text-purple-800 " {{ $guestChat->enabled === 1 ? '' : 'disabled' }}>copy <i
                                     class='bx bxs-copy-alt'></i></button>
                         </div>
                         <p id="para2" class="bg-gray-800 text-gray-50 p-5 rounded shadow-inner {{ $guestChat->enabled === 1 ? '' : 'blur-sm' }}">

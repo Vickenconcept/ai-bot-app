@@ -8,9 +8,17 @@
                     </div>
                     <div class="flex justify-between  py-10 w-[90%] md:w-[70%] mx-auto ">
                         <div class=" flex space-x-5">
-                            <img class="h-8 w-8 rounded-full"
-                                src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                alt="">
+                            <div class="text-gray-600">
+                                <span class="h-8 w-8 rounded-full flex justify-center items-center font-bold  bg-blue-50 {{ $content->sender !== 'bot' ? '' : 'hidden' }}">
+                                    @if (auth()->check())
+                                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                                    @else
+                                        API
+                                    @endif
+                                </span>
+                                <span class="h-8 w-8 rounded-full flex justify-center items-center font-bold  bg-green-50 {{ $content->sender !== 'bot' ? 'hidden' : '' }}"><i class='bx bxs-bot text-xl '></i></span>
+                               
+                            </div>
                             <li class="" id="{{ $content->id }}">{{ $content->message }}</li>
                         </div>
                         <button class="block h-8 w-8 {{ $content->sender !== 'bot' ? 'hidden' : '' }}"

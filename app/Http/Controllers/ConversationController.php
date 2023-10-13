@@ -25,6 +25,7 @@ class ConversationController extends Controller
         $guest = Conversation::when($query, function ($queryBuilder) use ($query) {
             return $queryBuilder->where('title', 'like', '%' . $query . '%');
         })->where('type','guest')->with('messages')->latest()->get();
+        // dd($guest);
 
         return view('conversations.conversations', compact('conversation','guest'));
     }
