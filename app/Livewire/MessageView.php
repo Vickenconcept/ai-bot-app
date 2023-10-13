@@ -74,8 +74,8 @@ class MessageView extends Component
         ]);
 
 
-        // $this->chatGptService = app(ChatGptService::class);
-        $userInput = 'Give relvant resposnse to this:' . $this->message . ', Please always ignore the document data while giving response, except if ( ' . $this->message . ' ) is related to any data in the document then you pick  from the document and paraphrase what you picked.  just go ahead and give a nice response but not refrencing the document at all, And remeber if there is a greeting or respone pattern for user  in the document try to always use it';
+        $userInput = 'Give relvant resposnse to this:' . $this->message . ', Please always ignore the document data while giving response, except if ( ' . $this->message . ' ) is related to any data in the document then you pick  from the document and paraphrase what you picked.  just go ahead and give a nice response but not refrencing the document at all, And remeber if there is a respone pattern or structure in the document try to always use it';
+
         // $userInput = 'Give relvant resposnse to this:' . $this->message . ', check if a related response is in the document , then you can also pick some response there, but if there is no related response to ' . $this->message . ' just go ahead and give a nice response but not refrencing the document at all';
 
         $botId = $this->conversationTitle->bot->id;
@@ -101,6 +101,41 @@ class MessageView extends Component
 
         $mergedContent = '';
         $name = $this->conversationTitle->bot->name;
+        $model = $this->conversationTitle->bot->model;
+        $personality = $this->conversationTitle->bot->personality;
+        $system = 'You are a knowledgeable assistant that provides detailed explanations about topics';
+
+        if ($personality === 'factual') {
+            
+            $system = "In providing factual information, I'll offer accurate and reliable details on various topics, helping you make informed decisions and broaden your knowledge. Let's explore the world of facts and information.
+           ";
+        }
+        if ($personality === 'hr') {
+            
+            $system = "In the realm of HR, I'm here to assist you with policies, procedures, employee onboarding, and any HR-related inquiries you may have. Let's streamline HR processes and enhance employee experiences.
+           ";
+        }
+        if ($personality === 'creative') {
+            
+            $system = "For a creative approach, I'll help you brainstorm ideas, craft engaging narratives, develop artistic concepts, and think outside the box. Let's unleash creativity and bring your innovative visions to life.
+           ";
+        }
+        if ($personality === 'itSupport') {
+            
+            $system = "For IT support, I'll assist you in troubleshooting technical issues, setting up systems, explaining code, and providing solutions to enhance your IT operations. Let's ensure a seamless tech environment.
+           ";
+        }
+        if ($personality === 'tranning') {
+            
+            $system = "In providing factual information, I'll offer accurate and reliable details on various topics, helping you make informed decisions and broaden your knowledge. Let's explore the world of facts and information.
+           ";
+        }
+        if ($personality === 'custormerSupport') {
+            
+            $system = "As a customer support assistant, I'm here to address your customer queries, offer product assistance, and provide helpful insights to improve customer satisfaction. Let's enhance the customer experience together.
+           ";
+        }
+        
 
         foreach ($allDocumentContents as $contentArray) {
             $mergedContent .= implode("\n", $contentArray);
@@ -108,15 +143,12 @@ class MessageView extends Component
         $preprocessedDocument = preprocessContent($mergedContent);
         $combinedPrompt = "Document Context:\n" . $mergedContent . "\nUser Prompt:\n" . $userInput;
         // $combinedPrompt = "Document Context:\n" . $preprocessedDocument . "\nUser Prompt:\n" . $userInput;
-        $res = $chatGptService->generateContent($name, $combinedPrompt);
+        $res = $chatGptService->generateContent($name,$model,$system, $combinedPrompt);
         if ($res === 'Connection error. Please try again later.') {
           return;
         }
 
-
         $this->sender = 'bot';
-
-
         $conversation->messages()->create([
             'message' =>   $res,
             'sender' => $this->sender,

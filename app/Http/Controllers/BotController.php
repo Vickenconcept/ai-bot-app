@@ -50,6 +50,7 @@ class BotController extends Controller
             'uuid_chat' => 'sometimes',
         ]);
         $validated['uuid_chat'] = $uuid;
+    //    dd( $validated['model'] );
         $validated['knowledge'] = json_encode($validated['knowledge']);
 
         $message = $user->bots()->create($validated);

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->foreignId('content_id')->constrained('contents');
             $table->text('title');
             $table->text('content')->nullable();
+            // $table->longText('content')->nullable();
             $table->enum('status', ['learned', 'processing'])->default('learned');
 
             $table->timestamps();

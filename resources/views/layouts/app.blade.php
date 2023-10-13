@@ -29,9 +29,9 @@
         
         !function(){var t=window,e=document,a=function(){var t=e.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://trinketsofcody.com/cody-widget.js";var a=e.getElementsByTagName("script")[0];a.parentNode.insertBefore(t,a)};"complete"===document.readyState?a():t.attachEvent?t.attachEvent("onload",a):t.addEventListener("load",a,!1)}();
         </script> --}}
-      
 
-      
+
+
 </head>
 
 <body class="h-full">
@@ -39,7 +39,19 @@
 
         <x-header />
         {{-- <span x-text="openHelp"></span> --}}
-        <div x-show="openHelp" class="bg-red-500 p-20" style="display: none"><button @click="openHelp = false"  ><i class="bx bx-x"></i></button></div>
+        <div x-show="openHelp"
+         class="bg-red-500 p-20 fixed z-50 w-72 " 
+        style="display: none
+            left: 20px;
+            box-shadow: 3px 3px 6px lightgray ; 
+            border: 3px solid darkblue; 
+            border-radius: 10px;
+            display: none;
+            background-color: #fff; 
+            height:500px;
+        ">
+            <button @click="openHelp = false"><i class="bx bx-x"></i></button>
+        </div>
 
         {{ $slot }}
 
@@ -65,7 +77,7 @@
             box-shadow: 3px 6px 5px gray;"
                 width="300" height="500"></iframe>
         </div> --}}
-        
+
     </div>
 
 
@@ -117,7 +129,7 @@
         }
         // 
 
-       
+
 
         form.addEventListener("submit", (event) => {
             event.preventDefault();
@@ -180,10 +192,9 @@
         //     const messages = result.innerText.split('\n');
         //     localStorage.setItem('chatMessages', JSON.stringify(messages));
         // });
-
     </script>
 
-      {{-- <script type='text/javascript' charset='utf-8'>     
+    {{-- <script type='text/javascript' charset='utf-8'>     
         var iframe = document.createElement('iframe');       
         document.body.appendChild(iframe);
      
@@ -191,7 +202,7 @@
         iframe.width = '400';
         iframe.height = '500';
      </script> --}}
-    
+
 
 
     @livewireScripts

@@ -109,10 +109,9 @@ class ContentController extends Controller
     public function destroy($content)
     {
         $user = auth()->user();
-        Log::info('content info:', ['content' => $content]);
-
+        
         $content = Content::find($content);
-        // $content->delete();
+        $content->delete();
 
         return redirect()->to('contents')->with('success', 'content deleted successfully.');
     }

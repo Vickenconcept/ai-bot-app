@@ -26,7 +26,7 @@
             <button type="submit" wire:loading.attr="disabled" onclick=" reloadPage()"  
             {{ (!is_null($content) && !empty($content))  ? '' : 'disabled' }}
             class="inline-flex items-center bg-blue-600 text-gray-50 py-2.5 px-4 text-xs shadow font-medium text-center  rounded hover:shadow-lg">
-            Create
+            save
         </button>
 
         </form>

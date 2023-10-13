@@ -5,6 +5,7 @@ namespace App\Livewire;
 use Illuminate\Support\Facades\Request;
 use Livewire\Component;
 use Livewire\WithFileUploads;
+use Illuminate\Support\Str;
 use Spatie\PdfToText\Pdf;
 use PhpOffice\PhpWord\IOFactory;
 use Goutte\Client;
@@ -91,6 +92,7 @@ class UploadDocument extends Component
         $this->validate([
             'webUrl' => 'required|url',
         ]);
+
         $client = new Client();
         $crawler = $client->request('GET', $this->webUrl);
 
@@ -99,6 +101,13 @@ class UploadDocument extends Component
         // dd($this->textContent);
 
         $user = auth()->user()->contents()->find($this->contentTitle->id);
+        
+        // $content = Str::limit($this->textContent, 255);
+        // $this->validate(
+        //     [
+        //         'content' => 'max:255', 
+        //     ]
+        //     );
 
         $user->documents()->create([
             'title' =>  'uploaded ' . rand(0, 99999),

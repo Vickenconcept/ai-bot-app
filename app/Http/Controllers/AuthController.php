@@ -49,7 +49,7 @@ class AuthController extends Controller
             'personality' => 'traning',
             'description' => 'an intelligent bot , for all times',
             'knowledge' => '',
-            'model' => 'gpt.3.5',
+            'model' => 'gpt-4',
         ]);
 
 
