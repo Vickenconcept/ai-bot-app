@@ -35,9 +35,11 @@
 </head>
 
 <body class="h-full">
-    <div id="ap" class="min-h-screen bg-gray- text-gray-700">
+    <div id="ap" class="min-h-screen bg-gray- text-gray-700" x-data="{ openHelp: false }">
 
         <x-header />
+        {{-- <span x-text="openHelp"></span> --}}
+        <div x-show="openHelp" class="bg-red-500 p-20" style="display: none"><button @click="openHelp = false"  ><i class="bx bx-x"></i></button></div>
 
         {{ $slot }}
 
