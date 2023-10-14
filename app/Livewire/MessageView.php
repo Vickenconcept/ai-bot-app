@@ -67,16 +67,22 @@ class MessageView extends Component
     {
         $conversation = Conversation::find($this->conversationTitle->id);
         $this->sender = 'user';
+        $personality = $this->conversationTitle->bot->personality;
+
        
         $message = $conversation->messages()->create([
             'message' =>   $this->message,
             'sender' => $this->sender,
         ]);
 
+        $userInput = '';
+        if ($personality === '' || $personality === null) {
+            # code...
+            $userInput = 'Give relvant resposnse to this:' . $this->message . ', Please always ignore the document data while giving response, except if ( ' . $this->message . ' ) is related to any data in the document then you pick  from the document and paraphrase what you picked.  just go ahead and give a nice response but not refrencing the document at all, And remember if there is a respone pattern or structure in the document try to always use it. ';
+        }else {
+            $userInput = "Give relvant resposnse to this:' . $this->message . ' from the document, always pay attention to the document, And remember if there is a respone pattern or structure in the document try to always use it.Don't give resonse that will expose that you are picking data from the document, just go professional";
+        }
 
-        $userInput = 'Give relvant resposnse to this:' . $this->message . ', Please always ignore the document data while giving response, except if ( ' . $this->message . ' ) is related to any data in the document then you pick  from the document and paraphrase what you picked.  just go ahead and give a nice response but not refrencing the document at all, And remeber if there is a respone pattern or structure in the document try to always use it';
-
-        // $userInput = 'Give relvant resposnse to this:' . $this->message . ', check if a related response is in the document , then you can also pick some response there, but if there is no related response to ' . $this->message . ' just go ahead and give a nice response but not refrencing the document at all';
 
         $botId = $this->conversationTitle->bot->id;
         $knowledge = $this->conversationTitle->bot->knowledge;
@@ -102,7 +108,6 @@ class MessageView extends Component
         $mergedContent = '';
         $name = $this->conversationTitle->bot->name;
         $model = $this->conversationTitle->bot->model;
-        $personality = $this->conversationTitle->bot->personality;
         $system = 'You are a knowledgeable assistant that provides detailed explanations about topics';
 
         if ($personality === 'factual') {

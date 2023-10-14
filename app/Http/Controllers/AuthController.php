@@ -46,7 +46,7 @@ class AuthController extends Controller
 
         $message = $user->bots()->create([
             'name' => 'bot',
-            'personality' => 'traning',
+            'personality' => '',
             'description' => 'an intelligent bot , for all times',
             'knowledge' => '',
             'model' => 'gpt-4',

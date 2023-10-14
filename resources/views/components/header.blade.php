@@ -26,23 +26,21 @@
                     <div class="flex space-x-4">
                         <a href="{{ route('conversations.index') }}"
                             class=" hover:border-b hover:border-gray-300    px-3 py-2 text-sm font-medium {{ request()->routeIs('conversations.index')||request()->routeIs('conversations.show') ? 'text-purple-900 bg-purple-50 rounded-md' : 'text-gray-300' }}" aria-current="page">
-                            <i class='bx bxs-bot text-md mr-2'></i>Chat</a>
+                            Chat</a>
                         <a href="{{ route('bots.index') }}"
-                            class=" hover:border-b hover:border-gray-300   px-3 py-2 text-sm font-medium {{ request()->routeIs('bots.index')||request()->routeIs('bots.show') ? 'text-purple-900 bg-purple-50 rounded-md' : 'text-gray-300' }}"><i
-                                class='bx bx-bot mr-1'></i>Bots</a>
+                            class=" hover:border-b hover:border-gray-300   px-3 py-2 text-sm font-medium {{ request()->routeIs('bots.index')||request()->routeIs('bots.show') ? 'text-purple-900 bg-purple-50 rounded-md' : 'text-gray-300' }}">Bots</a>
                         <a href="{{ route('contents.index') }}"
                             class=" hover:border-b hover:border-gray-300   px-3 py-2 text-sm font-medium {{ request()->routeIs('contents.index')||request()->routeIs('contents.show') ? 'text-purple-900 bg-purple-50 rounded-md' : 'text-gray-300' }}">
-                            <i class='bx bx-book mr-1'></i>Contents</a>
+                            Contents</a>
                         <a href="{{ route('account.index') }}"
-                            class=" hover:border-b hover:border-gray-300   px-3 py-2 text-sm font-medium {{ request()->routeIs('account.index') ? 'text-purple-900 bg-purple-50 rounded-md' : 'text-gray-300' }}"><i
-                                class='bx bx-cog mr-1'></i>Account</a>
+                            class=" hover:border-b hover:border-gray-300   px-3 py-2 text-sm font-medium {{ request()->routeIs('account.index') ? 'text-purple-900 bg-purple-50 rounded-md' : 'text-gray-300' }}">Account</a>
                     </div>
                 </div>
             </div>
             <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <a href="{{ route('support') }}">
                     <button type="button"
-                        class="relative rounded-full text-sm px-2 bg-gray-800 py-1 text-gray-400 hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800">
+                        class="relative rounded-full text-sm px-2 bg-gray-800 py-1 text-gray-400 hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 {{ request()->routeIs('support') ? 'border-2 border-gray-50' : '' }}">
                         Get Help
                     </button>
                 </a>

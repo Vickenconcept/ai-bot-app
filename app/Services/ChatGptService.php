@@ -5,6 +5,7 @@ namespace App\Services;
 use GuzzleHttp\Client;
 use Illuminate\Support\Facades\Cache;
 use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\ConnectException;
 use Illuminate\Support\Facades\Log;
 
 
@@ -88,12 +89,13 @@ class ChatGptService
                     // return response()->json(['error' => 'There was an SSL connection error. Please try again later.'], 500);
                 }
             
-                // Handle other exceptions
-                // ...
-            
-                // Rethrow the exception if it's not the specific error you want to handle
+              
                 throw $e;
             }
+            catch (ConnectException $e) {
+                return  'Connection error. Please try again later.';
+            }
+
         }
 
         return null; 

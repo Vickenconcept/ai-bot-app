@@ -97,21 +97,13 @@ class UploadDocument extends Component
         $crawler = $client->request('GET', $this->webUrl);
 
         $this->textContent = $crawler->filter('body')->text();
-        // $cleanedText = preg_replace("/[^a-zA-Z0-9\s]/", "", $mainText);
-        // dd($this->textContent);
+        $cleanedText = preg_replace("/[^a-zA-Z0-9\s]/", "", $this->textContent );
 
         $user = auth()->user()->contents()->find($this->contentTitle->id);
-        
-        // $content = Str::limit($this->textContent, 255);
-        // $this->validate(
-        //     [
-        //         'content' => 'max:255', 
-        //     ]
-        //     );
 
         $user->documents()->create([
             'title' =>  'uploaded ' . rand(0, 99999),
-            'content' =>   $this->textContent,
+            'content' =>   $cleanedText,
 
         ]);
         $this->dispatch('refreshComponent', data: $this->body);

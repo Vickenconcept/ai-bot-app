@@ -48,7 +48,7 @@ class DocumentController extends Controller
      */
     public function edit(Document $document)
     {
-        //
+        
     }
 
     /**
@@ -56,7 +56,16 @@ class DocumentController extends Controller
      */
     public function update(Request $request, Document $document)
     {
-        //
+        $title = $request->input('title');
+        $id = $request->input('id');
+        // dd($id);
+
+        $document = Document::find($id);
+        $document->title = $title;
+        $document->update();
+        // $document;
+        // dd($document->title);
+        return redirect()->back()->with('success','updated successfully');
     }
 
     /**
@@ -66,8 +75,7 @@ class DocumentController extends Controller
 
     public function destroy($document)
     {
-        Log::info('Document info:', ['document' => $document]);
-        // dd($document);
+        // Log::info('Document info:', ['document' => $document]);
         try {
             Document::whereIn('id', explode(',', $document))->delete();
             session()->flash('success', 'Items deleted successfully.');

@@ -108,7 +108,7 @@
                     </div>
                     <h1>Referrals: {{ count(Auth::user()->referrals) ?? '0' }}</h1>
                 @endif
-                <div class="overflow-auto">
+                <div class="overflow-x-auto">
                     <table class="w-full text-sm text-left text-gray-500 ">
                         <thead class="text-xs text-gray-700 uppercase bg-gray-50  ">
                             <tr>
