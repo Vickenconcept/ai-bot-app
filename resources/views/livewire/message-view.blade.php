@@ -1,5 +1,14 @@
-<div x-data="{ isOpen: false }" id="here" class="mb-32">
+<div x-data="{ isOpen: false, openNote: false, openSaveModal: false }" id="here" class="mb-32">
     <div class="">
+        @if ($errors->any())
+        <div class="bg-red-50 text-red-300  p-3 border border-red-300 rounded">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
         <ul class=" mb-32">
             @foreach ($body as $content)
                 <div class="{{ $content->sender !== 'bot' ? 'bg-white' : 'bg-gray-100' }}">
@@ -9,17 +18,33 @@
                     <div class="flex justify-between  py-10 w-[90%] md:w-[70%] mx-auto ">
                         <div class=" flex space-x-5">
                             <div class="text-gray-600">
-                                <span class="h-8 w-8 rounded-full flex justify-center items-center font-bold  bg-blue-50 {{ $content->sender !== 'bot' ? '' : 'hidden' }}">
+                                <span
+                                    class="h-8 w-8 rounded-full flex justify-center items-center font-bold  bg-blue-50 {{ $content->sender !== 'bot' ? '' : 'hidden' }}">
                                     @if (auth()->check())
-                                    {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
+                                        {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
                                     @else
                                         API
                                     @endif
                                 </span>
-                                <span class="h-8 w-8 rounded-full flex justify-center items-center font-bold  bg-green-50 {{ $content->sender !== 'bot' ? 'hidden' : '' }}"><i class='bx bxs-bot text-xl '></i></span>
-                               
+                                <span
+                                    class="h-8 w-8 rounded-full flex justify-center items-center font-bold  bg-green-50 {{ $content->sender !== 'bot' ? 'hidden' : '' }}"><i
+                                        class='bx bxs-bot text-xl '></i></span>
+
                             </div>
-                            <li class="" id="{{ $content->id }}">{{ $content->message }}</li>
+                            <div
+                                class="grid md:grid-cols-8  py-2 pl-2 pr-4 rounded {{ $content->sender !== 'bot' ? '' : 'hover:bg-gray-200 hover:border' }}">
+                                <li class=" col-span-7 text-justify " id="{{ $content->id }}">{{ $content->message }}
+                                </li>
+                                <div class="text-right col-span-1">
+                                    <button
+                                        class="{{ $content->sender !== 'bot' ? 'hidden' : '' }} text-gray-400 hover:text-gray-700"
+                                        @click="openNote = true"
+                                        onclick="addNote(document.getElementById('{{ $content->id }}'))">
+                                        <i class='bx bx-note '></i>
+
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                         <button class="block h-8 w-8 {{ $content->sender !== 'bot' ? 'hidden' : '' }}"
                             onclick="toCopy(document.getElementById('{{ $content->id }}'))">
@@ -40,7 +65,7 @@
                 <div
                     class="w-[90%]   mx-auto  border border-gray-200 rounded-lg bg-gray-50 shadow-md shadow-blue-200  ">
                     <div class="px-4 py-2 bg-white rounded-t-lg ">
-                        <form  id="messageForm" wire:ignore>
+                        <form id="messageForm" wire:ignore>
                             @csrf
                             <textarea id="message" rows="2"
                                 class="w-full px-2 text-sm text-gray-900 bg-white border-0  focus:ring-transparent focus:outline-none resize-none"
@@ -62,22 +87,13 @@
                                 class="inline-flex justify-center items-center p-2 text-gray-900 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 ">
                                 <i class='bx bx-cog'></i>
                             </button>
-                            <button type="button"
-                                class="inline-flex justify-center items-center p-2 text-gray-500 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 ">
-                                <svg class="w-4 h-4" aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
-                                    fill="currentColor" viewBox="0 0 16 20">
-                                    <path
-                                        d="M8 0a7.992 7.992 0 0 0-6.583 12.535 1 1 0 0 0 .12.183l.12.146c.112.145.227.285.326.4l5.245 6.374a1 1 0 0 0 1.545-.003l5.092-6.205c.206-.222.4-.455.578-.7l.127-.155a.934.934 0 0 0 .122-.192A8.001 8.001 0 0 0 8 0Zm0 11a3 3 0 1 1 0-6 3 3 0 0 1 0 6Z" />
-                                </svg>
-                                <span class="sr-only">Set location</span>
-                            </button>
 
                             <button
                                 class="bg-gray-50 border ml-2 border-gray-300 text-gray-900 text-sm rounded-lg  block  py-1 px-4  "><i
                                     class='bx bx-target-lock'></i> Target</span></button>
-                            <button
-                                class="bg-gray-50 border ml-2 border-gray-300 text-gray-900 text-sm rounded-lg  block  py-1 px-4  "
-                                onclick="updateDiv()"><i class='bx bx-note'></i> Note</span></button>
+                            <button @click="openNote = !openNote"
+                                class="bg-gray-50 border ml-2 border-gray-300 text-gray-900 text-sm rounded-lg  block  py-1 px-4  "><i
+                                    class='bx bx-note'></i> Note</span></button>
                             <button @click="isOpen = true"
                                 class="bg-gray-50 border ml-2 border-gray-300 text-gray-900 text-sm rounded-lg  block  py-1 px-4  ">{{ $conversationTitle->bot->name }}</button>
 
@@ -103,11 +119,12 @@
                     </div>
                 </div>
             </div>
+            {{-- modal --}}
 
             <div class="fixed items-center justify-center  overflow-auto flex top-0 left-0 mx-auto w-full h-full bg-gray-600 bg-opacity-20 z-10 transition duration-1000 ease-in-out"
                 x-show="isOpen" style="display: none;">
                 <div @click.away="isOpen = false"
-                    class="bg-white w-[70%] lg:w-[40%] h-80  shadow-inner   border rounded-lg overflow-auto  pb-6 px-5 transition-all relative duration-700">
+                    class="bg-white w-[80%] lg:w-[40%] h-80  shadow-inner   border rounded-lg overflow-auto  pb-6 px-5 transition-all relative duration-700">
                     <div class="space-y-5 p-5 ">
 
                         <h1>select bot for chat</h1>
@@ -120,8 +137,9 @@
                                     wire:change="pickBot" onchange="reloadPage()" hidden>
                                 <label for="{{ $bot->name }}"
                                     class="font-semibold upperase w-full block bg-gray-100 border rounded p-2 cursor-pointer  capitalize"
-                                    :class="'{{ $conversationTitle->bot->name }}' === '{{ $bot->name }}' ?
-                                    'bg-blue-200 border border-blue-300' : ''"
+                                    :class="'{{ $conversationTitle->bot->name }}'
+                                    === '{{ $bot->name }}' ?
+                                        'bg-blue-200 border border-blue-300' : ''"
                                     :class="{
                                         'bg-blue-200 border border-blue-300': selected ===
                                             '{{ $bot->id }}',
@@ -132,6 +150,86 @@
                     </div>
                 </div>
             </div>
+
+
+
+
+        </div>
+        {{-- modal2 --}}
+
+        <div class="fixed items-center justify-center  overflow-auto flex z-50 top-0 left-0 mx-auto w-full h-full bg-gray-600 bg-opacity-20 transition duration-1000 ease-in-out"
+            x-show="openSaveModal" style="display: none;">
+            <div @click.away="openSaveModal = false"
+                class="bg-white w-[80%] lg:w-[40%] h-80  shadow-inner   border rounded-lg overflow-auto  pb-6 px-5 transition-all relative duration-700">
+                <div class="space-y-5 p-5 ">
+
+                    <h1>Add To Document</h1>
+
+                    <div class=" space-y-1" >
+                       
+                        <form action="{{ route('documents.store') }}" method="POST" class="space-y-3">
+                            @csrf
+                            <input type="text" class="form-control" name="title">
+                            <div class="space-y-3">
+                                <h1>Directory <span class="text-red-400">*</span></h1>
+                                <div class="grid grid-cols-1 gap-2 overflow-y-auto " x-data="{ selected: null }">
+                                    @forelse ($contents as $content)
+                                        <label for="{{ $content->title }}"
+                                            @click="selected =  @js($content->title)"
+                                            class=" font-semibold capitalize bg-gray-100 border rounded p-2 cursor-pointer"
+                                            :class="{
+                                                'bg-purple-100 border border-purple-300': selected === @js($content->title),
+                                                '': selected !==
+                                                    @js($content->title)
+                                            }"
+                                            
+                                            >
+                                            <input type="radio" name="content_id" id="{{ $content->title }}"
+
+                                                value="{{ $content->id }}">
+                                            {{ $content->title }}
+                                        </label>
+                                    @empty
+                                        <div class="text-green-400 bg-green-50 border border-green-400 p-3 rounded  ">
+                                            <span>Create directory for saving data. </span>
+                                            <a href="{{ route('contents.index') }}" class="text-gray-700 underline">
+                                                Go
+                                                to
+                                                contents</a>
+                                        </div>
+                                    @endforelse
+                                    <input type="hidden" name="content" value="" id="contentData">
+                                </div>
+                                <button type="submit" class="btn-primary">save</button>
+                            </div>
+
+                        </form>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div x-show="openNote"
+            class="space-y-3 z-10 bg-purple-50 w-full lg:w-1/3 shadow duration-300 transition translate-x fixed top-0 left-0 h-screen pt-20 px-10 "
+            style="display: none">
+            <div class="flex space-x-2 ">
+                <button @click="openNote = false" class=" shadow px-2 py-1 bg-gray-50 rounded hover:bg-purple-200"> <i
+                        class="bx bx-x "></i></button>
+                <button onclick="toCopy(document.getElementById('note'))"
+                    class=" shadow px-2 py-1 bg-gray-50 rounded hover:bg-purple-200"> <i
+                        class="bx bx-copy "></i></button>
+                <button onclick="clearDiv(document.getElementById('note'))"
+                    class=" shadow px-2 py-1 bg-gray-50 rounded hover:bg-purple-200"> <i
+                        class='bx bx-recycle'></i></button>
+                <x-main-button @click="openSaveModal = true" class="text-gray-50">Save</x-main-button>
+            </div>
+            <hr>
+            <div id="note" class="overflow-y-auto h-full">
+                <p> </p>
+            </div>
+
+
 
 
         </div>
@@ -148,6 +246,22 @@
                 document.execCommand("copy");
                 // alert("copied!");
             }
+
+            function clearDiv(copyclearDivDiv) {
+                copyclearDivDiv.innerHTML = '';
+
+            }
+
+            function addNote(noteData) {
+                const note = document.getElementById('note');
+                note.innerHTML += "\n" + noteData.textContent + "<br>";
+                const contentData = document.getElementById('contentData').value += noteData.textContent;
+                console.log(contentData);
+
+            }
+
+
+
 
 
 

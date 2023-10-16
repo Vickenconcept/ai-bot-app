@@ -217,7 +217,7 @@
                                             <label for="{{ $content->id }}"
                                                 class="mr-3 cursor-pointer">{{ $content->title }}</label>
                                         @empty
-                                            <div class="text-red-400 bg-red-50 border border-red-400 p-3 rounded  ">
+                                            <div class="text-green-400 bg-green-50 border border-green-400 p-3 rounded  ">
                                                 <span>Add contents for the bot to function on. </span>
                                                 <a href="{{ route('contents.index') }}"
                                                     class="text-gray-700 underline"> Go to contents</a>

@@ -47,7 +47,7 @@ Route::resource('guests', GuestController::class);
 // Route::resource('guests', GuestController::class)->middleware('checkRouteStatus:guests.show');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/home', [DashboardController::class, 'index'])->name('home');
+    Route::get('/home', [DashboardController::class, 'index'])->name('home')->middleware('admin');
     Route::resource('messages', MessageController::class);
     Route::post('conversations/update', [ConversationController::class, 'updateConversation'])->name('updateConversation');
     // Route::post('conversations/guest', [ConversationController::class, 'guest'])->name('guest');

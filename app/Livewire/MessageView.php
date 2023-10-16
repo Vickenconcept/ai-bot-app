@@ -13,13 +13,19 @@ use Livewire\Component;
 class MessageView extends Component
 {
 
-    public $message;
-    public $text = '';
-    public $body, $conversationTitle, $conversationonId, $sender, $selectBot, $chatGptService;
-    public $isDisabled = true;
-    public $allDocumentContents = [];
+    public $message,
+    $text = '',
+    $body, 
+    $conversationTitle, 
+    $conversationonId, 
+    $sender, 
+    $selectBot, 
+    $chatGptService,
+    $contents,
+    $isDisabled = true,
+    $allDocumentContents = [],
 
-    public $bot;
+    $bot;
 
 
     public function mount($body, $conversationTitle)
@@ -28,6 +34,7 @@ class MessageView extends Component
         $this->conversationTitle = $conversationTitle;
         // $this->bot =  Bot::orderBy('id', 'desc')->get();
         $this->bot =  Bot::latest()->get();
+        $this->contents =  Content::latest()->get();
     }
 
     public function pickBot()

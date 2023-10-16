@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Content;
 use App\Models\Document;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
@@ -22,7 +23,7 @@ class DocumentController extends Controller
      */
     public function create()
     {
-        //
+    //
     }
 
     /**
@@ -30,7 +31,18 @@ class DocumentController extends Controller
      */
     public function store(Request $request)
     {
-        //
+    $id = $request->input('content_id');
+        $data = $request->validate([
+            'content_id' => 'required',
+            'title' => 'required',
+            'content' => 'required'
+
+        ]);
+        $content = Content::findOrfail($id);
+
+        $content->documents()->create($data);
+
+        return redirect()->back()->with('success','Document  created successfully');
     }
 
     /**

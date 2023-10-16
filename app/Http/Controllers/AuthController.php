@@ -32,8 +32,10 @@ class AuthController extends Controller
             'email' => 'required|email',
             'password' => 'required|confirmed',
             'username' => 'sometimes',
+            'role' => 'sometimes',
             'referrer_id' => 'sometimes'
         ]);
+        $data['role'] = 'user';
         $data['referrer_id'] = $referrer ? $referrer->id : null;
         // dd($data);
 
@@ -67,7 +69,8 @@ class AuthController extends Controller
                 : back()->with('invalidCredential', 'Invalid Credentials');
         }
 
-        return  to_route('home');
+        return  to_route('conversations.index');
+        // return  to_route('home');
     }
 
     public function logout(Request $request)
