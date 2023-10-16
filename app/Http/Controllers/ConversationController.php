@@ -20,14 +20,14 @@ class ConversationController extends Controller
 
         $conversation = Conversation::when($query, function ($queryBuilder) use ($query) {
             return $queryBuilder->where('title', 'like', '%' . $query . '%');
-        })->where('type','user')->with('messages')->latest()->get();
+        })->where('type', 'user')->with('messages')->latest()->get();
 
         $guest = Conversation::when($query, function ($queryBuilder) use ($query) {
             return $queryBuilder->where('title', 'like', '%' . $query . '%');
-        })->where('type','guest')->with('messages')->latest()->get();
+        })->where('type', 'guest')->with('messages')->latest()->get();
         // dd($guest);
 
-        return view('conversations.conversations', compact('conversation','guest'));
+        return view('conversations.conversations', compact('conversation', 'guest'));
     }
 
     /**
@@ -64,16 +64,18 @@ class ConversationController extends Controller
      */
     public function show($slug)
     {
-        $body = Conversation::where('slug', $slug)->firstOrFail()->messages;
+        // $body = Conversation::where('slug', $slug)->firstOrFail()->messages;
+        $body = Conversation::where('slug', $slug)
+            ->firstOrFail()
+            ->messages()
+            ->orderBy('created_at', 'asc')
+            ->get();
+        // dd($body);
         $conversationTitle = Conversation::where('slug', $slug)->firstOrFail();
-        // $body = Conversation::findOrfail($conversation->id)->messages;
-        // $conversationTitle = Conversation::findOrfail($conversation->id);
-        $conversation =  Conversation::where('type','user')->latest()->get();
-        $guest = Conversation::where('type','guest')->with('messages')->latest()->get();
+        $conversation =  Conversation::where('type', 'user')->latest()->get();
+        $guest = Conversation::where('type', 'guest')->with('messages')->latest()->get();
 
-
-
-        return view('conversations.show', compact('body', 'conversationTitle', 'conversation','guest'));
+        return view('conversations.show', compact('body', 'conversationTitle', 'conversation', 'guest'));
     }
 
     /**
@@ -94,7 +96,7 @@ class ConversationController extends Controller
         $user = auth()->user();
 
         $conversationToUpdate = $user->conversations()->find($conversationId);
-        
+
 
         if (!$conversationToUpdate) {
             return redirect()->back()->with('error', 'Conversation not found.');
@@ -109,11 +111,12 @@ class ConversationController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($conversation)
+    public function destroy($id)
     {
         $user = auth()->user();
 
-        $conversation = Conversation::find($conversation);
+        $conversation = Conversation::find($id);
+        // dd($id);
         $conversation->delete();
 
         return redirect()->to('conversations')->with('success', 'Conversation deleted successfully.');

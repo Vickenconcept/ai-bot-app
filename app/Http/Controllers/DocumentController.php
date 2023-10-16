@@ -54,7 +54,7 @@ class DocumentController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Document $document)
+    public function update(Request $request)
     {
         $title = $request->input('title');
         $id = $request->input('id');

@@ -124,9 +124,8 @@
                 class="bg-white w-[70%] lg:w-[40%] shadow-inner  border rounded-lg overflow-auto  pb-6 px-5 transition-all relative duration-700">
                 <div class="space-y-5 pt-5 ">
                     <span class="text-xl font-bold">Rename Document</span>
-                    <form action="{{ route('documents.update', ['document' => $body->id]) }}" method="post">
+                    <form action="{{ route('documents.updateData') }}" method="post">
                         @csrf
-                        @method('PUT')
                         <div class="space-y-5">
                             <input type="hidden" :value="body.id" name="id">
                             <input id="body.id" type="text" name="title" placeholder="Search body"

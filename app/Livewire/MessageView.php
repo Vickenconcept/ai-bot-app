@@ -80,7 +80,7 @@ class MessageView extends Component
             # code...
             $userInput = 'Give relvant resposnse to this:' . $this->message . ', Please always ignore the document data while giving response, except if ( ' . $this->message . ' ) is related to any data in the document then you pick  from the document and paraphrase what you picked.  just go ahead and give a nice response but not refrencing the document at all, And remember if there is a respone pattern or structure in the document try to always use it. ';
         }else {
-            $userInput = "Give relvant resposnse to this:' . $this->message . ' from the document, always pay attention to the document, And remember if there is a respone pattern or structure in the document try to always use it.Don't give resonse that will expose that you are picking data from the document, just go professional";
+            $userInput = "Give relvant resposnse to this:' . $this->message . ' from the document, always pay attention to the document, And remember if there is a respone pattern or structure in the document try to always use it.Don't give resonse that will expose that you are picking data from the document, just go professional, If the answer cannot be found in the articles, write 'I could not find an answer'. ";
         }
 
 
@@ -142,13 +142,24 @@ class MessageView extends Component
         }
         
 
+        // $sum = 'Please summarize this( ' . $mergedContent . ') and get the main point, not more than 3500 words remove filler words and put it in filler words , for a bot to get data from it';
+        // $res = $chatGptService->generateContent($name,$model,$system, $sum);
         foreach ($allDocumentContents as $contentArray) {
             $mergedContent .= implode("\n", $contentArray);
         }
+
         $preprocessedDocument = preprocessContent($mergedContent);
-        $combinedPrompt = "Document Context:\n" . $mergedContent . "\nUser Prompt:\n" . $userInput;
-        // $combinedPrompt = "Document Context:\n" . $preprocessedDocument . "\nUser Prompt:\n" . $userInput;
-        $res = $chatGptService->generateContent($name,$model,$system, $combinedPrompt);
+        $contentArray = $contentArray ?? 'DO GIVE GOOD RESPONSE';
+        $json =  json_encode($contentArray) ;
+        $characterCount = strlen($json);
+        // dd($characterCount);
+
+        $document = "Document Context:\n" . $json ;
+        $combinedPrompt =  "\nUser Prompt:\n" . $userInput;
+        // $combinedPrompt = "Document Context:\n" . $json . "\nUser Prompt:\n" . $userInput;
+        // $combinedPrompt = "Document Context:\n" . $mergedContent . "\nUser Prompt:\n" . $userInput;
+        $res = $chatGptService->generateContent($name,$model,$system, $combinedPrompt, $document);
+        // dd($res);
         if ($res === 'Connection error. Please try again later.') {
           return;
         }
@@ -158,6 +169,7 @@ class MessageView extends Component
             'message' =>   $res,
             'sender' => $this->sender,
         ]);
+        
         $this->dispatch('refreshComponent', data: 'hello i am the payload');
         return;
     }

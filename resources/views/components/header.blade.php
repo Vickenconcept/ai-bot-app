@@ -25,15 +25,15 @@
                 <div class="hidden sm:block">
                     <div class="flex space-x-4">
                         <a href="{{ route('conversations.index') }}"
-                            class=" hover:border-b hover:border-gray-300    px-3 py-2 text-sm font-medium {{ request()->routeIs('conversations.index')||request()->routeIs('conversations.show') ? 'text-purple-900 bg-purple-50 rounded-md' : 'text-gray-300' }}" aria-current="page">
+                            class=" hover:border-b hover:border-gray-300    px-3 py-2 text-sm font-medium text-gray-300 {{ request()->routeIs('conversations.index')||request()->routeIs('conversations.show') ? 'border-b border-gray-300 ' : '' }}" aria-current="page">
                             Chat</a>
                         <a href="{{ route('bots.index') }}"
-                            class=" hover:border-b hover:border-gray-300   px-3 py-2 text-sm font-medium {{ request()->routeIs('bots.index')||request()->routeIs('bots.show') ? 'text-purple-900 bg-purple-50 rounded-md' : 'text-gray-300' }}">Bots</a>
+                            class=" hover:border-b hover:border-gray-300   px-3 py-2 text-sm font-medium text-gray-300 {{ request()->routeIs('bots.index')||request()->routeIs('bots.show') ? 'border-b border-gray-300 ' : '' }}">Bots</a>
                         <a href="{{ route('contents.index') }}"
-                            class=" hover:border-b hover:border-gray-300   px-3 py-2 text-sm font-medium {{ request()->routeIs('contents.index')||request()->routeIs('contents.show') ? 'text-purple-900 bg-purple-50 rounded-md' : 'text-gray-300' }}">
+                            class=" hover:border-b hover:border-gray-300   px-3 py-2 text-sm font-medium text-gray-300 {{ request()->routeIs('contents.index')||request()->routeIs('contents.show') ? 'border-b border-gray-300 ' : '' }}">
                             Contents</a>
                         <a href="{{ route('account.index') }}"
-                            class=" hover:border-b hover:border-gray-300   px-3 py-2 text-sm font-medium {{ request()->routeIs('account.index') ? 'text-purple-900 bg-purple-50 rounded-md' : 'text-gray-300' }}">Account</a>
+                            class=" hover:border-b hover:border-gray-300   px-3 py-2 text-sm font-medium text-gray-300 {{ request()->routeIs('account.index') ? 'border-b border-gray-300 ' : '' }}">Account</a>
                     </div>
                 </div>
             </div>
@@ -81,14 +81,14 @@
     <div class="sm:hidden" id="mobile-menu" x-show="openMobileMenue">
         <div class="space-y-1 px-2 pb-3 pt-2">
             <a href="{{ route('conversations.index') }}"
-                class=" text-gray-300 hover:border-b hover:border-gray-300  block  px-3 py-2 text-base font-medium"
+                class=" text-gray-300 hover:border-b hover:border-gray-300  block  px-3 py-2 text-base font-medium text-gray-300"
                 aria-current="page">Chat</a>
             <a href="{{ route('bots.index') }}"
-                class="text-gray-300 hover:border-b hover:border-gray-300  block  px-3 py-2 text-base font-medium">Bots</a>
+                class="text-gray-300 hover:border-b hover:border-gray-300  block  px-3 py-2 text-base font-medium text-gray-300">Bots</a>
             <a href="{{ route('contents.index') }}"
-                class="text-gray-300 hover:border-b hover:border-gray-300  block  px-3 py-2 text-base font-medium">Contents</a>
+                class="text-gray-300 hover:border-b hover:border-gray-300  block  px-3 py-2 text-base font-medium text-gray-300">Contents</a>
             <a href="{{ route('account.index') }}"
-                class="text-gray-300 hover:border-b hover:border-gray-300  block  px-3 py-2 text-base font-medium">Account</a>
+                class="text-gray-300 hover:border-b hover:border-gray-300  block  px-3 py-2 text-base font-medium text-gray-300">Account</a>
         </div>
     </div>
 </nav>

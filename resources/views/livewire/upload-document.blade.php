@@ -9,9 +9,11 @@
         </div>
     @endif
 
+
+
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 card-animate" x-show="hideSection" style="display: none">
-        <div class="rounded-md cursor-pointer hover:bg-blue-100 border border-blue-300  bg-blue-50  p-3"
-            @click="activeSection = 'section1'; hideSection = false">
+        <div class="rounded-md cursor-pointer hover:bg-purple-100 border border-purple-300  bg-purple-50  p-3"
+            @click="activeSection = 'section1'; hideSection=false">
             <h1><i class='bx bx-pen text-2xl'></i></h1>
             <div>
                 <h1 class="font-semibold tracking-wider">Write</h1>
@@ -19,7 +21,7 @@
             </div>
         </div>
         <div class="rounded-md cursor-pointer hover:bg-red-100 border border-red-300  bg-red-50  p-3"
-            @click="activeSection = 'section2'; hideSection = false">
+            @click="activeSection = 'section2'; hideSection=false">
             <h1><i class='bx bx-upload text-2xl'></i></h1>
             <div>
                 <h1 class="font-semibold tracking-wider">Upload</h1>
@@ -27,7 +29,7 @@
             </div>
         </div>
         <div class="rounded-md cursor-pointer hover:bg-yellow-100 border border-yellow-300  bg-yellow-50  p-3"
-            @click="activeSection = 'section3'; hideSection = false">
+            @click="activeSection = 'section3'; hideSection=false">
             <h1><i class='bx bx-link-alt text-2xl'></i></h1>
             <div>
                 <h1 class="font-semibold tracking-wider">Import Website</h1>
@@ -56,7 +58,7 @@
                 <button type="submit" wire:loading.attr="disabled" onclick=" reloadPage()"
                     @click=" hideSection = true, activeSection = '' "
                     {{ !is_null($content) && !empty($content) && (!is_null($title) && !empty($title)) ? '' : 'disabled' }}
-                    class="inline-flex items-center bg-blue-600 text-gray-50 py-2.5 px-4 text-xs shadow font-medium text-center  rounded hover:shadow-lg">
+                    class="inline-flex items-center bg-purple-600 text-gray-50 py-2.5 px-4 text-xs shadow font-medium text-center  rounded hover:shadow-lg">
                     Create
                 </button>
             </div>
@@ -90,7 +92,7 @@
 
             <button type="submit" onclick=" reloadPage()" @click=" hideSection = true, activeSection = '' "
                 {{ !is_null($file) && !empty($file) && in_array($file->extension(), ['pdf', 'docx']) ? '' : 'disabled' }}
-                class="inline-flex items-center bg-blue-600 text-gray-50 py-2.5 px-4 text-xs shadow font-medium text-center  rounded hover:shadow-lg">
+                class="inline-flex items-center bg-purple-600 text-gray-50 py-2.5 px-4 text-xs shadow font-medium text-center  rounded hover:shadow-lg">
                 Create
             </button>
         </form>
@@ -101,20 +103,38 @@
         <button class="font-semibold" @click=" hideSection = true, activeSection = '' "><i
                 class='bx bx-chevron-left'></i> Options</button>
         <label for="name" class="font-senibold block">Paste Web Url<span class="text-red-400 ml-1">*</span></label>
-        <input id="name" type="text" wire:model.live="webUrl" placeholder="https://www.example.com" class="form-control"
-            autocomplete="false">
+        <input id="name" type="text" wire:model.live="webUrl" placeholder="https://www.example.com"
+            class="form-control" autocomplete="false">
         {{-- @error('webUrl') <span class="error">{{ $message }}</span> @enderror --}}
 
         <div>
             <button type="submit" wire:click="scrapeWebsite" onclick=" reloadPage()"
                 @click=" hideSection = true, activeSection = '' "
                 {{ !is_null($webUrl) && !empty($webUrl) && filter_var($webUrl, FILTER_VALIDATE_URL) ? '' : 'disabled' }}
-                class="inline-flex items-center bg-blue-600 text-gray-50 py-2.5 px-4 text-xs shadow font-medium text-center  rounded hover:shadow-lg">
+                class="inline-flex items-center bg-purple-600 text-gray-50 py-2.5 px-4 text-xs shadow font-medium text-center  rounded hover:shadow-lg">
                 Create
             </button>
         </div>
 
     </div>
+
+    <div>
+        <div class=" bg-gray-200 rounded-full my-3  w-full shadow-inner">
+            <div class=" bg-green-700  text-center p-0.5 text-xs font-semibold rounded-full text-gray-50 " id="btn">
+                {{ $totalDocumentCount }}
+            </div>
+        </div>
+        <div class="flex justify-between">
+        <h1>Documents you have currently stored out of your allowed quota.</h1>
+        <h1>{{ $totalDocumentCount }}/{{ $documentLimit }}</h1>
+
+        </div>
+    </div>
+    <script>
+        const total = @json($totalDocumentCount);
+        const btn = document.getElementById('btn');
+        btn.style.width = `${total}%`
+    </script>
 
 
     <script>

@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Services\ChatGptService;
 use Illuminate\Support\Facades\Request;
 use Livewire\Component;
 use Livewire\WithFileUploads;
@@ -17,41 +18,73 @@ class UploadDocument extends Component
 
     public $file, $textContent, $webUrl;
 
-    public $body, $contentTitle, $title, $content,  $updatedContent;
+    public $body, 
+    $contentTitle, 
+    $title, 
+    $content,  
+    $updatedContent,
+    $totalDocumentCount, 
+    $documentLimit;
 
 
     public function mount($body, $contentTitle)
     {
         $this->body = $body;
         $this->contentTitle = $contentTitle;
+        $contents = auth()->user()->contents()->withCount('documents')->get();
+        $this->totalDocumentCount = $contents->sum('documents_count');
+        $this->documentLimit = 100;
     }
-    public function saveWrittenDocument()
+    public function saveWrittenDocument(ChatGptService $chatGptService)
     {
         $user = auth()->user()->contents()->find($this->contentTitle->id);
         $this->title;
         $this->content;
         $this->contentTitle->id;
+
+
+        // $contents = auth()->user()->contents()->withCount('documents')->get();
+        // $totalDocumentCount = $contents->sum('documents_count');
+        // dd($this->totalDocumentCount);
+
+        // $this->documentLimit = 5;
+
+        if ($this->totalDocumentCount >= $this->documentLimit) {
+            return redirect()->back()->with('error', 'You have reached the document limit of 100 for this content.');
+        }
+        
+      
+        
+
+
+        $name = '';
+        $document = '';
+        $model = 'gpt-4';
+        $system = 'You are a knowledgeable assistant for summary';
+        $combinedPrompt = "summarize in bullet points, removing filler words, don't repet yourself: " . $this->content;
+
+
+        $res = $chatGptService->generateContent($name, $model, $system, $combinedPrompt, $document);
+
+       
         $user->documents()->create([
             'title' =>  $this->title,
-            'content' =>  $this->content,
+            'content' =>  $res,
 
         ]);
 
         $this->dispatch('refreshComponent', data: $this->body);
-
-
     }
 
-    public function saveUploadedDocument()
+    public function saveUploadedDocument(ChatGptService $chatGptService)
     {
         $this->validate([
-            'file' => 'required|mimes:pdf,docx|max:2048', 
+            'file' => 'required|mimes:pdf,docx|max:2048',
         ]);
 
         if ($this->file->getClientOriginalExtension() === 'pdf') {
             $binpath = 'C:/Program Files/Git/mingw64/bin/pdftotext';
             $this->textContent = Pdf::getText($this->file->getRealPath(), $binpath);
-
         } elseif ($this->file->getClientOriginalExtension() === 'docx') {
             $doc = IOFactory::load($this->file->getRealPath());
 
@@ -59,7 +92,7 @@ class UploadDocument extends Component
             $doc = IOFactory::load($this->file->getRealPath());
             foreach ($doc->getSections() as $section) {
                 foreach ($section->getElements() as $element) {
-                    
+
                     if ($element instanceof \PhpOffice\PhpWord\Element\TextRun) {
                         foreach ($element->getElements() as $textElement) {
                             if ($textElement instanceof \PhpOffice\PhpWord\Element\Text) {
@@ -71,21 +104,30 @@ class UploadDocument extends Component
             }
         }
 
+        $name = '';
+        $document = '';
+        $model = 'gpt-4';
+        $system = 'You are a knowledgeable assistant for summary';
+        $combinedPrompt = "summarize in bullet points, removing filler words, don't repet yourself: " . $this->textContent;
+
+
+        $res = $chatGptService->generateContent($name, $model, $system, $combinedPrompt, $document);
+        // dd($res);
+
 
         $user = auth()->user()->contents()->find($this->contentTitle->id);
-       
+
         $user->documents()->create([
             'title' =>  'uploaded ' . rand(0, 99999),
-            'content' =>   $this->textContent,
+            'content' =>   $res,
 
         ]);
         $this->dispatch('refreshComponent', data: $this->body);
         return;
-
     }
 
 
-    public function scrapeWebsite()
+    public function scrapeWebsite(ChatGptService $chatGptService)
     {
         // $url = 'https://me.vixblock.com.ng/index.html/';  // Replace with the URL you want to scrape
 
@@ -97,18 +139,28 @@ class UploadDocument extends Component
         $crawler = $client->request('GET', $this->webUrl);
 
         $this->textContent = $crawler->filter('body')->text();
-        $cleanedText = preg_replace("/[^a-zA-Z0-9\s]/", "", $this->textContent );
+        $cleanedText = preg_replace("/[^a-zA-Z0-9\s]/", "", $this->textContent);
+
+
+        $name = '';
+        $document = '';
+        $model = 'gpt-4';
+        $system = 'You are a knowledgeable assistant for summary';
+        $combinedPrompt = "summarize in bullet points, removing filler words, don't repet yourself: " . $cleanedText;
+
+
+        $res = $chatGptService->generateContent($name, $model, $system, $combinedPrompt, $document);
+        // dd($res);
 
         $user = auth()->user()->contents()->find($this->contentTitle->id);
 
         $user->documents()->create([
             'title' =>  'uploaded ' . rand(0, 99999),
-            'content' =>   $cleanedText,
+            'content' =>   $res,
 
         ]);
         $this->dispatch('refreshComponent', data: $this->body);
         return;
-        
     }
 
 

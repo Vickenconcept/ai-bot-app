@@ -66,7 +66,7 @@
   
         <p class="mt-10 text-center text-sm text-gray-500">
          Already registerd?
-          <a href="{{ route('login') }}" class="font-semibold leading-6 text-blue-600 hover:text-blue-500">Login</a>
+          <a href="{{ route('login') }}" class="font-semibold leading-6 text-purple-600 hover:text-purple-500">Login</a>
         </p>
       </div>
     </div>

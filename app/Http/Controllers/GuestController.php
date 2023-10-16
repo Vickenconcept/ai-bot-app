@@ -54,12 +54,11 @@ class GuestController extends Controller
     {
         $body = Conversation::where('uuid', $uuid)->first();
         $bot = Bot::where('uuid_chat', $uuid)->first();
-        // dd($bot->uuid_chat);
+       
 
         if (!$body) {
             if ($bot != null && $bot->uuid_chat === $uuid ) {
-                # code...
-                // dd($bot->uuid_chat);
+               
              
                 $title = 'bot #' . rand(0, 99999);
                 $defaultBot = Bot::where('name', 'bot')->first();
@@ -75,11 +74,16 @@ class GuestController extends Controller
                 $conversationTitle = Conversation::where('uuid', $uuid)->firstOrFail();
             }
             ;
-           return view('error.404');
+           return view('errors.404');
         //    return response()->json('widget canceled');
         } else {
             
-            $body = Conversation::where('uuid', $uuid)->firstOrFail()->messages;
+            // $body = Conversation::where('uuid', $uuid)->firstOrFail()->messages;
+            $body = Conversation::where('uuid', $uuid)
+            ->firstOrFail()
+            ->messages()
+            ->orderBy('created_at', 'asc')
+            ->get();
             $conversationTitle = Conversation::where('uuid', $uuid)->firstOrFail();
             $conversation = Conversation::where('type', 'guest')->latest()->get();
             $guest = Conversation::where('type', 'guest')->with('messages')->latest()->get();
@@ -104,12 +108,9 @@ class GuestController extends Controller
         $status = $request->input('statues');
         
         
-        // Find the specific conversation by ID
         $conversation = Conversation::find($conversation);
-        // dd($conversation);
         
 
-        // Update the title of the conversation
         $conversation->enabled = $status;
         $conversation->update();
 

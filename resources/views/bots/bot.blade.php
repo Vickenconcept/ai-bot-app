@@ -1,6 +1,6 @@
 <x-app-layout>
 
-    <div class="   m-4 lg:m-10 space-y-5 " x-data="{ isOpen: false, bot: '', openModal: false }">
+    <div class="   m-4 lg:m-10 space-y-5 pb-50 " x-data="{ isOpen: false, bot: '', openModal: false }">
         @if ($errors->any())
             <div class="bg-red-50 text-red-300  p-3 border border-red-300 rounded">
                 <ul>
@@ -75,8 +75,7 @@
                                                         class='bx bx-message-rounded mr-1 text-sm'></i></div>
 
                                             </x-dropdown-link>
-                                            {{-- <p id="{{ $guestChat->id }}" class="w-full  p-2 border text-sm font-semibold shadow-inner border-gray-300 bg-white ">
-                                                {{ route('guests.show', ['guest' => $guestChat->uuid]) }}</p> --}}
+                                          
                                             <x-dropdown-link>
                                                 <form class="w-full"
                                                     action="{{ route('bots.destroy', ['bot' => $bot->id]) }}"
@@ -103,8 +102,9 @@
         <div class="fixed items-center justify-center m-0   overflow-auto flex top-0 left-0 mx-auto w-full h-full bg-gray-600 bg-opacity-20 z-10 transition duration-1000 ease-in-out"
             x-show="isOpen" style="display: none;">
             <div @click.away="isOpen = false"
-                class="bg-white w-[70%] h-screen  shadow-inner   border rounded-lg overflow-auto  pb-6 px-5 transition-all relative duration-700">
+                class="bg-white w-[90%] lg:w-[70%] h-[500px]  shadow-inner   border rounded-lg overflow-auto  pb-6 px-5 transition-all relative duration-700">
                 <div class="space-y-5 pt-5 ">
+                    <button @click="isOpen = false"><i class="bx bx-x text-xl font-bold"></i></button>
 
 
 
@@ -244,7 +244,7 @@
             <div class="fixed items-center justify-center my-0  flex top-0 left-0 mx-auto w-full h-full bg-gray-600 bg-opacity-20 z-10 transition duration-1000 ease-in-out"
                 x-show="openModal" style="display: none;">
                 <div
-                    class="bg-white w-[70%]  shadow-inner  border rounded-lg overflow-auto  pb-6 px-5 transition-all relative duration-700">
+                    class="bg-white w-[90%] lg:w-[70%]  shadow-inner  border rounded-lg overflow-auto  pb-6 px-5 transition-all relative duration-700">
                     <div class="space-y-5 pt-5 ">
                         <div><button @click="openModal = false"><i class="bx bx-x text-xl font-bold"></i></button>
                         </div>

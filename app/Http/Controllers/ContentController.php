@@ -111,6 +111,7 @@ class ContentController extends Controller
         $user = auth()->user();
         
         $content = Content::find($content);
+        
         $content->delete();
 
         return redirect()->to('contents')->with('success', 'content deleted successfully.');

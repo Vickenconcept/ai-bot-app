@@ -56,6 +56,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('contents/update', [ContentController::class, 'updateName'])->name('updateName');
     Route::resource('contents', ContentController::class);
     Route::resource('account', AccountController::class);
+    Route::post('documents/updateData', [DocumentController::class, 'update'])->name('documents.updateData');
     Route::resource('documents', DocumentController::class);
     Route::get('invite', InviteController::class)->name('invite');
     Route::get("/ask", AskController::class);

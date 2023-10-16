@@ -33,6 +33,11 @@ class Content extends Model
         parent::boot();
 
         static::addGlobalScope(new ExemptionAccessScope);
+        
+        static::deleting(function ($contents) {
+                    // Delete the associated messages
+                    $contents->documents()->delete();
+                });
     }
     // protected static function boot()
     // {
@@ -40,4 +45,6 @@ class Content extends Model
 
     //     static::addGlobalScope(new DataAccessScope);
     // }
+
+   
 }

@@ -29,7 +29,7 @@ class CheckRouteStatus
             if ($routeStatus->enabled) {
                 return $next($request); // At least one conversation has enabled = 1, proceed
             }
-            return response()->view('error.404', [], 404);
+            return response()->view('errors.404', [], 404);
         }
 
         // dd('hello');

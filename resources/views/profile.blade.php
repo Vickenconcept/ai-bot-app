@@ -64,7 +64,7 @@
 
         <div class="space-y-5 ">
             <hr>
-            <h1 class=" ">Changing your password will log you out of every device except this one.</h1>
+            <h1 class=" ">Changing your password will log you out of every device.</h1>
             <form action="{{ route('changePassword') }}" method="POSt" class=" space-y-4 ">
                 @csrf
                 

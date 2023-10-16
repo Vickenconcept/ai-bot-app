@@ -39,9 +39,16 @@ class Conversation extends Model
         parent::boot();
 
         static::addGlobalScope(new ExemptionAccessScope);
+
+        static::deleting(function ($conversation) {
+            // Delete the associated messages
+            $conversation->messages()->delete();
+        });
     }
     // protected function updatedAt(): Attribute
     // {
     //     return Attribute::get(fn ($value) => Carbon::parse($value)->format('F j, Y, g:i A'));
     // }
+
+    
 }

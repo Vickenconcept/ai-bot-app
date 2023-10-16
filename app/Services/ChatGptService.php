@@ -23,11 +23,13 @@ class ChatGptService
 
   
 
-    public function generateContent($name, $model, $system, $prompt)
+    public function generateContent($name, $model, $system, $prompt, $document)
     {
         $url = 'https://api.openai.com/v1/chat/completions';
         $maxRetries = 3;
         $retryDelay = 5; // seconds
+        $prompt = substr($prompt, 0, 4096);
+        // dd($prompt);
 
         for ($retry = 0; $retry < $maxRetries; $retry++) {
             try {
@@ -36,13 +38,27 @@ class ChatGptService
                         'Authorization' => 'Bearer ' . $this->apiKey,
                         'Content-Type' => 'application/json',
                     ],
+                    // 'json' => [
+                    //     'model' => $model,
+                    //     'messages' => [
+                    //         ['role' => 'system', 'content' => $system .'. your name is '. $name],
+                    //         ['role' => 'user', 'content' => $prompt],
+                    //     ],
+                    //     'temperature' => 0.2, // Adjust as needed
+                        
+                    // ],
                     'json' => [
                         'model' => $model,
                         'messages' => [
+                            ['role' => 'assistant', 'content' => $document],
                             ['role' => 'system', 'content' => $system .'. your name is '. $name],
                             ['role' => 'user', 'content' => $prompt],
                         ],
                         'temperature' => 0.2, // Adjust as needed
+                        // 'max_tokens'=> 4096,
+                        // 'top_p'=>  1,
+                        // 'frequency_penalty'=> 0,
+                        // 'presence_penalty'=> 0
                     ],
                 ]);
 

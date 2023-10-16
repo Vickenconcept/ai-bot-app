@@ -26,4 +26,6 @@ class Message extends Model
     {
         return Attribute::get(fn ($value) => Carbon::parse($value)->format('F j, Y, g:i A'));
     }
+
+    
 }
