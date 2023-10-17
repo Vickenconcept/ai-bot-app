@@ -39,9 +39,8 @@
 
         <x-header />
         {{-- <span x-text="openHelp"></span> --}}
-        <div x-show="openHelp"
-         class="bg-red-500 p-20 fixed z-50 w-72 " 
-        style="display: none
+        <div x-show="openHelp" class="bg-red-500 p-20 fixed z-50 w-72 "
+            style="display: none
             left: 20px;
             box-shadow: 3px 3px 6px lightgray ; 
             border: 3px solid darkblue; 
@@ -52,31 +51,10 @@
         ">
             <button @click="openHelp = false"><i class="bx bx-x"></i></button>
         </div>
-
+       
         {{ $slot }}
 
-        {{-- <div>
-            <button class="btn" id="toggleIframe" style="
-            position: fixed;
-            bottom: 20px;
-            right: 20px;
-            color: white;
-            background-color: blue;
-            padding: 8px 10px;
-            box-shadow: 5px 2px 5px gray;
-            border-radius: 10px;"><i class='bx bxs-palette'></i></button>
-            <iframe id="myIframe" src="http://127.0.0.1:8000/guests/42331577-b859-4745-b726-07d107917db6" style="
-            position: fixed;
-            bottom: 70px;
-            right: 20px;
-            box-shadow: 3px 3px 6px lightgray ; 
-            border: 3px solid darkblue; 
-            border-radius: 10px;
-            display: none;
-            background-color: #fff; 
-            box-shadow: 3px 6px 5px gray;"
-                width="300" height="500"></iframe>
-        </div> --}}
+
 
     </div>
 
@@ -89,6 +67,11 @@
         //     messageDiv.innerText = `${role.charAt(0).toUpperCase() + role.slice(1)}: ${content}`;
         //     return messageDiv;
         // }
+
+
+       
+
+
 
         // Function to handle message submission
 

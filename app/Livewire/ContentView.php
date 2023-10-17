@@ -10,7 +10,7 @@ class ContentView extends Component
 
 
     public $body ,$contentTitle, $hideComponent = 'hidden';
-    protected $listeners = ['refreshComponent'];
+    protected $listeners = ['changeDisplay'];
 
     public $selectAll = false;
     public $checked = true;
@@ -34,7 +34,7 @@ class ContentView extends Component
     }
 
 
-    public function refreshComponent()
+    public function changeDisplay()
     {
         $this->hideComponent  = 'block';
     }

@@ -3,8 +3,18 @@
       <div class="sm:mx-auto sm:w-full sm:max-w-sm">
         <h2 class=" text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">Sign in to your account</h2>
       </div>
+     
 
       <div class=" sm:mx-auto sm:w-full sm:max-w-sm">
+        @if ($errors->any())
+        <div class="bg-red-50 text-red-300  p-3 border border-red-300 rounded">
+            <ul>
+                @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                @endforeach
+            </ul>
+        </div>
+    @endif
         <form class="space-y-6" action="{{ route('auth.register') }}" method="POST">
             @csrf
           <div>

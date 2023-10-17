@@ -1,14 +1,14 @@
 <div x-data="{ isOpen: false, openNote: false, openSaveModal: false }" id="here" class="mb-32">
     <div class="">
         @if ($errors->any())
-        <div class="bg-red-50 text-red-300  p-3 border border-red-300 rounded">
-            <ul>
-                @foreach ($errors->all() as $error)
-                    <li>{{ $error }}</li>
-                @endforeach
-            </ul>
-        </div>
-    @endif
+            <div class="bg-red-50 text-red-300  p-3 border border-red-300 rounded">
+                <ul>
+                    @foreach ($errors->all() as $error)
+                        <li>{{ $error }}</li>
+                    @endforeach
+                </ul>
+            </div>
+        @endif
         <ul class=" mb-32">
             @foreach ($body as $content)
                 <div class="{{ $content->sender !== 'bot' ? 'bg-white' : 'bg-gray-100' }}">
@@ -37,7 +37,7 @@
                                 </li>
                                 <div class="text-right col-span-1">
                                     <button
-                                        class="{{ $content->sender !== 'bot' ? 'hidden' : '' }} text-gray-400 hover:text-gray-700"
+                                        class="{{ $content->sender !== 'bot' ? 'hidden' : '' }} {{ auth()->check() ? '' : 'hidden' }} text-gray-400 hover:text-gray-700"
                                         @click="openNote = true"
                                         onclick="addNote(document.getElementById('{{ $content->id }}'))">
                                         <i class='bx bx-note '></i>
@@ -69,9 +69,14 @@
                             @csrf
                             <textarea id="message" rows="2"
                                 class="w-full px-2 text-sm text-gray-900 bg-white border-0  focus:ring-transparent focus:outline-none resize-none"
-                                placeholder="Ask {{ $conversationTitle->bot->name }}" wire:model.live="message"></textarea>
+                                placeholder="Ask {{ $conversationTitle->bot->name }}" wire:model.defer="message"></textarea>
+                            {{-- <textarea name="" id="nterim_span"  rows="1" class="w-full"></textarea> --}}
+                            {{-- <p id="interim_span"></p> --}}
                         </form>
                     </div>
+
+
+                    {{-- <p id="final_span"></p> --}}
 
                     <div class="flex items-center justify-between px-2  border-t  ">
                         <button @click="isOpen = true"
@@ -108,9 +113,13 @@
                             </button>
                         </div>
                         <div wire:loading.remove class="text-xl font-bold text-gray-400">
+                            <button onclick="startButton(event)" class="" id="start"><i
+                                    class='bx bxs-microphone'></i></button>
+                            <button onclick="stopButton(event)" class="hidden" id="end"><i
+                                    class='bx bxs-microphone text-red-500'></i></button>
 
-                            <button wire:click="generateContent"
-                                {{ !is_null($message) && !empty($message) ? '' : 'disabled' }}
+                            <button wire:click="generateContent" id="send"
+                                {{-- {{ !is_null($message) && !empty($message) ? '' : 'disabled' }} --}}
                                 class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-gray-400 rounded-lg hover:text-gray-500">
                                 <i class='bx bxs-send text-2xl'></i>
                             </button>
@@ -144,7 +153,9 @@
                                         'bg-blue-200 border border-blue-300': selected ===
                                             '{{ $bot->id }}',
                                         '': selected !== '{{ $bot->id }}'
-                                    }">{{ $bot->name }}</label>
+                                    }">{{ $bot->name }}
+                                    <span
+                                        class="text-gray-50 px-3 ml-1 rounded-full bg-purple-600 font-normal text-sm">{{ $bot->model }}</span></label>
                             @endforeach
                         </div>
                     </div>
@@ -160,32 +171,30 @@
         <div class="fixed items-center justify-center  overflow-auto flex z-50 top-0 left-0 mx-auto w-full h-full bg-gray-600 bg-opacity-20 transition duration-1000 ease-in-out"
             x-show="openSaveModal" style="display: none;">
             <div @click.away="openSaveModal = false"
-                class="bg-white w-[80%] lg:w-[40%] h-80  shadow-inner   border rounded-lg overflow-auto  pb-6 px-5 transition-all relative duration-700">
+                class="bg-white w-[80%] lg:w-[50%] h-96  shadow-inner   border rounded-lg overflow-auto  pb-6 px-5 transition-all relative duration-700">
                 <div class="space-y-5 p-5 ">
 
                     <h1>Add To Document</h1>
 
-                    <div class=" space-y-1" >
-                       
+                    <div class=" space-y-1">
+
                         <form action="{{ route('documents.store') }}" method="POST" class="space-y-3">
                             @csrf
-                            <input type="text" class="form-control" name="title">
+                            <h1>Title <span class="text-red-400">*</span></h1>
+                            <input type="text" class="form-control" name="title" placeholder="Document name">
                             <div class="space-y-3">
                                 <h1>Directory <span class="text-red-400">*</span></h1>
                                 <div class="grid grid-cols-1 gap-2 overflow-y-auto " x-data="{ selected: null }">
                                     @forelse ($contents as $content)
-                                        <label for="{{ $content->title }}"
-                                            @click="selected =  @js($content->title)"
+                                        <label for="{{ $content->title }}" @click="selected =  @js($content->title)"
                                             class=" font-semibold capitalize bg-gray-100 border rounded p-2 cursor-pointer"
                                             :class="{
-                                                'bg-purple-100 border border-purple-300': selected === @js($content->title),
+                                                'bg-purple-100 border border-purple-300': selected ===
+                                                    @js($content->title),
                                                 '': selected !==
                                                     @js($content->title)
-                                            }"
-                                            
-                                            >
+                                            }">
                                             <input type="radio" name="content_id" id="{{ $content->title }}"
-
                                                 value="{{ $content->id }}">
                                             {{ $content->title }}
                                         </label>
@@ -231,9 +240,7 @@
 
 
 
-
         </div>
-
 
 
         <script>
@@ -249,6 +256,7 @@
 
             function clearDiv(copyclearDivDiv) {
                 copyclearDivDiv.innerHTML = '';
+                document.getElementById('contentData').value = ''
 
             }
 
@@ -256,16 +264,11 @@
                 const note = document.getElementById('note');
                 note.innerHTML += "\n" + noteData.textContent + "<br>";
                 const contentData = document.getElementById('contentData').value += noteData.textContent;
-                console.log(contentData);
 
             }
 
 
 
-
-
-
-            // setInterval(refreshDiv, 1000);
             function reloadPage() {
                 setTimeout(function() {
                     window.location.reload();
@@ -297,6 +300,84 @@
                     document.documentElement.scrollTop = document.documentElement.scrollHeight;
                 });
             });
+
+
+
+
+            const final_span = document.getElementById('message')
+            const interim_span = document.getElementById('interim_span');
+            final_span.value = innerHTML = '';
+
+            if (!('webkitSpeechRecognition' in window)) {
+                upgrade();
+            } else {
+                var recognition = new webkitSpeechRecognition();
+                console.log('i have it');
+                recognition.continuous = true;
+                recognition.interimResults = false;
+
+                recognition.onstart = function() {
+                    console.log('onstart');
+                }
+                recognition.onresult = function(event) {
+                    var interim_transcript = '';
+
+                    for (var i = event.resultIndex; i < event.results.length; ++i) {
+                        if (event.results[i].isFinal) {
+                            final_transcript += event.results[i][0].transcript;
+                        } else {
+                            interim_transcript += event.results[i][0].transcript;
+                        }
+                    }
+                    // final_transcript = capitalize(final_transcript);
+                    final_span.value = addSpace(final_transcript);
+                    // interim_span.innerHTML = addSpace(interim_transcript);
+
+                }
+                recognition.onerror = function(event) {}
+                recognition.onend = function() {
+                    console.log('end');
+                }
+            }
+
+            function addSpace(final_transcript) {
+                return final_transcript + " "
+            }
+
+
+
+            function startButton(event) {
+                final_transcript = '';
+                recognition.lang = 'en-US';
+                recognition.start();
+                document.getElementById('start').style.display = 'none';
+                document.getElementById('end').style.display = 'unset';
+                // document.getElementById('send').disabled = false;
+            }
+
+            if (final_span.value === '' || final_span.value === null) {
+                document.getElementById('end').style.display = 'none';
+
+            }
+
+
+            // if (final_span.value  ===  final_span.value) {
+            //     console.log(final_span.value === '');
+            //     document.getElementById('start').style.display = 'none';
+
+            // }
+
+            function stopButton(event) {
+                final_transcript = '';
+                recognition.lang = 'en-US';
+                recognition.stop();
+                document.getElementById('end').style.display = 'none';
+                document.getElementById('start').style.display = 'unset';
+            }
+
+            function checkTextAreaValue() {
+                console.log(final_span);
+            }
         </script>
     </div>
 

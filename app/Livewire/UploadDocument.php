@@ -18,13 +18,13 @@ class UploadDocument extends Component
 
     public $file, $textContent, $webUrl;
 
-    public $body, 
-    $contentTitle, 
-    $title, 
-    $content,  
-    $updatedContent,
-    $totalDocumentCount, 
-    $documentLimit;
+    public $body,
+        $contentTitle,
+        $title,
+        $content,
+        $updatedContent,
+        $totalDocumentCount,
+        $documentLimit;
 
 
     public function mount($body, $contentTitle)
@@ -37,25 +37,18 @@ class UploadDocument extends Component
     }
     public function saveWrittenDocument(ChatGptService $chatGptService)
     {
+
         $user = auth()->user()->contents()->find($this->contentTitle->id);
         $this->title;
         $this->content;
         $this->contentTitle->id;
 
 
-        // $contents = auth()->user()->contents()->withCount('documents')->get();
-        // $totalDocumentCount = $contents->sum('documents_count');
-        // dd($this->totalDocumentCount);
 
-        // $this->documentLimit = 5;
 
         if ($this->totalDocumentCount >= $this->documentLimit) {
             return redirect()->back()->with('error', 'You have reached the document limit of 100 for this content.');
         }
-        
-      
-        
-
 
         $name = '';
         $document = '';
@@ -66,14 +59,21 @@ class UploadDocument extends Component
 
         $res = $chatGptService->generateContent($name, $model, $system, $combinedPrompt, $document);
 
-       
-        $user->documents()->create([
+        $validated = $this->validate([
+            'title' => 'required',
+            'content' => 'required',
+        ]);
+
+        $document = $user->documents()->create([
             'title' =>  $this->title,
             'content' =>  $res,
 
         ]);
 
-        $this->dispatch('refreshComponent', data: $this->body);
+        if ($document) {
+
+            $this->dispatch('refreshComponent', data: $this->body);
+        }
     }
 
     public function saveUploadedDocument(ChatGptService $chatGptService)
@@ -81,6 +81,7 @@ class UploadDocument extends Component
         $this->validate([
             'file' => 'required|mimes:pdf,docx|max:2048',
         ]);
+        // dd($this->file);
 
         if ($this->file->getClientOriginalExtension() === 'pdf') {
             $binpath = 'C:/Program Files/Git/mingw64/bin/pdftotext';
@@ -104,32 +105,39 @@ class UploadDocument extends Component
             }
         }
 
+        $cleanInvalidUtf8 = mb_convert_encoding($this->textContent, 'UTF-8', 'UTF-8');
+
+
         $name = '';
         $document = '';
         $model = 'gpt-4';
         $system = 'You are a knowledgeable assistant for summary';
-        $combinedPrompt = "summarize in bullet points, removing filler words, don't repet yourself: " . $this->textContent;
+        $combinedPrompt = "summarize in bullet points, removing filler words, don't repet yourself: " . $cleanInvalidUtf8;
 
 
         $res = $chatGptService->generateContent($name, $model, $system, $combinedPrompt, $document);
-        // dd($res);
 
 
         $user = auth()->user()->contents()->find($this->contentTitle->id);
 
-        $user->documents()->create([
+        $document = $user->documents()->create([
             'title' =>  'uploaded ' . rand(0, 99999),
             'content' =>   $res,
 
         ]);
-        $this->dispatch('refreshComponent', data: $this->body);
+
+
+        if ($document) {
+
+            $this->dispatch('refreshComponent', data: $this->body);
+        }
+
         return;
     }
 
 
     public function scrapeWebsite(ChatGptService $chatGptService)
     {
-        // $url = 'https://me.vixblock.com.ng/index.html/';  // Replace with the URL you want to scrape
 
         $this->validate([
             'webUrl' => 'required|url',
@@ -154,12 +162,17 @@ class UploadDocument extends Component
 
         $user = auth()->user()->contents()->find($this->contentTitle->id);
 
-        $user->documents()->create([
+        $document = $user->documents()->create([
             'title' =>  'uploaded ' . rand(0, 99999),
             'content' =>   $res,
 
         ]);
-        $this->dispatch('refreshComponent', data: $this->body);
+
+        if ($document) {
+
+            $this->dispatch('refreshComponent', data: $this->body);
+        }
+
         return;
     }
 

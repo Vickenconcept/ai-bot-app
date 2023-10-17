@@ -76,7 +76,11 @@ class MessageView extends Component
         $this->sender = 'user';
         $personality = $this->conversationTitle->bot->personality;
 
-       
+    //    dd($this->message);
+       $this->validate([
+        'message' => 'required'
+       ]);
+
         $message = $conversation->messages()->create([
             'message' =>   $this->message,
             'sender' => $this->sender,

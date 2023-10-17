@@ -9,6 +9,7 @@ use Illuminate\Http\RedirectResponse;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\CreateUserRequest;
 use Illuminate\Http\Response;
+use Illuminate\Auth\Events\Registered;
 
 class AuthController extends Controller
 {
@@ -27,19 +28,33 @@ class AuthController extends Controller
         // $referrer = $request->session()->get('referrer');
         $referrer = User::whereUsername(session()->pull('referrer'))->first();
 
-        $data = $request->validate([
-            'name' => 'required',
-            'email' => 'required|email',
-            'password' => 'required|confirmed',
-            'username' => 'sometimes',
-            'role' => 'sometimes',
-            'referrer_id' => 'sometimes'
-        ]);
-        $data['role'] = 'user';
-        $data['referrer_id'] = $referrer ? $referrer->id : null;
-        // dd($data);
+        
+        
+        try {
+            $data = $request->validate([
+                'name' => 'required',
+                'email' => 'required|email',
+                'password' => 'required|confirmed',
+                'username' => 'sometimes',
+                'role' => 'sometimes',
+                'referrer_id' => 'sometimes'
+            ]);
+            $data['role'] = 'user';
+            $data['referrer_id'] = $referrer ? $referrer->id : null;
+            // dd($data);
+            $user = User::create($data);
+            // Your code that might throw the duplicate entry error
+        } catch (\Illuminate\Database\QueryException $e) {
+            // Handle the exception
+            if ($e->getCode() == 23000) {
+                return redirect()->back()->withInput()->withErrors(['error' => 'A duplicate entry error occurred. Please try again.']);
+            }
+        
+            // Handle other database errors if needed
+        }
 
-        $user = User::create($data);
+
+        // event(new Registered($user));
 
         Auth::login($user);
 

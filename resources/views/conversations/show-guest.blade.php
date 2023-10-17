@@ -3,6 +3,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <div class="">
+        <x-notification />
         <div class=" ">
             {{-- <nav class="relative flex w-full flex-wrap items-center justify-between bg-blue-900 text-white lg:py-4">
                 <div class="flex w-full flex-wrap items-center justify-between px-3">

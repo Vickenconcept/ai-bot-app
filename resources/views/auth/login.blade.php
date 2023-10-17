@@ -42,10 +42,13 @@
         </div>
       </form>
 
-      <p class="mt-10 text-center text-sm text-gray-500">
+      <p class="mt-10  text-sm text-gray-500 text-right">
+        <a href="{{ route('password.request') }}" class="font-semibold leading-6 text-purple-600 hover:text-purple-500">Forgot your password?</a>
+      </p>
+      {{-- <p class="mt-10 text-center text-sm text-gray-500">
         Don't have Account?
         <a href="{{ route('register') }}" class="font-semibold leading-6 text-purple-600 hover:text-purple-500">Register</a>
-      </p>
+      </p> --}}
     </div>
   </div>
 </x-guest-layout>

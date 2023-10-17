@@ -11,6 +11,7 @@ use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\InviteController;
 use App\Http\Controllers\MessageController;
+use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Content;
 use App\Models\Conversation;
@@ -36,6 +37,14 @@ Route::middleware('guest')->group(function () {
     Route::view('login', 'auth.login')->name('login');
     // Route::view('register', 'auth.register')->name('register');
     // Route::view('register/success', 'auth.success')->name('register.success');
+    // Route::get('/forgot-password', function () {
+    //     return view('auth.forgot-password');
+    // })->name('password.request');
+    Route::get('forgot-password', [PasswordResetController::class, 'index'])->name('password.request');
+    Route::post('forgot-password', [PasswordResetController::class, 'store'])->name('password.email');
+    Route::get('/reset-password/{token}', [PasswordResetController::class, 'reset'])->name('password.reset');
+    Route::post('/reset-password', [PasswordResetController::class, 'update'])->name('password.update');
+    
     
     Route::controller(AuthController::class)->group(function () {
         Route::get('register', 'showRegistrationForm')->name('register');
