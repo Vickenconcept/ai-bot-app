@@ -6,6 +6,7 @@ use App\Models\Bot;
 use App\Models\Content;
 use App\Models\Conversation;
 use App\Models\Document;
+use App\Models\Message;
 use App\Services\ChatGptService;
 use GuzzleHttp\Psr7\Request;
 use Livewire\Component;
@@ -32,7 +33,6 @@ class MessageView extends Component
     {
         $this->body = $body;
         $this->conversationTitle = $conversationTitle;
-        // $this->bot =  Bot::orderBy('id', 'desc')->get();
         $this->bot =  Bot::latest()->get();
         $this->contents =  Content::latest()->get();
     }
@@ -41,10 +41,8 @@ class MessageView extends Component
     {
         $this->selectBot;
 
-        // $user = auth()->user();
 
         $conversationToUpdate = Conversation::find($this->conversationTitle->id);
-        // $conversationToUpdate = $user->conversations()->find($this->conversationTitle->id);
 
         $conversationToUpdate->bot_id = $this->selectBot;
         $conversationToUpdate->update();
@@ -76,7 +74,6 @@ class MessageView extends Component
         $this->sender = 'user';
         $personality = $this->conversationTitle->bot->personality;
 
-    //    dd($this->message);
        $this->validate([
         'message' => 'required'
        ]);
@@ -100,6 +97,7 @@ class MessageView extends Component
         $knowledgeIdsJson = $this->conversationTitle->bot->knowledge;
 
         $knowledgeIds = json_decode($knowledgeIdsJson, true);
+
         if ( $knowledgeIds != null) {
             $knowledgeIds = array_map('intval', $knowledgeIds);
             $contents = Content::whereIn('id', $knowledgeIds)->get();
@@ -168,9 +166,8 @@ class MessageView extends Component
         $document = "Document Context:\n" . $json ;
         $combinedPrompt =  "\nUser Prompt:\n" . $userInput;
         // $combinedPrompt = "Document Context:\n" . $json . "\nUser Prompt:\n" . $userInput;
-        // $combinedPrompt = "Document Context:\n" . $mergedContent . "\nUser Prompt:\n" . $userInput;
         $res = $chatGptService->generateContent($name,$model,$system, $combinedPrompt, $document);
-        // dd($res);
+        
         if ($res === 'Connection error. Please try again later.') {
           return;
         }
@@ -185,16 +182,17 @@ class MessageView extends Component
         return;
     }
 
-    // dd($documents);
-    // $documents = Document::pluck('content')->toArray();
 
+    public function clearMessages()
+    {
 
-    // $htmlContentString = implode("\n", $documents);
-    // $preprocessedDocument = preprocessContent($htmlContentString);
-    // $combinedPrompt = "Document Context:\n" . $preprocessedDocument . "\nUser Prompt:\n" . $userInput;
-    // $res = $this->chatGptService->generateContent($combinedPrompt);
-
-
+        $message = Message::where('conversation_id', $this->conversationTitle->id)->get();
+        foreach($message as $mes){
+            $mes->delete();
+        }
+ 
+        $this->dispatch('refreshComponent', data: 'hello i am the payload');
+    }
 
     public function render()
     {

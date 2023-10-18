@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('image/favicon.ico') }}">
 
     <title>ChatBot</title>
 
@@ -38,6 +39,7 @@
     <div id="ap" class="min-h-screen bg-gray- text-gray-700" x-data="{ openHelp: false }">
 
         <x-header />
+        <x-pre-loader />
         {{-- <span x-text="openHelp"></span> --}}
         <div x-show="openHelp" class="bg-red-500 p-20 fixed z-50 w-72 "
             style="display: none

@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
+    <link rel="shortcut icon" type="image/x-icon" href="{{ asset('image/favicon.ico') }}">
     {{-- <meta name="csrf_token" content="TOKEN" id="csrf_token" data-turbolinks-permanent> --}}
     
     <title>ChatBot</title>

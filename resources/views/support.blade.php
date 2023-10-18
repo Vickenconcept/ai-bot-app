@@ -37,8 +37,8 @@
         <div class="px-10">
             <div x-show="isOpen === 'tutorial' " style="display: none">tutorial</div>
             <div x-show="isOpen === 'support' " style="display: none">
-                <div class="  w-full flex justify-center items-center p-20 ">
-                    <div class="bg-white  p-5 sm:p-10 text-center w-[80%] mx-auto space-y-5 text-gray-700">
+
+                    <div class="bg-white  p-5 sm:p-10 text-center w-full lg:w-[80%] h-96 mx-auto space-y-5 text-gray-700">
 
                         <div class="grid grid-cols-1 lg:grid-cols-5">
                             <div></div>
@@ -56,7 +56,6 @@
                             </div>
                         </div>
                     </div>
-                </div>
             </div>
         </div>
     </div>

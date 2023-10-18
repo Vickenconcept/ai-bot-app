@@ -9,6 +9,7 @@
                 </ul>
             </div>
         @endif
+
         <ul class=" mb-32">
             @foreach ($body as $content)
                 <div class="{{ $content->sender !== 'bot' ? 'bg-white' : 'bg-gray-100' }}">
@@ -88,10 +89,18 @@
                         <div class=" {{ request()->routeIs('conversations.show') ? 'hidden' : '' }}" wire:ignore></div>
                         <div class="flex pl-0 space-x-1 sm:pl-2 {{ request()->routeIs('guests.show') ? 'hidden' : '' }}"
                             wire:ignore>
-                            <button type="button"
-                                class="inline-flex justify-center items-center p-2 text-gray-900 rounded cursor-pointer hover:text-gray-900 hover:bg-gray-100 ">
-                                <i class='bx bx-cog'></i>
-                            </button>
+                            <div  class="relative"  x-data="{ isOpen: false }">
+                                <button type="button"
+                                @click="isOpen = !isOpen"
+                                    class="inline-flex justify-center items-center p-2 text-gray-900 rounded cursor-pointer hover:text-gray-900 hover:rotate-45 duration-500  ">
+                                    <i class='bx bx-cog'></i>
+                                </button>
+                                    <button x-show="isOpen" @click.away="isOpen = false" wire:click="clearMessages" class=" flex items-center shadow absolute -top-8 -left-12 ml-3 w-32 bg-white hover:bg-red-100 hover:text-red-500 px-4 py-1 rounded-lg">
+                                        <i class='bx bx-reset'></i>  Clear chat
+                                    </button>
+                            </div>
+
+
 
                             <button
                                 class="bg-gray-50 border ml-2 border-gray-300 text-gray-900 text-sm rounded-lg  block  py-1 px-4  "><i
@@ -118,8 +127,8 @@
                             <button onclick="stopButton(event)" class="hidden" id="end"><i
                                     class='bx bxs-microphone text-red-500'></i></button>
 
-                            <button wire:click="generateContent" id="send"
-                                {{-- {{ !is_null($message) && !empty($message) ? '' : 'disabled' }} --}}
+                            <button wire:click="generateContent" id="send" {{-- {{ !is_null($message) && !empty($message) ? '' : 'disabled' }} --}}
+                            onclick="stopButton(event)" 
                                 class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-gray-400 rounded-lg hover:text-gray-500">
                                 <i class='bx bxs-send text-2xl'></i>
                             </button>
@@ -251,7 +260,6 @@
                 window.getSelection().removeAllRanges();
                 window.getSelection().addRange(range);
                 document.execCommand("copy");
-                // alert("copied!");
             }
 
             function clearDiv(copyclearDivDiv) {
