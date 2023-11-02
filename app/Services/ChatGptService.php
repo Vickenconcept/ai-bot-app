@@ -38,15 +38,7 @@ class ChatGptService
                         'Authorization' => 'Bearer ' . $this->apiKey,
                         'Content-Type' => 'application/json',
                     ],
-                    // 'json' => [
-                    //     'model' => $model,
-                    //     'messages' => [
-                    //         ['role' => 'system', 'content' => $system .'. your name is '. $name],
-                    //         ['role' => 'user', 'content' => $prompt],
-                    //     ],
-                    //     'temperature' => 0.2, // Adjust as needed
-                        
-                    // ],
+              
                     'json' => [
                         'model' => $model,
                         'messages' => [

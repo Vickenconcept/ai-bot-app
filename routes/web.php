@@ -16,7 +16,9 @@ use App\Http\Controllers\ProfileController;
 use App\Models\Content;
 use App\Models\Conversation;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Storage;
 
 /*
 |--------------------------------------------------------------------------
@@ -44,8 +46,8 @@ Route::middleware('guest')->group(function () {
     Route::post('forgot-password', [PasswordResetController::class, 'store'])->name('password.email');
     Route::get('/reset-password/{token}', [PasswordResetController::class, 'reset'])->name('password.reset');
     Route::post('/reset-password', [PasswordResetController::class, 'update'])->name('password.update');
-    
-    
+
+
     Route::controller(AuthController::class)->group(function () {
         Route::get('register', 'showRegistrationForm')->name('register');
         Route::post('auth/register', 'register')->name('auth.register');
@@ -61,6 +63,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('conversations/update', [ConversationController::class, 'updateConversation'])->name('updateConversation');
     // Route::post('conversations/guest', [ConversationController::class, 'guest'])->name('guest');
     Route::resource('conversations', ConversationController::class);
+    Route::post('bots/update', [BotController::class, 'update'])->name('updateBot');
     Route::resource('bots', BotController::class);
     Route::post('contents/update', [ContentController::class, 'updateName'])->name('updateName');
     Route::resource('contents', ContentController::class);
@@ -77,7 +80,7 @@ Route::middleware(['auth'])->group(function () {
 });
 
 
-Route::get('test/{id}', function(){
+Route::get('test/{id}', function () {
     $contents =  Content::latest()->get();
 
     $collection = collect($contents);
@@ -87,20 +90,27 @@ Route::get('test/{id}', function(){
     $filtered->all();
 });
 
-Route::get('/clear', function() {
+Route::get('/clear', function () {
     Artisan::call('cache:clear');
     Artisan::call('route:cache');
     Artisan::call('view:clear');
     Artisan::call('config:cache');
     return  "all cleared ...";
-
 });
-Route::get('test', function(){
-  
-    $user = auth()->user();
-    dd($user->generateReferralLink());
-    return Conversation::findOrfail(29);
+Route::get('test', function () {
+
+    // $user = auth()->user();
+    // dd($user->generateReferralLink());
+    // return Conversation::findOrfail(29);
+
+
+    // $text = rawurlencode('hello world');
+    // $res = Http::get('https://translate.google.com/?sl=auto&tl=es&text='.$text. '&op=translate');
+
+    // $filename = time().'.mp3';
+    // Storage::disk('local')->put($filename, $res);
+
+    // return storage_path('app/public'.$filename);
+
+   
 })->withoutMiddleware(['auth']);;
-
-
-

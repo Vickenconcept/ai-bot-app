@@ -70,8 +70,8 @@ class ConversationController extends Controller
             ->messages()
             ->orderBy('created_at', 'asc')
             ->get();
-        // dd($body);
         $conversationTitle = Conversation::where('slug', $slug)->firstOrFail();
+        // dd($conversationTitle->template);
         $conversation =  Conversation::where('type', 'user')->latest()->get();
         $guest = Conversation::where('type', 'guest')->with('messages')->latest()->get();
 

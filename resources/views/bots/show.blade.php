@@ -4,6 +4,7 @@
     <x-notification />
 
     <div class="text-gray-700 p-4 md:p-8 space-y-5 bg-gray-50 min-h-screen">
+        this is it: {{ $guestChat->template }}
         <div>
             <h1 class="uppercase font-extrabold tracking-widest text-2xl text-gray-200 ">{{ $singleBot->name }}
             </h1>
@@ -53,6 +54,10 @@
                     Enable</button>
             </form>
         </div>
+        <hr>
+        <section>
+            <livewire:select-template :guestChat="$guestChat"/>
+        </section>
 
         <hr>
         <section class=" pt-10 space-y-5 " id="here">
@@ -211,7 +216,7 @@
             </div>
         </section>
         <section>
-            <livewire:customize-view :guestChat="$guestChat"/>
+            {{-- <livewire:customize-view :guestChat="$guestChat"/> --}}
         </section>
     </div>
 

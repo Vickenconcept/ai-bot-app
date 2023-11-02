@@ -33,8 +33,8 @@
 
                             </div>
                             <div
-                                class="grid md:grid-cols-8  py-2 pl-2 pr-4 rounded {{ $content->sender !== 'bot' ? '' : 'hover:bg-gray-200 hover:border' }}">
-                                <li class=" col-span-7 text-justify " id="{{ $content->id }}">{{ $content->message }}
+                                class="grid grid-cols-8  py-2 pl-2 pr-4 rounded {{ $content->sender !== 'bot' ? '' : 'hover:bg-gray-200' }}">
+                                <li class="col col-span-7 text-justify " id="{{ $content->id }}">{{ $content->message }}
                                 </li>
                                 <div class="text-right col-span-1">
                                     <button
@@ -102,9 +102,9 @@
 
 
 
-                            <button
+                            {{-- <button
                                 class="bg-gray-50 border ml-2 border-gray-300 text-gray-900 text-sm rounded-lg  block  py-1 px-4  "><i
-                                    class='bx bx-target-lock'></i> Target</span></button>
+                                    class='bx bx-target-lock'></i> Target</span></button> --}}
                             <button @click="openNote = !openNote"
                                 class="bg-gray-50 border ml-2 border-gray-300 text-gray-900 text-sm rounded-lg  block  py-1 px-4  "><i
                                     class='bx bx-note'></i> Note</span></button>

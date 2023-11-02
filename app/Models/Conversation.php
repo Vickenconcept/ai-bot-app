@@ -17,6 +17,13 @@ class Conversation extends Model
 
       public $guarded = [];
 
+      protected $casts = [
+        'image_link' => 'array',
+        'productPrice' => 'array',
+        'temp_three' => 'array',
+        'temp_four' => 'array',
+    ];
+
     public function user(){
         return $this->belongsTo(User::class);
     }

@@ -252,9 +252,8 @@
 
 
 
-                        <form action="{{ route('bots.update', ['bot' => $bot->id]) }}" method="POST" id="form2">
+                        <form action="{{ route('updateBot') }}" method="POST" id="form2">
                             @csrf
-                            @method('PUT')
                             <input type="hidden" name="botId" :value="bot.id">
 
                             <div class="space-y-5">
@@ -303,12 +302,13 @@
                                     </div>
                                 </div>
                             </div>
+                            <div class="space-x-3 mt-4">
+                                <x-main-button type="submit" class="text-gray-50" >Update</x-main-button>
+                                <button  type="button"  class="bg-gray-50 text-purple-700 shadow-inner border items-center  px-3  text-center  rounded hover:shadow-lg transition duration-300 py-2 text-xs font-semibold   disabled:opacity-25  ease-in-out"
+                                    @click="openModal = false">Cancle</button>
+                            </div>
+                            {{-- <x-main-button type="submit" class="text-gray-50" >Update</x-main-button> --}}
                         </form>
-                        <div class="space-x-3">
-                            <x-main-button type="submit" class="text-gray-50" onclick="document.getElementById('form2').submit()">Update</x-main-button>
-                            <button class="bg-gray-50 text-purple-700 shadow-inner border items-center  px-3  text-center  rounded hover:shadow-lg transition duration-300 py-2 text-xs font-semibold   disabled:opacity-25  ease-in-out"
-                                @click="openModal = false">Cancle</button>
-                        </div>
 
 
 

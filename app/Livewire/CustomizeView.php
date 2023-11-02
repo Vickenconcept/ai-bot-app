@@ -15,7 +15,8 @@ class CustomizeView extends Component
         $size = '15px 20px',
         $position = 'right',
         $launcherIcon = 'bx-bot',
-        $launcherColor = '#1d98f7';
+        $launcherColor = '#1d98f7',
+        $message ;
     public function mount($guestChat)
     {
         $this->guestChat = $guestChat;
