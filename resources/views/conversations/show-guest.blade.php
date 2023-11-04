@@ -37,7 +37,11 @@
         </nav>
             <livewire:template-three :body="$body" :conversationTitle="$conversationTitle" />
         @elseif ($conversationTitle->template === 'temp4')
-            <h1>temp4</h1>
+        <nav class=" fixed flex px-5 py-3 top-0 w-full shadow  bg-purple-900 text-white"
+            style=" color: {{ $conversationTitle->nav_col }}">
+            Welcome
+        </nav>
+            <livewire:template-four :body="$body" :conversationTitle="$conversationTitle" />
         @elseif ($conversationTitle->template === 'temp5')
             <h1>temp5</h1>
         @elseif ($conversationTitle->template === 'temp6')

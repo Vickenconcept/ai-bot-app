@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Services\MailChimpService;
 use Livewire\Component;
 
 class TemplateThree extends Component
@@ -14,11 +15,12 @@ class TemplateThree extends Component
         $chat,
         $email,
         $phoneNumber,
+        $secondToLastIndex,
         $userResponse = '',
         $history = [],
         $chatData = [];
 
-        protected $listeners = ['nextResponse'];
+    protected $listeners = ['nextResponse'];
 
 
 
@@ -26,13 +28,13 @@ class TemplateThree extends Component
     {
         $this->body = $body;
         $this->conversationTitle = $conversationTitle;
-        $this->history[0] = $this->conversationTitle->temp_three[0];
-        $this->chatData = $this->conversationTitle->temp_three;
+        $this->history[0] = $this->conversationTitle->temp_three[0] ?? [];
+        $this->chatData = $this->conversationTitle->temp_three ?? [];
+        $this->secondToLastIndex = count($this->chatData) - 1 ?? '';
 
         foreach ($this->chatData as $chat) {
             $this->chat = $chat;
         }
-
 
         // $this->bot =  Bot::latest()->get();
         // $this->contents =  Content::latest()->get();
@@ -40,27 +42,32 @@ class TemplateThree extends Component
 
     public function nextResponse()
     {
-        // dd($this->conversationTitle->temp_three);
-        if  ($this->currentResponseIndex <  count($this->chatData) - 1  ) {
+        if ($this->currentResponseIndex <  count($this->chatData) - 1) {
             # code...
             $this->currentResponseIndex++;
-            
+
             $this->history[] = $this->chatData[$this->currentResponseIndex];
-        }else{
+        } else {
 
             return;
         }
     }
 
-    public function addResponse()
+    public function subscribe(MailChimpService $mailChimpService)
     {
-        // Move to the next response
-        $this->chatData[] = '';
-
-        // You can add logic to handle reaching the end of the responses array
+        $contacts = $this->conversationTitle->users_contact_info ?? [];
+        array_push($contacts, $this->email ?? $this->phoneNumber);
+        $res = $this->conversationTitle->users_contact_info = $contacts;
+        $this->conversationTitle->update();
     }
+
+
     public function render()
     {
-        return view('livewire.template-three');
+        if ($this->chatData  !== [] &&  count($this->chatData) !== 1) {
+            return view('livewire.template-three');
+        } else {
+            return view('errors.404');
+        }
     }
 }

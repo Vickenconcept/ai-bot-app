@@ -9,10 +9,21 @@ class SelectTemplate extends Component
 {
     public $templates = ['template 1', 'template 2', 'template 3', 'template 4', 'template 5', 'template 6'];
     public $imageUrl = [],
+        $inputs = [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
         $productPrice = [],
         $productName = [],
         $tempThree = [],
+        $tempFour = [],
         $tempThreeDefaultData = [
+            'Hello, how can I assist you?',
+            'Welcome to our website.',
+            'We are not Available right now.',
+            'We Can get in tourch to provide the request.',
+            'Please let us know how you prefer to be contacted (email or phone).',
+            'Thanks we will get in touch soon.',
+
+        ],
+        $tempFourDefaultData = [
             'Hello, how can I assist you?',
             'Welcome to our website.',
             'We are not Available right now.',
@@ -33,9 +44,6 @@ class SelectTemplate extends Component
 
     public function selectedTemplate($id)
     {
-
-
-
         switch ($id) {
             case 'template 1':
                 $this->conversation->template = 'temp1';
@@ -75,11 +83,21 @@ class SelectTemplate extends Component
     }
     public function customizeTemplateThree()
     {
-        // dd($this->tempThree);
-
         $this->conversation->temp_three = $this->tempThree; // Example image links
 
         $this->conversation->update();
+    }
+    public function customizeTemplateFour()
+    {
+        // dd($this->tempThree);
+
+        $this->conversation->temp_four = $this->tempFour; // Example image links
+
+        $this->conversation->update();
+    }
+
+    public function addToTemplateFour(){
+        $this->tempFourDefaultData[] = '';
     }
 
 

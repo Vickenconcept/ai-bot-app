@@ -15,6 +15,8 @@ use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\ProfileController;
 use App\Models\Content;
 use App\Models\Conversation;
+use App\Services\GetResponseService;
+use App\Services\MailChimpService;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
@@ -111,6 +113,18 @@ Route::get('test', function () {
     // Storage::disk('local')->put($filename, $res);
 
     // return storage_path('app/public'.$filename);
+    
+
+    // $getResponseService = app(GetResponseService::class);
+    // dd($getResponseService->getAudience('pxck0psjdi8tipukr0w24fh1d9ct3vi6'));
+
+    
+    // $apiKey = 'e1f7a2e06cf128d61784d6b0db1a24f0-us21';
+        // $prefixKey = 'us21';
+        // $mailChimpService = app(MailChimpService::class);
+        // $res = $mailChimpService->getAllLists($apiKey, $prefixKey);
+        // dd($res);
+
 
    
-})->withoutMiddleware(['auth']);;
+})->withoutMiddleware(['auth']);

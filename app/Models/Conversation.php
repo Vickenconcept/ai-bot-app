@@ -22,6 +22,8 @@ class Conversation extends Model
         'productPrice' => 'array',
         'temp_three' => 'array',
         'temp_four' => 'array',
+        'temp_five' => 'array',
+        'users_contact_info' => 'array',
     ];
 
     public function user(){
