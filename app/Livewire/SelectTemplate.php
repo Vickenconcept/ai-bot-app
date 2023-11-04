@@ -14,6 +14,7 @@ class SelectTemplate extends Component
         $productName = [],
         $tempThree = [],
         $tempFour = [],
+        $tempFive = [],
         $tempThreeDefaultData = [
             'Hello, how can I assist you?',
             'Welcome to our website.',
@@ -25,10 +26,19 @@ class SelectTemplate extends Component
         ],
         $tempFourDefaultData = [
             'Hello, how can I assist you?',
-            'Welcome to our website.',
-            'We are not Available right now.',
+            'https://yourImageLink.com',
+            'https://image.com',
             'We Can get in tourch to provide the request.',
-            'Please let us know how you prefer to be contacted (email or phone).',
+            'Provide us with your email address',
+            'Thanks we will get in touch soon.',
+
+        ],
+        $tempFiveDefaultData = [
+            'Hello, how can I assist you?',
+            'https://yourVideoLink.com',
+            'https://youtube.video.com',
+            'We Can get in tourch to provide the request.',
+            'Provide us with your email address',
             'Thanks we will get in touch soon.',
 
         ];
@@ -89,15 +99,25 @@ class SelectTemplate extends Component
     }
     public function customizeTemplateFour()
     {
-        // dd($this->tempThree);
-
         $this->conversation->temp_four = $this->tempFour; // Example image links
 
         $this->conversation->update();
     }
+    public function customizeTemplateFive()
+    {
+        $this->conversation->temp_five = $this->tempFive; // Example image links
 
+        $this->conversation->update();
+    }
+
+    public function addToTemplateThree(){
+        $this->tempThreeDefaultData[] = '';
+    }
     public function addToTemplateFour(){
         $this->tempFourDefaultData[] = '';
+    }
+    public function addToTemplateFive(){
+        $this->tempFiveDefaultData[] = '';
     }
 
 
