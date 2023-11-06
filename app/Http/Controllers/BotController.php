@@ -83,16 +83,15 @@ class BotController extends Controller
     public function show(Bot $bot, Request $request)
     {
 
-        // $uuid = $request->session()->get('bot_default_conversation');
-        $singleBot = Bot::findOrfail($bot->id);
-        $uuid = $singleBot->uuid_chat;
+        // $singleBot = Bot::findOrfail($bot->id);
+        $singleBot = $bot;
+        $uuid = $bot->uuid_chat;
         $conversation = Conversation::where('uuid', $uuid)->first();
         
         if (!$conversation) {
             // dd('heloo');
             $title = 'Bot #' . rand(0, 99999);
             $defaultBot = Bot::where('name', 'bot')->first();
-
 
             auth()->user()->conversations()->create([
                 'uuid' => $uuid,
@@ -102,7 +101,7 @@ class BotController extends Controller
             ]);
         }
 
-        $guestChat = Conversation::where('uuid', $uuid)->firstOrFail();
+        $guestChat = $conversation;
 
         return view('bots.show', compact('singleBot', 'guestChat'));
     }

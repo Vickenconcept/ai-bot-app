@@ -1,10 +1,7 @@
 <x-app-layout>
-    {{-- {{ $singleBot }} --}}
-    {{-- {{ $guestChat }} --}}
     <x-notification />
 
     <div class="text-gray-700 p-4 md:p-8 space-y-5 bg-gray-50 min-h-screen">
-        this is it: {{ $guestChat->template }}
         <div>
             <h1 class="uppercase font-extrabold tracking-widest text-2xl text-gray-200 ">{{ $singleBot->name }}
             </h1>
@@ -16,7 +13,6 @@
                 <i class='bx bx-x text-2xl font-semibold '></i>
             </button>
         </a>
-
         <div class="grid grid-cols-1 md:grid-cols-3">
             <div class="flex flex-wrap    items-center col-span-1 md:col-span-2">
                 <div class=" bg-gray-800 text-gray-50 rounded-tl rounded-bl">
@@ -26,8 +22,9 @@
                 </div>
                 <div class="">
                     <button onclick="toCopy(document.getElementById('{{ $guestChat->id }}'))"
-                        class=" bg-purple-800 px-4 py-2 text-white  rounded-tr rounded-br text-sm font-semibold   shadow-sm hover:shadow-md  " {{ $guestChat->enabled === 1 ? '' : 'disabled' }}>Copy
-                        </button>
+                        class=" bg-purple-800 px-4 py-2 text-white  rounded-tr rounded-br text-sm font-semibold   shadow-sm hover:shadow-md  "
+                        {{ $guestChat->enabled === 1 ? '' : 'disabled' }}>Copy
+                    </button>
                 </div>
             </div>
         </div>
@@ -56,7 +53,7 @@
         </div>
         <hr>
         <section>
-            <livewire:select-template :guestChat="$guestChat"/>
+            <livewire:select-template :guestChat="$guestChat" />
         </section>
 
         <hr>
@@ -69,7 +66,8 @@
                     <div class="text-xs ">
                         <div class=" text-right">
                             <button onclick="toCopy(document.getElementById('para3'))"
-                                class="  px-4 py-2 text-purple-600  text-md font-semibold  hover:text-purple-800 " {{ $guestChat->enabled === 1 ? '' : 'disabled' }}>copy <i
+                                class="  px-4 py-2 text-purple-600  text-md font-semibold  hover:text-purple-800 "
+                                {{ $guestChat->enabled === 1 ? '' : 'disabled' }}>copy <i
                                     class='bx bxs-copy-alt'></i></button>
                         </div>
                         <p id="para3"
@@ -84,18 +82,21 @@
 
                 {{--  --}}
                 <div class="shadow hover:shadow-lg bg-white  p-4 md:p-10 rounded-lg space-y-5">
-                    <h3>To get the widget to appear on your web app simply copy and paste the snippet below in your code base</h3>
-                    
-                    
-                    
+                    <h3>To get the widget to appear on your web app simply copy and paste the snippet below in your code
+                        base</h3>
+
+
+
                     <div class="text-xs">
                         <h3 class="italic text-sm ">Paste in your body tag</h3>
                         <div class=" text-right">
                             <button onclick="toCopy(document.getElementById('para1'))"
-                                class="  px-4 py-2 text-purple-600  text-md font-semibold  hover:text-purple-800 " {{ $guestChat->enabled === 1 ? '' : 'disabled' }}>copy <i
+                                class="  px-4 py-2 text-purple-600  text-md font-semibold  hover:text-purple-800 "
+                                {{ $guestChat->enabled === 1 ? '' : 'disabled' }}>copy <i
                                     class='bx bxs-copy-alt'></i></button>
                         </div>
-                        <p id="para1" class="bg-gray-800 text-gray-50 p-5 rounded shadow-inner {{ $guestChat->enabled === 1 ? '' : 'blur-sm' }}">
+                        <p id="para1"
+                            class="bg-gray-800 text-gray-50 p-5 rounded shadow-inner {{ $guestChat->enabled === 1 ? '' : 'blur-sm' }}">
 
                             &lt;div&gt;
                             <br>
@@ -154,10 +155,12 @@
                         <h3 class="italic text-sm ">Paste before the end of your body tag</h3>
                         <div class=" text-right">
                             <button onclick="toCopy(document.getElementById('para2'))"
-                                class="  px-4 py-2 text-purple-600  text-md font-semibold  hover:text-purple-800 " {{ $guestChat->enabled === 1 ? '' : 'disabled' }}>copy <i
+                                class="  px-4 py-2 text-purple-600  text-md font-semibold  hover:text-purple-800 "
+                                {{ $guestChat->enabled === 1 ? '' : 'disabled' }}>copy <i
                                     class='bx bxs-copy-alt'></i></button>
                         </div>
-                        <p id="para2" class="bg-gray-800 text-gray-50 p-5 rounded shadow-inner {{ $guestChat->enabled === 1 ? '' : 'blur-sm' }}">
+                        <p id="para2"
+                            class="bg-gray-800 text-gray-50 p-5 rounded shadow-inner {{ $guestChat->enabled === 1 ? '' : 'blur-sm' }}">
 
                             &lt;script&gt;
                             <br>
@@ -185,7 +188,8 @@
                             <br>
                             toggleIcon.addEventListener('click', () => {
                             <br>
-                            iframe.style.display = (iframe.style.display === 'none' || iframe.style.display === '') ?
+                            iframe.style.display = (iframe.style.display === 'none' || iframe.style.display
+                            === '') ?
                             <br>
                             'block' :
                             <br>
@@ -231,17 +235,16 @@
             // alert("copied!");
         }
 
-         function updateDiv() {
-                $("#here").load(window.location.href + " #here");
-            }
-            //  setTimeout(function() {
-            //             // window.location.reload();
-            //         }, 500);
-                    
-                    setInterval(() => {
-                        updateDiv()
-                        
-                    }, 2000);
+        function updateDiv() {
+            $("#here").load(window.location.href + " #here");
+        }
+        //  setTimeout(function() {
+        //             // window.location.reload();
+        //         }, 500);
 
+        setInterval(() => {
+            updateDiv()
+
+        }, 2000);
     </script>
 </x-app-layout>

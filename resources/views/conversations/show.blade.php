@@ -7,7 +7,6 @@
                 class=" font-bold tracking-wider text-xl"> <i class='bx bxs-chevron-left'></i> {{ $conversationTitle->title }}
             </a></div>
         @if ($conversationTitle->template === 'temp1')
-            {{ $conversationTitle->template }}
             <livewire:message-view :body="$body" :conversationTitle="$conversationTitle" />
         @else
             <h1>Not found</h1>

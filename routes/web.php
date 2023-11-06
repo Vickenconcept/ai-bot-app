@@ -60,7 +60,7 @@ Route::resource('guests', GuestController::class);
 // Route::resource('guests', GuestController::class)->middleware('checkRouteStatus:guests.show');
 
 Route::middleware(['auth'])->group(function () {
-    Route::get('/home', [DashboardController::class, 'index'])->name('home')->middleware('admin');
+    Route::get('/home', [DashboardController::class, 'index'])->name('home');
     Route::resource('messages', MessageController::class);
     Route::post('conversations/update', [ConversationController::class, 'updateConversation'])->name('updateConversation');
     // Route::post('conversations/guest', [ConversationController::class, 'guest'])->name('guest');
@@ -101,29 +101,16 @@ Route::get('/clear', function () {
 });
 Route::get('test', function () {
 
-    // $user = auth()->user();
-    // dd($user->generateReferralLink());
-    // return Conversation::findOrfail(29);
 
-
-    // $text = rawurlencode('hello world');
-    // $res = Http::get('https://translate.google.com/?sl=auto&tl=es&text='.$text. '&op=translate');
-
-    // $filename = time().'.mp3';
-    // Storage::disk('local')->put($filename, $res);
-
-    // return storage_path('app/public'.$filename);
+    // https://themewagon.com/theme-tag/hotel-template/
+    // https://themewagon.github.io/keto/index.html
     
 
     // $getResponseService = app(GetResponseService::class);
     // dd($getResponseService->getAudience('pxck0psjdi8tipukr0w24fh1d9ct3vi6'));
 
     
-    // $apiKey = 'e1f7a2e06cf128d61784d6b0db1a24f0-us21';
-        // $prefixKey = 'us21';
-        // $mailChimpService = app(MailChimpService::class);
-        // $res = $mailChimpService->getAllLists($apiKey, $prefixKey);
-        // dd($res);
+
 
 
    

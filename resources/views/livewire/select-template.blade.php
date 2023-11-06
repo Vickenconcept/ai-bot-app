@@ -4,12 +4,12 @@
     <div class="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2" x-show="templateGallary">
         @foreach ($templates as $template)
             <div class="max-w-sm rounded overflow-hidden shadow-lg cursor-pointer"
-                @click="$dispatch('selectedTemplate', { id: @js($template)}),template = @js($template), templateGallary = false">
+                @click="$dispatch('selectedTemplate', { id: @js($template[0])}),template = @js($template[0]), templateGallary = false">
                 <img class="w-full"
-                    src="https://media.istockphoto.com/id/1461083586/photo/half-folded-flyer-a4-booklet-mock-up-on-white-background.webp?b=1&s=170667a&w=0&k=20&c=fjw90yGrGs0XV_RcWtgRfbZ3mDOrZqnw_yzmXuSrRyQ="
+                    src="{{ $template[1] }}"
                     alt="Sunset in the mountains">
                 <div class="px-6 py-4">
-                    <div class=" text-xl mb-2 capitalize">{{ $template }}</div>
+                    <div class=" text-xl mb-2 capitalize">{{ $template[0] }}</div>
                 </div>
             </div>
         @endforeach
@@ -21,9 +21,11 @@
             <button @click="templateGallary = true, template = null" class="hover:underline font-semibold flex items-center"><i class='bx bx-chevron-left '></i> Back</button>
         </div>
         <div x-show="template === 'template 1'">
+            <h1 class="font-bold tracking-wide text-2xl text-center">Trained Bot Converstion <span class="text-sm italic">(default)</span></h1>
             <livewire:customize-view :guestChat="$guestChat" />
         </div>
         <div x-show="template === 'template 2'" class=" w-[60%] mx-auto space-y-5">
+            <h1 class="font-bold tracking-wide text-2xl text-center">Display product images in slides</h1>
             <p>Paste image urls here </p>
             <div class="  grid lg:grid-cols-2 gap-5">
 
@@ -46,9 +48,10 @@
 
         </div>
         <div x-show="template === 'template 3'" class="space-y-5">
+            <h1 class="font-bold tracking-wide text-2xl text-center">Audio Conversation</h1>
             <p>Add desired sentence sequence to get users contact detail, either email or phone number </p>
             <div class="text-red-400 bg-red-50 border border-red-400 p-3 rounded  ">
-                <span>Note: Your CTA follows the second to the lat sentence you input </span>
+                <span>Note: Your CTA follows the second to the last sentence you input </span>
 
             </div>
 
@@ -66,9 +69,10 @@
                 class="btn-primary">submit</button>
         </div>
         <div x-show="template === 'template 4'" class="space-y-5">
+            <h1 class="font-bold tracking-wide text-2xl text-center">Chat with Images</h1>
             <p>Add desired sentence sequence to get users contact detail. You can add image url to your chat template </p>
             <div class="text-red-400 bg-red-50 border border-red-400 p-3 rounded  ">
-                <span>Note: Your CTA follows the second to the lat sentence you input </span>
+                <span>Note: Your CTA follows the second to the last sentence you input </span>
 
             </div>
 
@@ -87,9 +91,10 @@
 
         </div>
         <div x-show="template === 'template 5'" class="space-y-5">
+            <h1 class="font-bold tracking-wide text-2xl text-center">Chat with videos</h1>
             <p>Add desired sentence sequence to get users contact detail. You can add video url to your chat template </p>
             <div class="text-red-400 bg-red-50 border border-red-400 p-3 rounded  ">
-                <span>Note: Your CTA follows the second to the lat sentence you input </span>
+                <span>Note: Your CTA follows the second to the last sentence you input </span>
 
             </div>
 

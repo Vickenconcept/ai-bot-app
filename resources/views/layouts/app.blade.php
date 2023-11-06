@@ -53,7 +53,7 @@
         ">
             <button @click="openHelp = false"><i class="bx bx-x"></i></button>
         </div>
-       
+
         {{ $slot }}
 
 
@@ -62,23 +62,163 @@
 
 
     <script>
-        //  initializeEmbed();
-        // function createMessageElement(content, role) {
-        //     const messageDiv = 'document.createElement('div')';
-        //     messageDiv.className = `message ${role}-message`;
-        //     messageDiv.innerText = `${role.charAt(0).toUpperCase() + role.slice(1)}: ${content}`;
-        //     return messageDiv;
+        var synthesis = window.speechSynthesis;
+
+
+
+
+        // document.addEventListener('DOMContentLoaded', function() {
+        //     if ('speechSynthesis' in window) {
+        //         var synthesis = window.speechSynthesis;
+
+        //         // Regex to match all English language tags e.g en, en-US, en-GB
+        //         var langRegex = /^en(-[a-z]{2})?$/i;
+
+        //         // Get the available voices and filter the list to only have English speakers
+
+        //         synthesis.onvoiceschanged = function() {
+        //             var voices = synthesis.getVoices().filter((voice) => langRegex.test(voice.lang));
+
+        //             // Log the properties of the voices in the list
+        //             voices.forEach(function(voice) {
+        //                 // console.log({
+        //                 //     name: voice.name,
+        //                 //     lang: voice.lang,
+        //                 //     uri: voice.voiceURI,
+        //                 //     local: voice.localService,
+        //                 //     default: voice.default,
+        //                 // });
+        //             });
+
+
+
+        //             var voice = voices.find(function(voice) {
+        //                 return voice.lang.includes('en');
+        //             });
+
+
+        //             // Create an utterance object
+        //             var utterance = new SpeechSynthesisUtterance('We are not Available right now.');
+
+        //             // utterance.text = "My name is Eleazar Nzerem.";
+
+        //             // Set utterance properties
+        //             utterance.lang = 'en'; // Set the language
+        //             utterance.voice = voice;
+        //             utterance.pitch = 1.5;
+        //             utterance.rate = 1.25;
+        //             utterance.volume = 0.8;
+
+
+        //             utterance.onstart = function() {
+        //                 console.log('Speech synthesis started.');
+        //             }
+
+        //             utterance.onend = function() {
+        //                 console.log('Speech synthesis complete.');
+        //             }
+
+        //             utterance.onerror = function(event) {
+        //                 console.error('Speech synthesis error:', event.error);
+        //             }
+
+
+        //             // Speak the utterance
+        //             synthesis.speak(utterance);
+        //         };
+
+
+        //     } else {
+        //         console.log('Text-to-speech not supported.');
+        //     }
+
+        //     console.log('helo');
+        // });
+
+        // function textToSpeach() {
+        //     // Wrap your code in a DOMContentLoaded event listener
+        //     document.addEventListener('DOMContentLoaded', function() {
+        //         // Your speech synthesis code here
+        //         var synthesis = window.speechSynthesis;
+
+        //         // Check if speech synthesis is supported
+        //         if ('speechSynthesis' in window) {
+        //             // Create a new SpeechSynthesisUtterance
+        //             var utterance = new SpeechSynthesisUtterance('Hello, I am speaking!');
+
+        //             // Set the voice and other properties
+        //             var voices = synthesis.getVoices();
+        //             var voice = voices.find(function(voice) {
+        //                 return voice.lang.includes('en');
+        //             });
+
+        //             if (voice) {
+        //                 utterance.voice = voice;
+        //                 utterance.lang = 'en'; // Set the language
+        //                 utterance.pitch = 1.5;
+        //                 utterance.rate = 1.25;
+        //                 utterance.volume = 0.8;
+
+        //                 // Speak the utterance
+        //                 synthesis.speak(utterance);
+        //             } else {
+        //                 console.error('No English voice found.');
+        //             }
+        //         } else {
+        //             console.error('Speech synthesis is not supported in this browser.');
+        //         }
+        //     });
+        //     console.log('onning');
+
+
+        // }
+        // textToSpeach()
+
+
+        // function textToSpeech() {
+        //     // Your speech synthesis code here
+        //     var synthesis = window.speechSynthesis;
+
+        //     // Check if speech synthesis is supported
+        //     if ('speechSynthesis' in window) {
+        //         // Create a new SpeechSynthesisUtterance
+        //         var utterance = new SpeechSynthesisUtterance('Hello, I am speaking!');
+
+        //         // Set the voice and other properties
+        //         var voices = synthesis.getVoices();
+        //         var voice = voices.find(function(voice) {
+        //             return voice.lang.includes('en');
+        //         });
+
+        //         if (voice) {
+        //             utterance.voice = voice;
+        //             utterance.lang = 'en'; // Set the language
+        //             utterance.pitch = 1.5;
+        //             utterance.rate = 1.25;
+        //             utterance.volume = 0.8;
+
+        //             // Speak the utterance
+        //             synthesis.speak(utterance);
+        //         } else {
+        //             console.error('No English voice found.');
+        //         }
+        //     } else {
+        //         console.error('Speech synthesis is not supported in this browser.');
+        //     }
         // }
 
-
-       
-
-
-
-        // Function to handle message submission
+        // document.getElementById('speakButton').addEventListener('click', textToSpeech);
 
 
 
+
+
+
+
+
+
+
+        // -------- //
 
         function logout(e) {
             localStorage.clear();
@@ -151,44 +291,14 @@
                 }
                 accumulatedMessage += event.data + ' ';
                 appendMessage(accumulatedMessage)
-                // appendMessage(event.data);
-                // const responseLines = event.data.split('\n');
-                // responseLines.forEach(line => {
-                //     if (line.trim() !== '') {
-                //         appendMessage("AI: " + line.trim());
-                //     }
-                // });
+
             };
 
             source.onerror = (error) => {
                 console.error('EventSource failed: ', error);
             };
         });
-
-
-        // Retrieve and display previous messages from local storage
-        // const previousMessages = JSON.parse(localStorage.getItem('chatMessages')) || [];
-        // previousMessages.forEach((message) => {
-        //     appendMessage(message);
-        // });
-
-        // // Store messages in local storage
-        // window.addEventListener('beforeunload', () => {
-        //     const messages = result.innerText.split('\n');
-        //     localStorage.setItem('chatMessages', JSON.stringify(messages));
-        // });
     </script>
-
-    {{-- <script type='text/javascript' charset='utf-8'>     
-        var iframe = document.createElement('iframe');       
-        document.body.appendChild(iframe);
-     
-        iframe.src = 'http://127.0.0.1:8000/guests/42331577-b859-4745-b726-07d107917db6';       
-        iframe.width = '400';
-        iframe.height = '500';
-     </script> --}}
-
-
 
     @livewireScripts
 

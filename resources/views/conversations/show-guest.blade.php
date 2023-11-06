@@ -24,7 +24,7 @@
                             class='bx bxs-chevron-left'></i>Back</a>
                 @endif
             </nav>
-            <div class=" text-gray-700 pb-20 w-full md:w-[75%] mx-auto ">
+            <div class=" text-gray-700 pb-20 w-full md:w-[75%] mx-auto mt-12 ">
                 <livewire:message-view :body="$body" :conversationTitle="$conversationTitle" />
             </div>
         @elseif ($conversationTitle->template === 'temp2')

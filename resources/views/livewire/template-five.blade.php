@@ -1,7 +1,4 @@
 <div>
-
-    {{-- <iframe src="https://player.vimeo.com/video/869914708" width="560" height="315" frameborder="0" allowfullscreen></iframe> --}}
-
     <div class="mt-20 pb-10">
         <div class="w-full px-5 flex flex-col justify-between" x-data="{ isOpen: null, openLast: false, contactType: true }">
             <div class="flex flex-col mt-5">
@@ -13,23 +10,17 @@
                                     class='bx bxs-user-circle text-2xl '></i></span>
                             @if (strpos($response, 'https://') === 0)
                                 <div
-                                    class="ml-2 p-3 bg-purple-200 text-purple-900 rounded-br-3xl rounded-tl-3xl rounded-tr-3xl ">
-                                    {{-- <img src="{{ $response }}"
-                                        class="h-96 w-96 rounded-br-3xl rounded-tl-3xl rounded-tr-3xl" alt=""> --}}
-                                    {{-- <iframe src="{{$response}}" width="600px" height="400px" frameborder="0"></iframe> --}}
+                                    class="ml-2 p-3 bg-purple-200 text-purple-900 rounded-br-3xl rounded-bl-3xl rounded-tr-3xl ">
                                     @php
                                         $response = preg_replace('/youtu.be\/(.+)/', "www.youtube.com/embed/$1", $response);
                                         $response = preg_replace('/vimeo.com\/(.+)/', "player.vimeo.com/video/$1", $response);
-
-                                        // Replace watch?v= with embed/
                                         $response = str_replace('watch?v=', 'embed/', $response);
                                     @endphp
-                                    <iframe src="{{ $response }}" width="600" height="400"
-                                        frameborder="0"></iframe>
+                                    <iframe src="{{ $response }}" class="w-full h-[40vh] rounded-br-3xl rounded-bl-3xl rounded-tr-3xl" frameborder="0"></iframe>
                                 </div>
                             @else
                                 <div
-                                    class="ml-2 py-3 px-4 bg-purple-200 text-purple-900 rounded-br-3xl rounded-tl-3xl rounded-tr-3xl ">
+                                    class="ml-2 py-3 px-4 bg-purple-200 text-purple-900 rounded-br-3xl rounded-bl-3xl rounded-tr-3xl ">
                                     {{ $response }}
                                 </div>
                             @endif
@@ -62,7 +53,7 @@
                 @endforeach
                 <div class="flex justify-end mb-4" x-show="openLast">
                     <div
-                        class="mr-2 py-3 px-4 bg-purple-800 text-purple-50 rounded-bl-3xl rounded-tl-3xl rounded-tr-3xl ">
+                        class="mr-2 py-3 px-4 bg-purple-800 text-purple-50 rounded-tl-3xl rounded-bl-3xl rounded-br-3xl ">
                         {{ $email }}
                     </div>
                     <span class="h-8 w-8 rounded-full flex justify-center items-center font-bold  bg-green-100  ">
@@ -72,27 +63,21 @@
                 <div class="flex justify-start mb-4" x-show="openLast">
                     <span class="h-8 w-8 rounded-full flex justify-center items-center font-bold  bg-green-100 "><i
                             class='bx bxs-bot text-2xl '></i></span>
-                    {{-- <div
-                        class="ml-2 py-3 px-4 bg-purple-200 text-purple-900 rounded-br-3xl rounded-tl-3xl rounded-tr-3xl ">
-                        {{ $chatData[$secondToLastIndex] }}
-                    </div> --}}
                     @if (strpos($chatData[$secondToLastIndex], 'https://') === 0)
                         <div
-                            class="ml-2 p-3 bg-purple-200 text-purple-900 rounded-br-3xl rounded-tl-3xl rounded-tr-3xl ">
-                            {{-- <img src="{{ $chatData[$secondToLastIndex] }}"
-                                class="h-96 w-96 rounded-br-3xl rounded-tl-3xl rounded-tr-3xl" alt=""> --}}
+                            class="ml-2 p-3 bg-purple-200 text-purple-900 rounded-br-3xl rounded-bl-3xl rounded-tr-3xl ">
+
                             @php
                                 $response = preg_replace('/youtu.be\/(.+)/', "www.youtube.com/embed/$1", $chatData[$secondToLastIndex]);
                                 $response = preg_replace('/vimeo.com\/(.+)/', "player.vimeo.com/video/$1", $chatData[$secondToLastIndex]);
 
-                                // Replace watch?v= with embed/
                                 $response = str_replace('watch?v=', 'embed/', $response);
                             @endphp
-                            <iframe src="{{ $response }}" width="600" height="400" frameborder="0"></iframe>
+                            <iframe src="{{ $response }}" class="w-full h-[40vh] rounded-br-3xl rounded-bl-3xl rounded-tr-3xl" frameborder="0"></iframe>
                         </div>
                     @else
                         <div
-                            class="ml-2 py-3 px-4 bg-purple-200 text-purple-900 rounded-br-3xl rounded-tl-3xl rounded-tr-3xl ">
+                            class="ml-2 py-3 px-4 bg-purple-200 text-purple-900 rounded-br-3xl rounded-bl-3xl rounded-tr-3xl ">
                             {{ $response }}
                         </div>
                     @endif

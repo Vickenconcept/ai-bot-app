@@ -57,11 +57,22 @@
 
 
         </ul>
+        {{-- <div wire:loading
+            class="fixed items-center justify-center  overflow-auto flex top-0 left-0 mx-auto w-full h-full bg-gray-800 bg-opacity-20 z-10 transition duration-1000 ease-in-out">
+            <div class="">
+                Loading...
+                <img src="{{ asset('image/Blocks.gif') }}" class="h-16 w-16" alt="loading..">
+            </div>
+        </div> --}}
 
 
         {{--  --}}
-
+        
         <div class=" w-[100%] md:w-[75%] bottom-5  fixed  ">
+            <div class=" mx-auto w-32 animate-pulse font-semibold px-20" wire:loading>
+                <span>Loading...</span>
+                {{-- <img src="{{ asset('image/Blocks.gif') }}" class="h-16 w-16" alt="loading.."> --}}
+            </div>
             <div class=" w-full flex justify-center container">
                 <div
                     class="w-[90%]   mx-auto  border border-gray-200 rounded-lg bg-gray-50 shadow-md shadow-blue-200  ">
@@ -71,13 +82,9 @@
                             <textarea id="message" rows="2"
                                 class="w-full px-2 text-sm text-gray-900 bg-white border-0  focus:ring-transparent focus:outline-none resize-none"
                                 placeholder="Ask {{ $conversationTitle->bot->name }}" wire:model.defer="message"></textarea>
-                            {{-- <textarea name="" id="nterim_span"  rows="1" class="w-full"></textarea> --}}
-                            {{-- <p id="interim_span"></p> --}}
+                           
                         </form>
                     </div>
-
-
-                    {{-- <p id="final_span"></p> --}}
 
                     <div class="flex items-center justify-between px-2  border-t  ">
                         <button @click="isOpen = true"
@@ -117,7 +124,7 @@
                         </div>
                         <div wire:loading class="text-xl font-bold text-gray-400">
                             <button wire:click="generateContent"
-                                class="inline-flex items-center py-2.5 px-4 text-2xl font-medium text-center text-gray-400 rounded-lg hover:text-gray-500">
+                                class="inline-flex items-center animate-pulse py-2.5 px-4 text-2xl font-medium text-center text-gray-400 rounded-lg hover:text-gray-500">
                                 ...
                             </button>
                         </div>

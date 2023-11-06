@@ -30,7 +30,12 @@
                             <div class=" text-center  mt-5 block ">
                                 <p class="text-[18px]  font-bold capitalize tracking-widest">{{ $data['name'] }}</p>
                                 <p class="text-[15px]  ">${{ $data['price'] }}</p>
-                                <button class="text-white bg-purple-700 rounded-lg py-2 px-4 ">Add to cart</button>
+                                <a href="mailto:{{ auth()->user()->email }}?subject=I%20Want%20to%20Purchase%20This&body=Hello,%20I%20would%20like%20to%20purchase%20the%20following%20item:%0A%0AProduct:%20{{ $data['name'] }}%0APrice:%20${{ $data['price'] }}%0A%0APlease%20provide%20details%20on%20how%20to%20proceed.%0A">
+                              
+                                {{-- <a href="mailto:admin@gmsil.com?subject=I%20Want%20to%20Purchase%20This&body=Hello,%20I%20would%20like%20to%20purchase%20the%20following%20item:%0A%0AProduct:%20Car%0APrice:%20$XXXXX%0A%0APlease%20provide%20details%20on%20how%20to%20proceed.%0A">
+                               --}}
+                                    <button class="text-white bg-purple-700 rounded-lg py-2 px-4 ">Purchase</button>
+                                </a>
                             </div>
                         </div>
                     @endforeach
