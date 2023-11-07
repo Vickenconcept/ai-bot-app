@@ -66,12 +66,12 @@
 
                                             <x-dropdown-link class="cursor-pointer ">
                                                 <div @click=" openModal= true; bot = @js($bot) "
-                                                    class="w-full text-left">Edit <i class='bx bxs-edit-alt'></i></div>
+                                                    class="w-full text-left px-4 py-2">Edit <i class='bx bxs-edit-alt'></i></div>
 
                                             </x-dropdown-link>
                                             <x-dropdown-link class="cursor-pointer "
                                                 href="{{ route('conversations.index') }}">
-                                                <div class="w-full text-left">Chat <i
+                                                <div class="w-full text-left px-4 py-2">Chat <i
                                                         class='bx bx-message-rounded mr-1 text-sm'></i></div>
 
                                             </x-dropdown-link>
@@ -82,7 +82,7 @@
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="w-full text-left">{{ __('Delete') }}
+                                                    <button type="submit" class="w-full text-left px-4 py-2">{{ __('Delete') }}
                                                         <i class='bx bxs-message-rounded-x'></i></button>
                                                 </form>
                                             </x-dropdown-link>

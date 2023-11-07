@@ -1,6 +1,6 @@
 <x-app-layout>
     {{-- <x-notification /> --}}
-    <div class="grid grid-cols-1 lg:grid-cols-8 h-full relative" x-data="{ closeSidebar: true, openModal: false, openModal2: false, conversation: '',guest:'', isGuest: false }">
+    <div class="grid grid-cols-1 lg:grid-cols-8 h-full relative" x-data="{ closeSidebar: true, openModal: false, openModal2: false, conversation: '', guest: '', isGuest: false }">
 
         <div class="col-span-2">
             <div class="col-span-2 p-3 bg-purple-200  h-screen fixed  lg:block  lg:w-[315px] space-y-5 {{ request()->routeIs('conversations.show') ? 'hidden' : 'w-full' }}"
@@ -12,7 +12,8 @@
                     <div class="flex ">
                         <button class="border-b-2 border-white py-1 px-4 font-semibold  text-sm  text-purple-700"
                             @click="isGuest = false">Yours</button>
-                        <x-main-button class=" text-gray-50 shadow-inner border-b-2  border-white" @click="isGuest = true">Guest</x-main-button>
+                        <x-main-button class=" text-gray-50 shadow-inner border-b-2  border-white"
+                            @click="isGuest = true">Guest</x-main-button>
                     </div>
                     <div class="mt-2 flex space-x-3">
                         <form class=" w-full" action="{{ route('conversations.index') }}" method="GET">
@@ -28,9 +29,10 @@
                         </form>
                     </div>
 
-                    <ul class="space-y-5 pt-5" >
+                    <ul class="space-y-5 pt-5">
                         @foreach ($conversation as $conversation)
-                            <li class="text-purple-900 font-semibold  flex justify-between text-md tracking-wide capitalize">
+                            <li
+                                class="text-purple-900 font-semibold  flex justify-between text-md tracking-wide capitalize">
                                 <a href="{{ route('conversations.show', $conversation->slug) }}">
                                     <i class='bx bxs-conversation mr-1 text-sm'></i>
                                     {{ $conversation->title }}
@@ -44,8 +46,8 @@
                                     <x-slot name="content">
 
                                         <x-dropdown-link class="cursor-pointer ">
-                                            <div @click=" openModal= true; conversation = @js($conversation) "
-                                                class="w-full text-left">Rename <i class='bx bxs-edit-alt'></i></div>
+                                            <button @click=" openModal= true; conversation = @js($conversation) "
+                                                class="w-full text-left px-4 py-2">Rename <i class='bx bxs-edit-alt'></i></button>
 
                                         </x-dropdown-link>
                                         <x-dropdown-link>
@@ -54,7 +56,7 @@
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="w-full text-left">{{ __('Delete') }} <i
+                                                <button type="submit" class="w-full text-left px-4 py-2">{{ __('Delete') }} <i
                                                         class='bx bxs-message-rounded-x'></i></button>
                                             </form>
                                         </x-dropdown-link>
@@ -71,7 +73,8 @@
                     <div class="flex">
                         <x-main-button class=" text-gray-50  shadow-inner border-b-2  border-white"
                             @click="isGuest = false">Yours</x-main-button>
-                        <button class="border-b-2 border-white py-1 px-4 font-semibold  text-sm " @click="isGuest = true">Guest</button>
+                        <button class="border-b-2 border-white py-1 px-4 font-semibold  text-sm "
+                            @click="isGuest = true">Guest</button>
                     </div>
                     <div class="mt-2 flex space-x-3">
                         <form class=" w-full" action="{{ route('conversations.index') }}" method="GET">
@@ -87,13 +90,31 @@
                         </form>
                     </div>
 
-                    <ul class="space-y-5 pt-5" >
+                    <ul class="space-y-5 pt-5">
                         @foreach ($guest as $guest)
-                            <li class="text-purple-900 font-semibold  flex justify-between text-md tracking-wide capitalize">
-                                <a href="{{ route('guests.show', $guest->uuid ) }}">
+                            <li
+                                class="text-purple-900 font-semibold  flex justify-between text-md tracking-wide capitalize">
+                                <a href="{{ route('guests.show', $guest->uuid) }}">
                                     <i class='bx bxs-conversation mr-1 text-sm'></i>
                                     {{ $guest->title }}
                                 </a>
+
+                                {{-- <div x-show="isOpen" @click.away="isOpen = false" style="display: none"
+                                    class="absolute right-0 z-10 mt-2 w-48 origin-top-right  bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
+                                    role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
+                                    tabindex="-1">
+                                    <a href="{{ route('profile') }}" class="block px-4 py-2 text-sm text-gray-700"
+                                        role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
+
+                                    <form action="{{ route('auth.logout') }}" method="POST">
+                                        @csrf
+
+                                        <a href="javascript:void(0)" onclick="logout(this)"
+                                            class="block px-4 py-2 text-sm text-gray-700">Sign out</a>
+                                    </form>
+                                    <a href="{{ route('home') }}"
+                                        class="block px-4 py-2 text-sm text-gray-700">Dashboard</a>
+                                </div> --}}
 
                                 <x-dropdown>
                                     <x-slot name="trigger">
@@ -102,9 +123,9 @@
                                     </x-slot>
                                     <x-slot name="content">
 
-                                        <x-dropdown-link class="cursor-pointer ">
-                                            <div @click=" openModal2= true; guest = @js($guest) "
-                                                class="w-full text-left">Rename <i class='bx bxs-edit-alt'></i></div>
+                                        <x-dropdown-link class="cursor-pointer">
+                                            <button @click=" openModal2= true; guest = @js($guest) "
+                                                class="w-full text-left px-4 py-2">Rename <i class='bx bxs-edit-alt'></i></button>
 
                                         </x-dropdown-link>
                                         <x-dropdown-link>
@@ -113,8 +134,8 @@
                                                 method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit" class="w-full text-left">{{ __('Delete') }} <i
-                                                        class='bx bxs-message-rounded-x'></i></button>
+                                                <button type="submit" class="w-full text-left px-4 py-2">{{ __('Delete') }}
+                                                    <i class='bx bxs-message-rounded-x'></i></button>
                                             </form>
                                         </x-dropdown-link>
 
@@ -144,7 +165,8 @@
                                     autocomplete="false">
                                 <div class="space-x-3">
                                     <x-main-button type="submit" class="text-gray-50">Update</x-main-button>
-                                    <button class="bg-gray-50 rounded hover:shadow-md px-2 py-1 text-purple-700 shadow-inner border"
+                                    <button
+                                        class="bg-gray-50 rounded hover:shadow-md px-2 py-1 text-purple-700 shadow-inner border"
                                         @click="openModal = false">Cancle</button>
                                 </div>
                             </div>
@@ -154,7 +176,7 @@
                 </div>
             </div>
 
-            {{-- modal for guest--}}
+            {{-- modal for guest --}}
             <div class="fixed items-center justify-center  flex top-0 left-0 mx-auto w-full h-full bg-gray-600 bg-opacity-20 z-10 transition duration-1000 ease-in-out"
                 x-show="openModal2" style="display: none;">
                 <div @click.away="openModal2 = false"
@@ -166,12 +188,12 @@
                             {{-- @method('PUT') --}}
                             <div class="space-y-5">
                                 <input type="hidden" :value="guest.id" name="conversationId">
-                                <input id="guest.id" type="text" name="title"
-                                    placeholder="Search guest" :value="guest.title" class="form-control"
-                                    autocomplete="false">
+                                <input id="guest.id" type="text" name="title" placeholder="Search guest"
+                                    :value="guest.title" class="form-control" autocomplete="false">
                                 <div class="space-x-3">
                                     <x-main-button type="submit" class="text-gray-50">Update</x-main-button>
-                                    <button class="bg-gray-50 rounded hover:shadow-md px-2 py-1 text-purple-700 shadow-inner border"
+                                    <button
+                                        class="bg-gray-50 rounded hover:shadow-md px-2 py-1 text-purple-700 shadow-inner border"
                                         @click="openModal2 = false">Cancle</button>
                                 </div>
                             </div>

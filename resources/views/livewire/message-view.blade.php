@@ -34,7 +34,8 @@
                             </div>
                             <div
                                 class="grid grid-cols-8  py-2 pl-2 pr-4 rounded {{ $content->sender !== 'bot' ? '' : 'hover:bg-gray-200' }}">
-                                <li class="col col-span-7 text-justify " id="{{ $content->id }}">{{ $content->message }}
+                                <li class="col col-span-7 text-justify " id="{{ $content->id }}">
+                                    {{ $content->message }}
                                 </li>
                                 <div class="text-right col-span-1">
                                     <button
@@ -67,7 +68,7 @@
 
 
         {{--  --}}
-        
+
         <div class=" w-[100%] md:w-[75%] bottom-5  fixed  ">
             <div class=" mx-auto w-32 animate-pulse font-semibold px-20" wire:loading>
                 <span>Loading...</span>
@@ -82,7 +83,7 @@
                             <textarea id="message" rows="2"
                                 class="w-full px-2 text-sm text-gray-900 bg-white border-0  focus:ring-transparent focus:outline-none resize-none"
                                 placeholder="Ask {{ $conversationTitle->bot->name }}" wire:model.defer="message"></textarea>
-                           
+
                         </form>
                     </div>
 
@@ -96,15 +97,15 @@
                         <div class=" {{ request()->routeIs('conversations.show') ? 'hidden' : '' }}" wire:ignore></div>
                         <div class="flex pl-0 space-x-1 sm:pl-2 {{ request()->routeIs('guests.show') ? 'hidden' : '' }}"
                             wire:ignore>
-                            <div  class="relative"  x-data="{ isOpen: false }">
-                                <button type="button"
-                                @click="isOpen = !isOpen"
+                            <div class="relative" x-data="{ isOpen: false }">
+                                <button type="button" @click="isOpen = !isOpen"
                                     class="inline-flex justify-center items-center p-2 text-gray-900 rounded cursor-pointer hover:text-gray-900 hover:rotate-45 duration-500  ">
                                     <i class='bx bx-cog'></i>
                                 </button>
-                                    <button x-show="isOpen" @click.away="isOpen = false" wire:click="clearMessages" class=" flex items-center shadow absolute -top-8 -left-12 ml-3 w-32 bg-white hover:bg-red-100 hover:text-red-500 px-4 py-1 rounded-lg">
-                                        <i class='bx bx-reset'></i>  Clear chat
-                                    </button>
+                                <button x-show="isOpen" @click.away="isOpen = false" wire:click="clearMessages"
+                                    class=" flex items-center shadow absolute -top-8 -left-12 ml-3 w-32 bg-white hover:bg-red-100 hover:text-red-500 px-4 py-1 rounded-lg">
+                                    <i class='bx bx-reset'></i> Clear chat
+                                </button>
                             </div>
 
 
@@ -135,7 +136,7 @@
                                     class='bx bxs-microphone text-red-500'></i></button>
 
                             <button wire:click="generateContent" id="send" {{-- {{ !is_null($message) && !empty($message) ? '' : 'disabled' }} --}}
-                            onclick="stopButton(event)" 
+                                onclick="stopButton(event)"
                                 class="inline-flex items-center py-2.5 px-4 text-xs font-medium text-center text-gray-400 rounded-lg hover:text-gray-500">
                                 <i class='bx bxs-send text-2xl'></i>
                             </button>
@@ -310,11 +311,19 @@
             document.addEventListener('livewire:initialized', function() {
                 @this.on('refreshComponent', (data) => {
 
-                    $("#here").load(window.location.href + " #here");
+                    // $("#here").load(window.location.href + " #here");
+                    location.reload();
                     document.body.scrollTop = document.body.scrollHeight;
                     document.documentElement.scrollTop = document.documentElement.scrollHeight;
                 });
             });
+
+            // window.addEventListener("DOMContentLoaded", (event) => {
+            //     console.log("DOM fully loaded and parsed");
+            //     document.body.scrollTop = document.body.scrollHeight;
+            //     document.documentElement.scrollTop = document.documentElement.scrollHeight;
+            // });
+
 
 
 

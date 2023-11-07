@@ -15,24 +15,17 @@
 
 
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
-    {{-- <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> --}}
-
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
 
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+    <link rel="stylesheet" href="{{ asset('build/assets/app-171b3f1e.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
+    <script src="{{ asset('build/assets/app-11155cd2.js') }}"></script>
 
     @livewireStyles
-    {{-- <script>
-        window.codySettings = { widget_id: '9a136341-8616-4af5-b6e8-ab72fb2a9dd5' };
-        
-        !function(){var t=window,e=document,a=function(){var t=e.createElement("script");t.type="text/javascript",t.async=!0,t.src="https://trinketsofcody.com/cody-widget.js";var a=e.getElementsByTagName("script")[0];a.parentNode.insertBefore(t,a)};"complete"===document.readyState?a():t.attachEvent?t.attachEvent("onload",a):t.addEventListener("load",a,!1)}();
-        </script> --}}
-
-
-
 </head>
 
 <body class="h-full">
@@ -40,20 +33,6 @@
 
         <x-header />
         <x-pre-loader />
-        {{-- <span x-text="openHelp"></span> --}}
-        <div x-show="openHelp" class="bg-red-500 p-20 fixed z-50 w-72 "
-            style="display: none
-            left: 20px;
-            box-shadow: 3px 3px 6px lightgray ; 
-            border: 3px solid darkblue; 
-            border-radius: 10px;
-            display: none;
-            background-color: #fff; 
-            height:500px;
-        ">
-            <button @click="openHelp = false"><i class="bx bx-x"></i></button>
-        </div>
-
         {{ $slot }}
 
 
@@ -228,7 +207,6 @@
 
         const form = document.querySelector("#form-question");
         const result = document.getElementById("result");
-        // const question = document.getElementById("question");
         const question = document.getElementById("question");
 
         // 
@@ -250,7 +228,6 @@
             newDiv.innerText = "\n" + message;
 
             result.appendChild(newDiv);
-            // question.innerText += "\n" + message; // Add a newline after each message
         }
         // 
 
@@ -265,7 +242,6 @@
             event.target.input.value = "";
 
             appendMessageForUser("You: " + input);
-            // result.innerText = createMessageElement(input, 'user') 
 
             const queryQuestion = encodeURIComponent(input);
             const source = new EventSource("/ask?question=" + queryQuestion);
@@ -275,7 +251,6 @@
                     source.close();
                     return;
                 }
-                // result.innerText += event.data + " \n";
 
             });
             // -----

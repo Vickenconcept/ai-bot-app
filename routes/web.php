@@ -34,7 +34,8 @@ use Illuminate\Support\Facades\Storage;
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    // return view('welcome');
+    return redirect()->to('login');
 });
 
 Route::middleware('guest')->group(function () {

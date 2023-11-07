@@ -23,7 +23,7 @@
                                     class='bx bx-dots-vertical-rounded'></i></x-main-button>
                         </x-slot>
                         <x-slot name="content">
-                            <x-dropdown-link class="cursor-pointer " onclick="deleteSelectedItems()">
+                            <x-dropdown-link class="cursor-pointer px-4 py-2 " onclick="deleteSelectedItems()">
                                 Delete
                             </x-dropdown-link>
                         </x-slot>

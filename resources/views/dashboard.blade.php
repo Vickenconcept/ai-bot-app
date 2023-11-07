@@ -8,10 +8,10 @@
                         contacts
                     </li>
                 </a>
-                <a href="#" @click="isOpen = 'support'">
+                {{-- <a href="#" @click="isOpen = 'support'">
                     <li class="py-0.5 px-2 rounded-md text-sm bg-purple-50 hover:bg-purple-300 text-gray-900">Support
                     </li>
-                </a>
+                </a> --}}
 
             </ul>
         </div>

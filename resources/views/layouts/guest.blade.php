@@ -7,7 +7,6 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('image/favicon.ico') }}">
-    {{-- <meta name="csrf_token" content="TOKEN" id="csrf_token" data-turbolinks-permanent> --}}
 
     <title>ChatBot</title>
 
@@ -15,7 +14,10 @@
 
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+    <link rel="stylesheet" href="{{ asset('build/assets/app-171b3f1e.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
+    <script src="{{ asset('build/assets/app-11155cd2.js') }}"></script>
 
 </head>
 

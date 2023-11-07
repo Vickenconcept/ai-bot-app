@@ -6,6 +6,7 @@ use App\Models\Bot;
 use App\Models\Conversation;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
+use App\Http\Middleware\CheckRouteStatus;
 
 class GuestController extends Controller
 {

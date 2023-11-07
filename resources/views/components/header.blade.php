@@ -71,6 +71,8 @@
                             <a href="javascript:void(0)" onclick="logout(this)"
                                 class="block px-4 py-2 text-sm text-gray-700">Sign out</a>
                         </form>
+                        <a href="{{ route('home') }}" 
+                                class="block px-4 py-2 text-sm text-gray-700">Dashboard</a>
                     </div>
                 </div>
             </div>

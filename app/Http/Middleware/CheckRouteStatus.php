@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Symfony\Component\HttpFoundation\Response;
 
-class CheckRouteStatus
+class CheckRouteStatus  
 {
     /**
      * Handle an incoming request.

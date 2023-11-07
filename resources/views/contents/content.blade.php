@@ -33,7 +33,7 @@
                                 <x-slot name="content">
 
                                     <x-dropdown-link class="cursor-pointer ">
-                                        <div @click=" openModal= true; content = @js($content) " class="w-full text-left">Rename <i class='bx bxs-edit-alt' ></i></div>
+                                        <div @click=" openModal= true; content = @js($content) " class="w-full text-left px-4 py-2">Rename <i class='bx bxs-edit-alt' ></i></div>
                                         
                                     </x-dropdown-link>
                                     <x-dropdown-link>
@@ -42,7 +42,7 @@
                                             method="POST">
                                             @csrf
                                             @method('DELETE')
-                                            <button type="submit" class="w-full text-left">{{ __('Delete') }} <i
+                                            <button type="submit" class="w-full text-left px-4 py-2">{{ __('Delete') }} <i
                                                     class='bx bxs-message-rounded-x'></i></button>
                                         </form>
                                     </x-dropdown-link>
