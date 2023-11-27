@@ -14,15 +14,17 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    {{-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> --}}
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js " defer></script>
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
 
 
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
-    <link rel="stylesheet" href="{{ asset('build/assets/app-171b3f1e.css') }}">
     <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-2addb739.css') }}">
     <script src="{{ asset('build/assets/app-11155cd2.js') }}"></script>
 
     @livewireStyles
@@ -35,168 +37,9 @@
         <x-pre-loader />
         {{ $slot }}
 
-
-
     </div>
 
-
     <script>
-        var synthesis = window.speechSynthesis;
-
-
-
-
-        // document.addEventListener('DOMContentLoaded', function() {
-        //     if ('speechSynthesis' in window) {
-        //         var synthesis = window.speechSynthesis;
-
-        //         // Regex to match all English language tags e.g en, en-US, en-GB
-        //         var langRegex = /^en(-[a-z]{2})?$/i;
-
-        //         // Get the available voices and filter the list to only have English speakers
-
-        //         synthesis.onvoiceschanged = function() {
-        //             var voices = synthesis.getVoices().filter((voice) => langRegex.test(voice.lang));
-
-        //             // Log the properties of the voices in the list
-        //             voices.forEach(function(voice) {
-        //                 // console.log({
-        //                 //     name: voice.name,
-        //                 //     lang: voice.lang,
-        //                 //     uri: voice.voiceURI,
-        //                 //     local: voice.localService,
-        //                 //     default: voice.default,
-        //                 // });
-        //             });
-
-
-
-        //             var voice = voices.find(function(voice) {
-        //                 return voice.lang.includes('en');
-        //             });
-
-
-        //             // Create an utterance object
-        //             var utterance = new SpeechSynthesisUtterance('We are not Available right now.');
-
-        //             // utterance.text = "My name is Eleazar Nzerem.";
-
-        //             // Set utterance properties
-        //             utterance.lang = 'en'; // Set the language
-        //             utterance.voice = voice;
-        //             utterance.pitch = 1.5;
-        //             utterance.rate = 1.25;
-        //             utterance.volume = 0.8;
-
-
-        //             utterance.onstart = function() {
-        //                 console.log('Speech synthesis started.');
-        //             }
-
-        //             utterance.onend = function() {
-        //                 console.log('Speech synthesis complete.');
-        //             }
-
-        //             utterance.onerror = function(event) {
-        //                 console.error('Speech synthesis error:', event.error);
-        //             }
-
-
-        //             // Speak the utterance
-        //             synthesis.speak(utterance);
-        //         };
-
-
-        //     } else {
-        //         console.log('Text-to-speech not supported.');
-        //     }
-
-        //     console.log('helo');
-        // });
-
-        // function textToSpeach() {
-        //     // Wrap your code in a DOMContentLoaded event listener
-        //     document.addEventListener('DOMContentLoaded', function() {
-        //         // Your speech synthesis code here
-        //         var synthesis = window.speechSynthesis;
-
-        //         // Check if speech synthesis is supported
-        //         if ('speechSynthesis' in window) {
-        //             // Create a new SpeechSynthesisUtterance
-        //             var utterance = new SpeechSynthesisUtterance('Hello, I am speaking!');
-
-        //             // Set the voice and other properties
-        //             var voices = synthesis.getVoices();
-        //             var voice = voices.find(function(voice) {
-        //                 return voice.lang.includes('en');
-        //             });
-
-        //             if (voice) {
-        //                 utterance.voice = voice;
-        //                 utterance.lang = 'en'; // Set the language
-        //                 utterance.pitch = 1.5;
-        //                 utterance.rate = 1.25;
-        //                 utterance.volume = 0.8;
-
-        //                 // Speak the utterance
-        //                 synthesis.speak(utterance);
-        //             } else {
-        //                 console.error('No English voice found.');
-        //             }
-        //         } else {
-        //             console.error('Speech synthesis is not supported in this browser.');
-        //         }
-        //     });
-        //     console.log('onning');
-
-
-        // }
-        // textToSpeach()
-
-
-        // function textToSpeech() {
-        //     // Your speech synthesis code here
-        //     var synthesis = window.speechSynthesis;
-
-        //     // Check if speech synthesis is supported
-        //     if ('speechSynthesis' in window) {
-        //         // Create a new SpeechSynthesisUtterance
-        //         var utterance = new SpeechSynthesisUtterance('Hello, I am speaking!');
-
-        //         // Set the voice and other properties
-        //         var voices = synthesis.getVoices();
-        //         var voice = voices.find(function(voice) {
-        //             return voice.lang.includes('en');
-        //         });
-
-        //         if (voice) {
-        //             utterance.voice = voice;
-        //             utterance.lang = 'en'; // Set the language
-        //             utterance.pitch = 1.5;
-        //             utterance.rate = 1.25;
-        //             utterance.volume = 0.8;
-
-        //             // Speak the utterance
-        //             synthesis.speak(utterance);
-        //         } else {
-        //             console.error('No English voice found.');
-        //         }
-        //     } else {
-        //         console.error('Speech synthesis is not supported in this browser.');
-        //     }
-        // }
-
-        // document.getElementById('speakButton').addEventListener('click', textToSpeech);
-
-
-
-
-
-
-
-
-
-
         // -------- //
 
         function logout(e) {

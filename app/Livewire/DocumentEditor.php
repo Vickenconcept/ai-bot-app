@@ -16,9 +16,15 @@ class DocumentEditor extends Component
     }
     public function documentSaveChanges()
     {
+        $this->validate([
+            'content' => 'required|max:3000',
+        ]);
+
+        $preprocessedDocument = strip_tags($this->content);
+
         $this->content;
         $doc = Document::find($this->document->id);
-        $doc->content = $this->content;
+        $doc->content = $preprocessedDocument ?? 'content error';
         $doc->update();
     }
     public function deleteDocument()

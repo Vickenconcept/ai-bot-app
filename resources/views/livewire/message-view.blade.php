@@ -318,15 +318,6 @@
                 });
             });
 
-            // window.addEventListener("DOMContentLoaded", (event) => {
-            //     console.log("DOM fully loaded and parsed");
-            //     document.body.scrollTop = document.body.scrollHeight;
-            //     document.documentElement.scrollTop = document.documentElement.scrollHeight;
-            // });
-
-
-
-
 
             const final_span = document.getElementById('message')
             const interim_span = document.getElementById('interim_span');
@@ -336,7 +327,7 @@
                 upgrade();
             } else {
                 var recognition = new webkitSpeechRecognition();
-                console.log('i have it');
+                // console.log('i have it');
                 recognition.continuous = true;
                 recognition.interimResults = false;
 
@@ -383,13 +374,6 @@
                 document.getElementById('end').style.display = 'none';
 
             }
-
-
-            // if (final_span.value  ===  final_span.value) {
-            //     console.log(final_span.value === '');
-            //     document.getElementById('start').style.display = 'none';
-
-            // }
 
             function stopButton(event) {
                 final_transcript = '';

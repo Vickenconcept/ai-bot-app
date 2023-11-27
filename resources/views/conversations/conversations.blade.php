@@ -99,23 +99,6 @@
                                     {{ $guest->title }}
                                 </a>
 
-                                {{-- <div x-show="isOpen" @click.away="isOpen = false" style="display: none"
-                                    class="absolute right-0 z-10 mt-2 w-48 origin-top-right  bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
-                                    role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button"
-                                    tabindex="-1">
-                                    <a href="{{ route('profile') }}" class="block px-4 py-2 text-sm text-gray-700"
-                                        role="menuitem" tabindex="-1" id="user-menu-item-0">Your Profile</a>
-
-                                    <form action="{{ route('auth.logout') }}" method="POST">
-                                        @csrf
-
-                                        <a href="javascript:void(0)" onclick="logout(this)"
-                                            class="block px-4 py-2 text-sm text-gray-700">Sign out</a>
-                                    </form>
-                                    <a href="{{ route('home') }}"
-                                        class="block px-4 py-2 text-sm text-gray-700">Dashboard</a>
-                                </div> --}}
-
                                 <x-dropdown>
                                     <x-slot name="trigger">
                                         <button><i
@@ -204,13 +187,12 @@
             </div>
         </div>
         <div class="col-span-6 h-full">
-
             <div
                 class=" w-full h-[500px] flex justify-center items-center {{ request()->routeIs('conversations.index') ? '' : 'hidden' }}">
                 <div class="flex justify-between text-purple-600 ">
                     <span class="animate-ping  font-extrabold text-xl mr-2 hidden lg:block"><i
                             class='bx bx-arrow-back'></i></span>
-                    <h1 class="text-2xl  font-bold tracking-wider "> Start a conversation</h1>
+                    <h1 class="text-2xl  font-bold tracking-wider "> Start a conversation </h1>
 
                 </div>
             </div>

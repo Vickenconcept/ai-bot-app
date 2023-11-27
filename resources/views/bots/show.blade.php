@@ -51,6 +51,8 @@
                     Enable</button>
             </form>
         </div>
+
+        <livewire:select-language :guestChat="$guestChat" />
         <hr>
         <section>
             <livewire:select-template :guestChat="$guestChat" />
@@ -110,6 +112,8 @@
                       {{ $guestChat->position }}: 20px;
                       <br>
                       color: white;
+                      border: 0px;
+                      cursor: pointer;
                       <br>
                       background-color: {{ $guestChat->launcher_color }};
                       <br>
@@ -235,12 +239,16 @@
             // alert("copied!");
         }
 
-        function updateDiv() {
-            $("#here").load(window.location.href + " #here");
-        }
-        //  setTimeout(function() {
-        //             // window.location.reload();
-        //         }, 500);
+        jQuery.noConflict();
+        (function($) {
+            function updateDiv() {
+                $("#here").load(window.location.href + " #here");
+            }
+            //  setTimeout(function() {
+            //             // window.location.reload();
+            //         }, 500);
+
+        })(jQuery);
 
         setInterval(() => {
             updateDiv()

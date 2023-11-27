@@ -1,7 +1,7 @@
 <div x-data="{ template: null, templateGallary: true }" class="space-y-5">
     <h1 class="font-bold text-2xl ">Select your Template</h1>
     <hr class="mb-10">
-    <div class="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-6 gap-2" x-show="templateGallary">
+    <div class="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2" x-show="templateGallary">
         @foreach ($templates as $template)
             <div class="max-w-sm rounded overflow-hidden shadow-lg cursor-pointer"
                 @click="$dispatch('selectedTemplate', { id: @js($template[0])}),template = @js($template[0]), templateGallary = false">

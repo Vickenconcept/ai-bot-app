@@ -15,7 +15,6 @@ class ConversationController extends Controller
      */
     public function index(Request $request)
     {
-
         $query = $request->input('query');
 
         $conversation = Conversation::when($query, function ($queryBuilder) use ($query) {
@@ -25,7 +24,6 @@ class ConversationController extends Controller
         $guest = Conversation::when($query, function ($queryBuilder) use ($query) {
             return $queryBuilder->where('title', 'like', '%' . $query . '%');
         })->where('type', 'guest')->with('messages')->latest()->get();
-        // dd($guest);
 
         return view('conversations.conversations', compact('conversation', 'guest'));
     }
@@ -45,9 +43,6 @@ class ConversationController extends Controller
     {
         $title = 'conversation #' . rand(0, 99999);
         $defaultBot = Bot::where('name', 'bot')->first();
-        // // dd($defaultBot->id);
-
-
         // dd(Str::uuid()->toString());
         auth()->user()->conversations()->create([
             'uuid' => Str::uuid()->toString(),
@@ -64,14 +59,12 @@ class ConversationController extends Controller
      */
     public function show($slug)
     {
-        // $body = Conversation::where('slug', $slug)->firstOrFail()->messages;
         $body = Conversation::where('slug', $slug)
             ->firstOrFail()
             ->messages()
             ->orderBy('created_at', 'asc')
             ->get();
         $conversationTitle = Conversation::where('slug', $slug)->firstOrFail();
-        // dd($conversationTitle->template);
         $conversation =  Conversation::where('type', 'user')->latest()->get();
         $guest = Conversation::where('type', 'guest')->with('messages')->latest()->get();
 
@@ -92,7 +85,7 @@ class ConversationController extends Controller
     {
         $title = $request->input('title');
         $conversationId = $request->input('conversationId');
-        // dd($conversationId);
+
         $user = auth()->user();
 
         $conversationToUpdate = $user->conversations()->find($conversationId);
@@ -116,7 +109,6 @@ class ConversationController extends Controller
         $user = auth()->user();
 
         $conversation = Conversation::find($id);
-        // dd($id);
         $conversation->delete();
 
         return redirect()->to('conversations')->with('success', 'Conversation deleted successfully.');

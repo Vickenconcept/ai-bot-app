@@ -101,9 +101,13 @@ class BotController extends Controller
             ]);
         }
 
-        $guestChat = $conversation;
+        if ($conversation) {
+            $guestChat = $conversation;
+            return view('bots.show', compact('singleBot', 'guestChat'));
+        }else {
+            return 'something went wrong ,refresh page';
+        }
 
-        return view('bots.show', compact('singleBot', 'guestChat'));
     }
 
     /**

@@ -23,7 +23,7 @@ class ChatGptService
 
   
 
-    public function generateContent($name, $model, $system, $prompt, $document)
+    public function generateContent($name, $model, $system, $prompt, $document, $lang = 'en')
     {
         $url = 'https://api.openai.com/v1/chat/completions';
         $maxRetries = 3;
@@ -40,10 +40,11 @@ class ChatGptService
                     ],
               
                     'json' => [
+                        // 'model' => 'gpt-4-1106-preview',
                         'model' => $model,
                         'messages' => [
                             ['role' => 'assistant', 'content' => $document],
-                            ['role' => 'system', 'content' => $system .'. your name is '. $name],
+                            ['role' => 'system', 'content' => $system .'. your name is '. $name. ', responed in this '. $lang .' language only'],
                             ['role' => 'user', 'content' => $prompt],
                         ],
                         'temperature' => 0.2, // Adjust as needed

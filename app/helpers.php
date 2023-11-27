@@ -32,3 +32,7 @@ if (!function_exists('lemmatizeWord')) {
         return $processedDocument;
     }
 }
+
+function get_location(){
+    
+}

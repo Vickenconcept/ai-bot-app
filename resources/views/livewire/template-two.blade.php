@@ -10,13 +10,7 @@
     <div class=" -z-10 h-full flex justify-center items-center   md:w-[80%]  lg:w-[50%] mx-auto">
         <div id="myCarousel" class="carousel slide border  rounded-xl  overflow-hidden  w-full bg-white"
             data-ride="carousel" style=" height:500px; ">
-            <!-- Indicators -->
-            {{-- <ol class="carousel-indicators">
-                @foreach ($conversationTitle->image_link as $key => $data)
-                    <li data-target="#myCarousel" data-slide-to="{{ $key }}"
-                        @if ($key === 0) class="active" @endif></li>
-                @endforeach --}}
-            </ol>
+
 
             <div class="carousel-inner">
                 @if (isset($conversationTitle->image_link))
@@ -30,7 +24,7 @@
                             <div class=" text-center  mt-5 block ">
                                 <p class="text-[18px]  font-bold capitalize tracking-widest">{{ $data['name'] }}</p>
                                 <p class="text-[15px]  ">${{ $data['price'] }}</p>
-                                <a href="mailto:{{ auth()->user()->email }}?subject=I%20Want%20to%20Purchase%20This&body=Hello,%20I%20would%20like%20to%20purchase%20the%20following%20item:%0A%0AProduct:%20{{ $data['name'] }}%0APrice:%20${{ $data['price'] }}%0A%0APlease%20provide%20details%20on%20how%20to%20proceed.%0A">
+                                <a href="mailto: {{ $sharedEmail }}?subject=I%20Want%20to%20Purchase%20This&body=Hello,%20I%20would%20like%20to%20purchase%20the%20following%20item:%0A%0AProduct:%20{{ $data['name'] }}%0APrice:%20${{ $data['price'] }}%0A%0APlease%20provide%20details%20on%20how%20to%20proceed.%0A">
                               
                                 {{-- <a href="mailto:admin@gmsil.com?subject=I%20Want%20to%20Purchase%20This&body=Hello,%20I%20would%20like%20to%20purchase%20the%20following%20item:%0A%0AProduct:%20Car%0APrice:%20$XXXXX%0A%0APlease%20provide%20details%20on%20how%20to%20proceed.%0A">
                                --}}

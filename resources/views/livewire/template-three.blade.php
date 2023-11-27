@@ -1,21 +1,29 @@
 <div class="mt-20 pb-10">
     <div class="w-full px-5 flex flex-col justify-between" x-data="{ isOpen: null, openLast: false, contactType: true }">
         <div class="flex flex-col mt-5">
+
             @foreach ($history as $key => $response)
                 @if ($loop->iteration <= $secondToLastIndex)
                     <div class="flex justify-start mb-4">
                         <span class="h-8 w-8 rounded-full flex justify-center items-center font-bold  bg-green-100 "><i
                                 class='bx bxs-bot text-2xl '></i></span>
-                        <div
-                            class="ml-2 py-3 px-4 bg-purple-200 text-purple-900 rounded-br-3xl rounded-bl-3xl rounded-tr-3xl ">
+
+                        <div id="chatCol1"
+                            class="ml-2 py-3 px-4 text-purple-900 rounded-br-3xl rounded-bl-3xl rounded-tr-3xl"
+                            style="background-color: {{ $conversationTitle->nav_bg_color }}; color: {{ $conversationTitle->nav_col }}">
+                            {{-- <div class="ml-2 py-3 px-4 bg-purple-200 text-purple-900 rounded-br-3xl rounded-bl-3xl rounded-tr-3xl "> --}}
                             {{ $response }}
                         </div>
+
                     </div>
                     @if ($loop->iteration == $secondToLastIndex)
                         <div class="flex space-x-5 pl-10" x-show="contactType">
                             <x-main-button class="text-gray-50"
+                                style="background-color: {{ $conversationTitle->nav_bg_color }}; color: {{ $conversationTitle->nav_col }}"
                                 @click="isOpen = 'email', contactType=false">email</x-main-button>
-                            <x-main-button class="text-gray-50" @click="isOpen ='number', contactType=false">phone
+                            <x-main-button
+                                style="background-color: {{ $conversationTitle->nav_bg_color }}; color: {{ $conversationTitle->nav_col }}"
+                                class="text-gray-50" @click="isOpen ='number', contactType=false">phone
                                 number</x-main-button>
                         </div>
                         <div class="pl-10">
@@ -26,9 +34,10 @@
                                     <div class="flex-initial ml-1">
 
                                         @if ($email !== '' && $email !== null)
-                                            <x-main-button class="text-gray-50 " @click="openLast = true, isOpen=null"
+                                            <x-main-button
+                                                style="background-color: {{ $conversationTitle->nav_bg_color }}; color: {{ $conversationTitle->nav_col }}" class="text-gray-50 " @click="openLast = true, isOpen=null"
                                                 wire:click="subscribe">Submit</x-main-button>
-                                        @endif
+ @endif
                                     </div>
                                 </div>
                             </form>
@@ -38,9 +47,10 @@
                                         placeholder="Enter your number here" />
                                     <div class="flex-initial ml-1">
                                         @if ($phoneNumber !== '' && $phoneNumber !== null)
-                                            <x-main-button class="text-gray-50 " @click="openLast = true, isOpen=null"
+                                            <x-main-button
+                                                style="background-color: {{ $conversationTitle->nav_bg_color }}; color: {{ $conversationTitle->nav_col }}" class="text-gray-50 " @click="openLast = true, isOpen=null"
                                                 wire:click="subscribe">Submit</x-main-button>
-                                        @endif
+ @endif
                                     </div>
                                 </div>
                             </form>
@@ -49,17 +59,19 @@
                 @endif
             @endforeach
             <div class="flex justify-end mb-4" x-show="openLast">
-                <div class="mr-2 py-3 px-4 bg-purple-800 text-purple-50 rounded-tl-3xl rounded-bl-3xl rounded-br-3xl  ">
+                <div class="mr-2 py-3 px-4 bg-purple-800 text-purple-50 rounded-tl-3xl rounded-bl-3xl rounded-br-3xl  "
+                    style="background-color: {{ $conversationTitle->nav_bg_color }}; color: {{ $conversationTitle->nav_col }}">
                     {{ $email }} {{ $phoneNumber }}
                 </div>
-                <span class="h-8 w-8 rounded-full flex justify-center items-center font-bold  bg-green-100  ">
+                <span class="h-8
+                    w-8 rounded-full flex justify-center items-center font-bold bg-green-100 ">
                     ME
                 </span>
             </div>
             <div class="flex justify-start mb-4" x-show="openLast">
                 <span class="h-8 w-8 rounded-full flex justify-center items-center font-bold  bg-green-100 "><i
                         class='bx bxs-bot text-2xl '></i></span>
-                <div class="ml-2 py-3 px-4 bg-purple-200 text-purple-900 rounded-br-3xl rounded-bl-3xl rounded-tr-3xl ">
+                <div class="ml-2 py-3 px-4 bg-purple-200 text-purple-900 rounded-br-3xl rounded-bl-3xl rounded-tr-3xl " style="background-color: {{ $conversationTitle->nav_bg_color }}; color: {{ $conversationTitle->nav_col }}">
                     {{ $chatData[$secondToLastIndex] }}
                 </div>
             </div>
@@ -76,15 +88,15 @@
             index += 1
             var text = @json($chatData);
             // console.log("'" + text[index] + "'");
-            if ( index < text.length -1 ) {
+            if (index < text.length - 1) {
                 console.log(index);
                 textToSpeech("'" + text[index] + "'")
-            }else{
-                console.log(index < text.length -1);
+            } else {
+                console.log(index < text.length - 1);
             }
 
 
-                @this.dispatch('nextResponse');
+            @this.dispatch('nextResponse');
         }, 3000);
 
 
