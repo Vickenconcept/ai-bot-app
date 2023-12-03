@@ -111,7 +111,27 @@
             <button wire:click="customizeTemplateFive" @click="templateGallary = true, template = null"
                 class="btn-primary">submit</button>
         </div>
-        <div x-show="template === 'template 6'">this is 6</div>
+        <div x-show="template === 'template 6'" class="space-y-5">
+
+            <h1 class="font-bold tracking-wide text-2xl text-center">Enter your desired Keywords and  response </p>
+            <div class="  grid lg:grid-cols-2 gap-5  mt-5">
+
+                @foreach ($tempSixDefaultData as $index => $value)
+                    <div class=" font-normal">
+                        <label for=""></label>
+                        <input type="text" wire:model="question.{{ $index }}" class="form-control"
+                            placeholder="Your keyword..">
+                        <input type="text" wire:model="answer.{{ $index }}" class="form-control  mt-2"
+                            placeholder="Your response..">
+                    </div>
+                @endforeach
+            </div>
+
+    
+            <x-main-button class="text-purple-50" wire:click="addToTemplateSix">+ Add </x-main-button>
+            <button wire:click="customizeTemplateSix" @click="templateGallary = true, template = null"
+                class="btn-primary mt-2">submit</button>
+        </div>
     </div>
 
 

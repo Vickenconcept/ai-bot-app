@@ -15,15 +15,17 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
-    <link rel="stylesheet" href="{{ asset('build/assets/app-2addb739.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-8d4c5195.css') }}">
     <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
-    <script src="{{ asset('build/assets/app-11155cd2.js') }}"></script>
+    
 
 </head>
 
 <body class="h-full">
     {{ $slot }}
 
+
+    <script src="{{ asset('build/assets/app-11155cd2.js') }}"></script>
 </body>
 
 <script>
@@ -58,6 +60,7 @@
     //         console.error('Speech synthesis is not supported in this browser.');
     //     }
     // }
+    
 </script>
 
 </html>

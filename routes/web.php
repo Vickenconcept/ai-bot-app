@@ -61,6 +61,9 @@ Route::resource('guests', GuestController::class);
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', [DashboardController::class, 'index'])->name('home');
+    Route::post('/home', [DashboardController::class, 'store'])->name('home.store');
+    Route::post('/subscribe', [DashboardController::class, 'subscribe'])->name('home.subscribe');
+    Route::get('/home', [DashboardController::class, 'index'])->name('home');
     Route::resource('messages', MessageController::class);
     Route::post('conversations/update', [ConversationController::class, 'updateConversation'])->name('updateConversation');
     // Route::post('conversations/guest', [ConversationController::class, 'guest'])->name('guest');
@@ -110,6 +113,10 @@ Route::get('test', function (Request $request) {
 
     // $getResponseService = app(GetResponseService::class);
     // dd($getResponseService->getAudience('pxck0psjdi8tipukr0w24fh1d9ct3vi6'));
+    // ba68c47b0f22ebc09ecbe7b6df697ac2-us21
+    
+   
+
 
     $httpClient = new Client();
     $url = 'https://api.heygen.com/v1/video.generate';

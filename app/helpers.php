@@ -33,6 +33,4 @@ if (!function_exists('lemmatizeWord')) {
     }
 }
 
-function get_location(){
-    
-}
+

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->json('temp_three')->nullable();
             $table->json('temp_four')->nullable();
             $table->json('temp_five')->nullable();
+            $table->json('temp_six')->nullable();
             $table->json('users_contact_info')->nullable();
             $table->enum('template', ['temp1','temp2','temp3','temp4','temp5','temp6'])->default('temp1');
             $table->text('layout')->nullable();

@@ -16,7 +16,8 @@
 
     {{-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> --}}
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js " defer></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js " ></script>
+    
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
@@ -24,8 +25,8 @@
 
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
     <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
-    <link rel="stylesheet" href="{{ asset('build/assets/app-2addb739.css') }}">
-    <script src="{{ asset('build/assets/app-11155cd2.js') }}"></script>
+    <link rel="stylesheet" href="{{ asset('build/assets/app-8d4c5195.css') }}">
+   
 
     @livewireStyles
 </head>
@@ -39,7 +40,14 @@
 
     </div>
 
+
     <script>
+        function logout(e) {
+            localStorage.clear();
+            e.closest('form').submit();
+        }
+    </script>
+    {{-- <script>
         // -------- //
 
         function logout(e) {
@@ -116,10 +124,10 @@
                 console.error('EventSource failed: ', error);
             };
         });
-    </script>
+    </script> --}}
 
     @livewireScripts
-
+    <script src="{{ asset('build/assets/app-11155cd2.js') }}"></script>
 </body>
 
 

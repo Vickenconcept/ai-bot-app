@@ -13,7 +13,7 @@ class SelectTemplate extends Component
         ['template 3', 'https://plus.unsplash.com/premium_photo-1681487807762-98fbe8a9db5e?auto=format&fit=crop&q=60&w=600&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MTN8fGNoYXR8ZW58MHx8MHx8fDA%3D'],
         ['template 4', 'https://media.istockphoto.com/id/1413855189/photo/chat-bot-service-concept-virtual-assistant-and-crm-software-automation-technology-customer.jpg?s=612x612&w=0&k=20&c=5wY13TF0YQWF_Ktt0HU9CcjRE6h0wvBpxG78XSLU0-U='],
         ['template 5', 'https://media.istockphoto.com/id/1356965747/photo/businesswoman-watching-a-live-business-stream-online-live-stream-window-video-streaming-on.jpg?s=612x612&w=0&k=20&c=PABQURWQhJAhR84qoU1RwoaMfh2eQp2LOgtfjV-mhwM='],
-        // ['template 6', 'https://media.istockphoto.com/id/1461083586/photo/half-folded-flyer-a4-booklet-mock-up-on-white-background.webp?b=1&s=170667a&w=0&k=20&c=fjw90yGrGs0XV_RcWtgRfbZ3mDOrZqnw_yzmXuSrRyQ='],
+        ['template 6', 'https://media.istockphoto.com/id/1461083586/photo/half-folded-flyer-a4-booklet-mock-up-on-white-background.webp?b=1&s=170667a&w=0&k=20&c=fjw90yGrGs0XV_RcWtgRfbZ3mDOrZqnw_yzmXuSrRyQ='],
     ];
     // public $templates = ['template 1', 'template 2', 'template 3', 'template 4', 'template 5', 'template 6'];
     public $imageUrl = [],
@@ -23,6 +23,8 @@ class SelectTemplate extends Component
         $tempThree = [],
         $tempFour = [],
         $tempFive = [],
+        $question = [],
+        $answer = [],
         $tempThreeDefaultData = [
             'Hello, how can I assist you?',
             'Welcome to our website.',
@@ -49,6 +51,12 @@ class SelectTemplate extends Component
             'Provide us with your email address',
             'Thanks we will get in touch soon.',
 
+        ],
+
+        $tempSixDefaultData = [
+            'Hello, how can I assist you?',
+            'https://yourVideoLink.com',
+           
         ];
     public $guestChat, $conversation;
     protected $listeners = ['selectedTemplate'];
@@ -118,6 +126,20 @@ class SelectTemplate extends Component
         $this->conversation->update();
     }
 
+    public function customizeTemplateSix()
+    {
+        $this->conversation;
+
+        $result = array_map(function ($question, $answer) {
+            return ['question' => $question, 'answer' => $answer];
+        }, $this->question, $this->answer, );
+        // dd(json_encode($result));
+
+        $this->conversation->temp_six = $result ?? null; // Example image links
+
+        $this->conversation->update();
+    }
+
     public function addToTemplateThree()
     {
         $this->tempThreeDefaultData[] = '';
@@ -129,6 +151,11 @@ class SelectTemplate extends Component
     public function addToTemplateFive()
     {
         $this->tempFiveDefaultData[] = '';
+    }
+
+    public function addToTemplateSix()
+    {
+        $this->tempSixDefaultData[] = '';
     }
 
 

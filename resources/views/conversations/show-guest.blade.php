@@ -57,7 +57,14 @@
             </nav>
             <livewire:template-five :body="$body" :conversationTitle="$conversationTitle" />
         @elseif ($conversationTitle->template === 'temp6')
-            <h1>temp6</h1>
+        <nav class=" fixed flex px-5 py-3 top-0 w-full shadow mb-20 {{ $conversationTitle->nav_bg_color }}bg-purple-900 text-white"
+            style="background-color: {{ $conversationTitle->nav_bg_color }}; color: {{ $conversationTitle->nav_col }}">
+            <ul class="capitalize" style="text-align:  {{ $conversationTitle->layout }}">
+                <li class="font-bold text-xl">{{ $conversationTitle->head_title ?? 'Welcome' }} </li>
+                
+            </ul>
+        </nav>
+            <livewire:template-six :body="$body" :conversationTitle="$conversationTitle" />
         @endif
 
     </div>

@@ -17,6 +17,7 @@ class SelectLanguage extends Component
         $this->guestChat = $guestChat;
         $uuid = $this->guestChat->uuid;
         $this->conversation = Conversation::where('uuid', $uuid)->first();
+        $this->lang = $this->conversation->lang;
     }
 
     public function selectLanguage(){

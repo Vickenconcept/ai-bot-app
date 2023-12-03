@@ -7,14 +7,11 @@
                     <div class="flex justify-start mb-4">
                         <span class="h-8 w-8 rounded-full flex justify-center items-center font-bold  bg-green-100 "><i
                                 class='bx bxs-bot text-2xl '></i></span>
-
                         <div id="chatCol1"
                             class="ml-2 py-3 px-4 text-purple-900 rounded-br-3xl rounded-bl-3xl rounded-tr-3xl"
                             style="background-color: {{ $conversationTitle->nav_bg_color }}; color: {{ $conversationTitle->nav_col }}">
-                            {{-- <div class="ml-2 py-3 px-4 bg-purple-200 text-purple-900 rounded-br-3xl rounded-bl-3xl rounded-tr-3xl "> --}}
                             {{ $response }}
                         </div>
-
                     </div>
                     @if ($loop->iteration == $secondToLastIndex)
                         <div class="flex space-x-5 pl-10" x-show="contactType">
@@ -35,9 +32,10 @@
 
                                         @if ($email !== '' && $email !== null)
                                             <x-main-button
-                                                style="background-color: {{ $conversationTitle->nav_bg_color }}; color: {{ $conversationTitle->nav_col }}" class="text-gray-50 " @click="openLast = true, isOpen=null"
+                                                style="background-color: {{ $conversationTitle->nav_bg_color }}; color: {{ $conversationTitle->nav_col }}"
+                                                class="text-gray-50 " @click="openLast = true, isOpen=null"
                                                 wire:click="subscribe">Submit</x-main-button>
- @endif
+                                        @endif
                                     </div>
                                 </div>
                             </form>
@@ -48,9 +46,10 @@
                                     <div class="flex-initial ml-1">
                                         @if ($phoneNumber !== '' && $phoneNumber !== null)
                                             <x-main-button
-                                                style="background-color: {{ $conversationTitle->nav_bg_color }}; color: {{ $conversationTitle->nav_col }}" class="text-gray-50 " @click="openLast = true, isOpen=null"
+                                                style="background-color: {{ $conversationTitle->nav_bg_color }}; color: {{ $conversationTitle->nav_col }}"
+                                                class="text-gray-50 " @click="openLast = true, isOpen=null"
                                                 wire:click="subscribe">Submit</x-main-button>
- @endif
+                                        @endif
                                     </div>
                                 </div>
                             </form>
@@ -63,7 +62,8 @@
                     style="background-color: {{ $conversationTitle->nav_bg_color }}; color: {{ $conversationTitle->nav_col }}">
                     {{ $email }} {{ $phoneNumber }}
                 </div>
-                <span class="h-8
+                <span
+                    class="h-8
                     w-8 rounded-full flex justify-center items-center font-bold bg-green-100 ">
                     ME
                 </span>
@@ -71,7 +71,8 @@
             <div class="flex justify-start mb-4" x-show="openLast">
                 <span class="h-8 w-8 rounded-full flex justify-center items-center font-bold  bg-green-100 "><i
                         class='bx bxs-bot text-2xl '></i></span>
-                <div class="ml-2 py-3 px-4 bg-purple-200 text-purple-900 rounded-br-3xl rounded-bl-3xl rounded-tr-3xl " style="background-color: {{ $conversationTitle->nav_bg_color }}; color: {{ $conversationTitle->nav_col }}">
+                <div class="ml-2 py-3 px-4 bg-purple-200 text-purple-900 rounded-br-3xl rounded-bl-3xl rounded-tr-3xl "
+                    style="background-color: {{ $conversationTitle->nav_bg_color }}; color: {{ $conversationTitle->nav_col }}">
                     {{ $chatData[$secondToLastIndex] }}
                 </div>
             </div>

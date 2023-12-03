@@ -239,20 +239,23 @@
             // alert("copied!");
         }
 
-        jQuery.noConflict();
-        (function($) {
-            function updateDiv() {
-                $("#here").load(window.location.href + " #here");
-            }
-            //  setTimeout(function() {
-            //             // window.location.reload();
-            //         }, 500);
+        // jQuery.noConflict();
+        // (function($) {
 
-        })(jQuery);
+        // })(jQuery);
+
+        jQuery(document).ready(function($) {
+           
+            function updateDiv() {
+            $("#here").load(window.location.href + " #here");
+        }
 
         setInterval(() => {
             updateDiv()
 
         }, 2000);
+
+        });
+
     </script>
 </x-app-layout>
