@@ -104,8 +104,10 @@
                                                     :value="listId ?? '{{ $mailLists->lists[0]->id }}'">
                                             @endif
                                             {{-- <input type="text" value="{{ null ?? $mailLists->lists[0]->id }}"> --}}
-
+                                            @if ($contact->users_contact_info )
+                                                
                                             <x-main-button type="submit" class="text-gray-50">Subscribe</x-main-button>
+                                            @endif
 
                                         </form>
                                     @endif

@@ -39,7 +39,7 @@
                 This email was sent to <a href="#" class="text-blue-600 hover:underline dark:text-blue-400" target="_blank">{{ $data['email'] }}</a>. 
             </p>
     
-            <p class="mt-3 text-gray-500 dark:text-gray-400">© {{ now() }}  Meraki UI. All Rights Reserved.</p>
+            <p class="mt-3 text-gray-500 dark:text-gray-400">© {{ now() }}  Botconvert. All Rights Reserved.</p>
         </footer>
     </section>
     

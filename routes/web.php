@@ -105,6 +105,7 @@ Route::get('/clear', function () {
 
 
 Route::get('test', function (Request $request) {
+    // bh9uA)v4RB@mO@a9GMq(!BO2D9LO$44
 
 
     // https://themewagon.com/theme-tag/hotel-template/
@@ -117,9 +118,6 @@ Route::get('test', function (Request $request) {
     
    
 
-
-    $httpClient = new Client();
-    $url = 'https://api.heygen.com/v1/video.generate';
 
 
     $location = Location::get($request->ip());

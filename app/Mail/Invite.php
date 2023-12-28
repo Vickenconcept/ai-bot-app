@@ -17,7 +17,7 @@ class Invite extends Mailable
      * Create a new message instance.
      */
 
-     protected $name,$email, $access,$data;
+    protected $name, $email, $access, $data;
     public function __construct($name, $access, $email)
     {
         $this->name = $name;
@@ -26,18 +26,32 @@ class Invite extends Mailable
         $this->data = [
             'name' => $this->name,
             'access' => $this->access,
-            'email'  => $this->email 
+            'email'  => $this->email
         ];
-
-
     }
 
-    public function build()
+    // public function build()
+    // {
+    //     return $this->from(auth()->user()->email)
+    //         ->to($this->email)
+    //         ->subject('Contact Form Submission')
+    //         ->view('email') // Create this view
+    //         ->with('data', $this->data);
+    // }
+
+    public function envelope()
     {
-        return $this->from(auth()->user()->email)
-                    ->subject('Contact Form Submission')
-                    ->view('email') // Create this view
-                    ->with('data', $this->data);
+        return new Envelope(
+            subject: 'Join my Team',
+        );
+    }
+
+    public function content()
+    {
+        return new Content(
+            view: 'email',
+            with: ['data' => $this->data],
+        );
     }
 
     /**

@@ -90,7 +90,7 @@
             var text = @json($chatData);
             // console.log("'" + text[index] + "'");
             if (index < text.length - 1) {
-                console.log(index);
+                // console.log(index);
                 textToSpeech("'" + text[index] + "'")
             } else {
                 console.log(index < text.length - 1);
@@ -103,6 +103,12 @@
 
 
 
+        // window.addEventListener('DOMContentLoaded', () => {
+        // })
+        // setInterval(() => {
+
+        //     textToSpeech('hello world')
+        // }, 2000);
 
 
         function textToSpeech(text) {
@@ -116,21 +122,37 @@
 
                 // Set the voice and other properties
                 var voices = synthesis.getVoices();
-                var voice = voices.find(function(voice) {
-                    return voice.lang.includes('en');
-                });
 
-                if (voice) {
-                    utterance.voice = voice;
-                    utterance.lang = 'en'; // Set the language
-                    utterance.pitch = 1.5;
-                    utterance.rate = 1.25;
-                    utterance.volume = 0.8;
-
-                    // Speak the utterance
-                    synthesis.speak(utterance);
+                if (voices.length === 0) {
+                    synthesis.addEventListener('voiceschanged', function() {
+                        voices = synthesis.getVoices();
+                        // Continue with your code using the updated 'voices' array
+                        console.log(voices);
+                    });
                 } else {
-                    console.error('No English voice found.');
+                    // Continue with your code using the 'voices' array
+                    // console.log(voices);
+                    console.log('heloo world');
+
+
+
+                    var voice = voices.find(function(voice) {
+                        return voice.lang.includes('en');
+                    });
+                    console.log(voices);
+
+                    if (voice) {
+                        utterance.voice = voice;
+                        utterance.lang = 'en'; // Set the language
+                        utterance.pitch = 1.5;
+                        utterance.rate = 1.25;
+                        utterance.volume = 0.8;
+
+                        // Speak the utterance
+                        synthesis.speak(utterance);
+                    } else {
+                        console.error('No English voice found.');
+                    }
                 }
             } else {
                 console.error('Speech synthesis is not supported in this browser.');

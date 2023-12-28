@@ -58,7 +58,7 @@
         <button class="font-semibold" @click=" hideSection = true, activeSection = '' "><i
                 class='bx bx-chevron-left'></i> Options</button>
 
-        <form wire:submit="saveWrittenDocument">
+        <form>
             <div class="space-y-2 ">
                 <label for="name" class="font-senibold">Document Title<span
                         class="text-red-400 ml-1">*</span></label>
@@ -71,7 +71,7 @@
                     </textarea>
                 </div>
 
-                <button type="submit" wire:loading.attr="disabled" 
+                <button type="submit" wire:loading.attr="disabled"  wire:click="saveWrittenDocument"
                     @click=" hideSection = true, activeSection = '' "
                     {{-- {{ !is_null($content) && !empty($content) && (!is_null($title) && !empty($title)) ? '' : 'disabled' }} --}}
                     class="inline-flex items-center bg-purple-600 text-gray-50 py-2.5 px-4 text-xs shadow font-medium text-center  rounded hover:shadow-lg">

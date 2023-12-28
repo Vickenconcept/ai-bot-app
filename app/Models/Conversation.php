@@ -38,10 +38,10 @@ class Conversation extends Model
         return $this->belongsTo(Bot::class, 'bot_id');
     }
 
-    public function setDefaultBot(Bot $bot)
-    {
-        $this->bot()->associate($bot)->save();
-    }
+    // public function setDefaultBot(Bot $bot)
+    // {
+    //     $this->bot()->associate($bot)->save();
+    // }
 
     protected static function boot()
     {

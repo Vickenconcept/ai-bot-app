@@ -13,7 +13,8 @@ return new class extends Migration
     {
         Schema::create('bots', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');
+            // $table->foreignId('user_id')->constrained('users');
+            $table->unsignedBigInteger('user_id')->constrained('users');
             $table->text('name');
             $table->text('description')->nullable();
             $table->text('personality')->nullable();
@@ -21,6 +22,7 @@ return new class extends Migration
             $table->text('model');
             $table->text('uuid_chat')->nullable();
             $table->timestamps();
+            $table->engine = 'InnoDB';
         });
     }
 

@@ -19,9 +19,9 @@ class InviteController extends Controller
         ]);
         $user = auth()->user();
 
-        dispatch(function () use($email, $user, $access){
+        // dispatch(function () use($email, $user, $access){
             Mail::to($email)->send(new MailInvite($user->name, $access, $email));
-        });
+        // });
 
         return redirect()->back()->with('success', 'Invite sent successfuly');
     }

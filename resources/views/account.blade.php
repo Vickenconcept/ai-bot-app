@@ -73,20 +73,6 @@
                     Only users who are owners can see this. <br> You can also change your username to reset this link.
                 </p>
 
-                {{-- <div class="grid grid-cols-1 md:grid-cols-3">
-                    <div class="flex flex-wrap    items-center col-span-1 md:col-span-2">
-                        <div class=" bg-gray-800 text-gray-50 rounded-tl rounded-bl">
-                            <p id="invite" class="  p-2  text-sm font-semibold shadow-inner ">
-                                {{ auth()->user()->generateReferralLink() }}
-                            </p>
-                        </div>
-                        <div class="">
-                            <button onclick="toCopy(document.getElementById('invite'))"
-                                class=" bg-purple-800 px-4 py-2 text-white  rounded-tr rounded-br text-sm font-semibold   shadow-sm hover:shadow-md  ">Copy
-                            </button>
-                        </div>
-                    </div>
-                </div> --}}
                
                 <div class="flex flex-wrap" >
                     <div class=" bg-gray-800 text-gray-50 rounded-tl rounded-bl">

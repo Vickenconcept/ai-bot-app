@@ -37,7 +37,6 @@ class UploadDocument extends Component
     }
     public function saveWrittenDocument(ChatGptService $chatGptService)
     {
-
         $user = auth()->user()->contents()->find($this->contentTitle->id);
         $this->title;
         $this->content;
@@ -86,6 +85,10 @@ class UploadDocument extends Component
         if ($this->file->getClientOriginalExtension() === 'pdf') {
             // $binpath = 'C:/Program Files/Git/mingw64/bin/pdftotext';
             $binpath = base_path('bin/pdftotext');
+
+            $command = "which pdftotext";
+            $pdftotext_path = shell_exec($command);
+            dd($pdftotext_path);
             dd($binpath);
             $this->textContent = Pdf::getText($this->file->getRealPath(), $binpath);
         } elseif ($this->file->getClientOriginalExtension() === 'docx') {
