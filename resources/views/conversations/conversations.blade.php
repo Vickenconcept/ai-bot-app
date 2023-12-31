@@ -3,17 +3,17 @@
     <div class="grid grid-cols-1 lg:grid-cols-8 h-full relative" x-data="{ closeSidebar: true, openModal: false, openModal2: false, conversation: '', guest: '', isGuest: false }">
 
         <div class="col-span-2">
-            <div class="col-span-2 p-3 bg-purple-200  h-screen fixed  lg:block  lg:w-[315px] space-y-5 {{ request()->routeIs('conversations.show') ? 'hidden' : 'w-full' }}"
+            <div class="col-span-2 p-3 bg-[#1a001a]  h-screen fixed  lg:block  lg:w-[315px] space-y-5 {{ request()->routeIs('conversations.show') ? 'hidden' : 'w-full' }}"
                 x-show="closeSidebar">
 
                 <hr class="hidden lg:block">
 
                 <div class="space-y-1" x-show="isGuest === false">
-                    <div class="flex ">
-                        <button class="border-b-2 border-white py-1 px-4 font-semibold  text-sm  text-purple-700"
+                    <div class="flex justify-between  mb-3">
+                        <button class=" w-1/2  py-1 px-4 font-semibold  text-sm  text-purple-100"
                             @click="isGuest = false">Yours</button>
-                        <x-main-button class=" text-gray-50 shadow-inner border-b-2  border-white"
-                            @click="isGuest = true">Guest</x-main-button>
+                        <button class=" w-1/2 text-gray-50 shadow-inner  items-center  px-3  text-center  rounded bg-purple-950 hover:shadow-lg transition duration-300 py-2 text-xs font-semibold   disabled:opacity-25  ease-in-out"
+                            @click="isGuest = true">Guest</button>
                     </div>
                     <div class="mt-2 flex space-x-3">
                         <form class=" w-full" action="{{ route('conversations.index') }}" method="GET">
@@ -24,15 +24,15 @@
                         </form>
                         <form class="" action="{{ route('conversations.store') }}" method="POST">
                             @csrf
-                            <button type="submit" class=" bg-gray-100 rounded shadow-sm px-2 py-1"
-                                title="Add new conversation"><i class='bx bxs-message-add text-purple-900'></i></button>
+                            <button type="submit" class=" bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded shadow-sm px-2 py-1"
+                                title="Add new conversation"><i class='bx bx-message-add text-purple-100'></i></button>
                         </form>
                     </div>
 
-                    <ul class="space-y-5 pt-5">
+                    <ul class="space-y-3 pt-5">
                         @foreach ($conversation as $conversation)
                             <li
-                                class="text-purple-900 font-semibold  flex justify-between text-md tracking-wide capitalize">
+                                class="text-purple-200 font-normal  bg-slate-500 rounded p-2 bg-opacity-30 flex justify-between text-md tracking-wide capitalize">
                                 <a href="{{ route('conversations.show', $conversation->slug) }}">
                                     <i class='bx bxs-conversation mr-1 text-sm'></i>
                                     {{ $conversation->title }}
@@ -70,10 +70,10 @@
 
                 {{--  --}}
                 <div x-show="isGuest" class="space-y-1" style="display: none;">
-                    <div class="flex">
-                        <x-main-button class=" text-gray-50  shadow-inner border-b-2  border-white"
-                            @click="isGuest = false">Yours</x-main-button>
-                        <button class="border-b-2 border-white py-1 px-4 font-semibold  text-sm "
+                    <div class="flex juctify-between mb-3">
+                        <button class="  w-1/2 text-gray-50 shadow-inner  items-center  px-3  text-center  rounded bg-purple-950 hover:shadow-lg transition duration-300 py-2 text-xs font-semibold   disabled:opacity-25  ease-in-out"
+                            @click="isGuest = false">Yours</button>
+                        <button class=" w-1/2  py-1 px-4 font-semibold  text-sm  text-purple-100"
                             @click="isGuest = true">Guest</button>
                     </div>
                     <div class="mt-2 flex space-x-3">
@@ -85,15 +85,15 @@
                         </form>
                         <form class="" action="{{ route('guests.store') }}" method="POST">
                             @csrf
-                            <button type="submit" class=" bg-gray-100 rounded shadow-sm px-2 py-1"
-                                title="Add new conversation"><i class='bx bxs-message-add text-purple-900'></i></button>
+                            <button type="submit" class=" bg-gradient-to-r from-violet-500 to-fuchsia-500 rounded shadow-sm px-2 py-1"
+                                title="Add new conversation"><i class='bx bx-message-add text-purple-100'></i></button>
                         </form>
                     </div>
 
-                    <ul class="space-y-5 pt-5">
+                    <ul class="space-y-3 pt-5">
                         @foreach ($guest as $guest)
                             <li
-                                class="text-purple-900 font-semibold  flex justify-between text-md tracking-wide capitalize">
+                                class="text-purple-200 font-normal  bg-slate-500 rounded p-2 bg-opacity-30  flex justify-between text-md tracking-wide capitalize">
                                 <a href="{{ route('guests.show', $guest->uuid) }}">
                                     <i class='bx bxs-conversation mr-1 text-sm'></i>
                                     {{ $guest->title }}

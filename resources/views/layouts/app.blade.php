@@ -23,9 +23,9 @@
 
 
 
-    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
-    <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
-    <link rel="stylesheet" href="{{ asset('build/assets/app-8d4c5195.css') }}">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-8d4c5195.css') }}"> --}}
    
 
     @livewireStyles
@@ -127,7 +127,7 @@
     </script> --}}
 
     @livewireScripts
-    <script src="{{ asset('build/assets/app-11155cd2.js') }}"></script>
+    {{-- <script src="{{ asset('build/assets/app-11155cd2.js') }}"></script> --}}
 </body>
 
 
