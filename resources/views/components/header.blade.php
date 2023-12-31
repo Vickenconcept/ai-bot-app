@@ -1,10 +1,14 @@
-<nav class="bg-purple-900 sticky top-0 z-50" x-data="{ openMobileMenue: false, open: true }">
+<nav class="bg-purple-200 sticky top-0 z-50" x-data="{ openMobileMenue: false, open: true }">
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div class="relative flex h-16 items-center justify-between">
-            <div class="absolute inset-y-0 left-0 flex items-center sm:hidden">
+            <a href="{{ route('conversations.index') }}" class="text-xl hidden sm:block">
+                <i class="bx bxs-bot text-2xl text-purple-800"></i>
+                <b>Bot</b>Convert
+            </a>
+            <div class="absolute inset-y-0 left-0 flex  items-center sm:hidden">
                 <!-- Mobile menu button-->
                 <button type="button" @click="openMobileMenue = !openMobileMenue"
-                    class="relative inline-flex items-center justify-center  p-2 text-gray-400 hover:border-b hover:border-gray-300  focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                    class="relative inline-flex items-center justify-center p-2 text-gray-400 hover:border-b hover:border-purple-950  focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                     aria-controls="mobile-menu" aria-expanded="false">
                     <span class="absolute -inset-0.5"></span>
                     <span class="sr-only">Open main menu</span>
@@ -20,27 +24,34 @@
                     </svg>
                 </button>
             </div>
-            <div class="flex flex-1 items-center justify-center sm:items-stretch sm:justify-start">
+            <div class="flex flex-2 items-center justify-center sm:items-stretch sm:justify-start">
 
                 <div class="hidden sm:block">
                     <div class="flex space-x-4">
                         <a href="{{ route('conversations.index') }}"
-                            class=" hover:border-b hover:border-gray-300    px-3 py-2 text-sm font-medium text-gray-300 {{ request()->routeIs('conversations.index')||request()->routeIs('conversations.show') ? 'border-b border-gray-300 ' : '' }}" aria-current="page">
-                            Chat</a>
+                            class=" hover:border-b hover:border-purple-950   px-3 py-2 text-sm font-medium text-purple-950 {{ request()->routeIs('conversations.index')||request()->routeIs('conversations.show') ? 'border-b border-purple-950 bg-purple-300 rounded bg-opacity-30 ' : '' }}" aria-current="page">
+                            <i class='bx bx-conversation mr-1 text-sm'></i>
+                            Chat
+                        </a>
                         <a href="{{ route('bots.index') }}"
-                            class=" hover:border-b hover:border-gray-300   px-3 py-2 text-sm font-medium text-gray-300 {{ request()->routeIs('bots.index')||request()->routeIs('bots.show') ? 'border-b border-gray-300 ' : '' }}">Bots</a>
+                            class=" hover:border-b hover:border-purple-950  px-3 py-2 text-sm font-medium text-purple-950 {{ request()->routeIs('bots.index')||request()->routeIs('bots.show') ? 'border-b border-purple-950 bg-purple-300 rounded bg-opacity-30 ' : '' }}">
+                            <i class='bx bx-bot mr-1 text-sm'></i>
+                            Bots</a>
                         <a href="{{ route('contents.index') }}"
-                            class=" hover:border-b hover:border-gray-300   px-3 py-2 text-sm font-medium text-gray-300 {{ request()->routeIs('contents.index')||request()->routeIs('contents.show') ? 'border-b border-gray-300 ' : '' }}">
+                            class=" hover:border-b hover:border-purple-950  px-3 py-2 text-sm font-medium text-purple-950 {{ request()->routeIs('contents.index')||request()->routeIs('contents.show') ? 'border-b border-purple-950 bg-purple-300 rounded bg-opacity-30 ' : '' }}">
+                            <i class='bx bx-file mr-1 text-sm'></i>
                             Contents</a>
                         <a href="{{ route('account.index') }}"
-                            class=" hover:border-b hover:border-gray-300   px-3 py-2 text-sm font-medium text-gray-300 {{ request()->routeIs('account.index') ? 'border-b border-gray-300 ' : '' }}">Account</a>
+                            class=" hover:border-b hover:border-purple-950  px-3 py-2 text-sm font-medium text-purple-950 {{ request()->routeIs('account.index') ? 'border-b border-purple-950 bg-purple-300 rounded bg-opacity-30 ' : '' }}">
+                            <i class='bx bx-user mr-1 text-sm'></i>
+                            Account</a>
                     </div>
                 </div>
             </div>
             <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <a href="{{ route('support') }}">
                     <button type="button"
-                        class="relative rounded-full text-sm px-2 bg-gray-800 py-1 text-gray-400 hover:text-gray-300 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 {{ request()->routeIs('support') ? 'border-2 border-gray-50' : '' }}">
+                        class="relative rounded-full text-sm px-2 bg-gray-800 py-1 text-gray-400 hover:text-purple-950 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 {{ request()->routeIs('support') ? 'border-2 border-gray-50' : '' }}">
                         Get Help
                     </button>
                 </a>
@@ -83,14 +94,14 @@
     <div class="sm:hidden" id="mobile-menu" x-show="openMobileMenue">
         <div class="space-y-1 px-2 pb-3 pt-2">
             <a href="{{ route('conversations.index') }}"
-                class=" text-gray-300 hover:border-b hover:border-gray-300  block  px-3 py-2 text-base font-medium text-gray-300"
+                class=" text-purple-950 hover:border-b hover:border-purple-950  block px-3 py-2 text-base font-medium text-purple-950"
                 aria-current="page">Chat</a>
             <a href="{{ route('bots.index') }}"
-                class="text-gray-300 hover:border-b hover:border-gray-300  block  px-3 py-2 text-base font-medium text-gray-300">Bots</a>
+                class="text-purple-950 hover:border-b hover:border-purple-950  block px-3 py-2 text-base font-medium text-purple-950">Bots</a>
             <a href="{{ route('contents.index') }}"
-                class="text-gray-300 hover:border-b hover:border-gray-300  block  px-3 py-2 text-base font-medium text-gray-300">Contents</a>
+                class="text-purple-950 hover:border-b hover:border-purple-950  block px-3 py-2 text-base font-medium text-purple-950">Contents</a>
             <a href="{{ route('account.index') }}"
-                class="text-gray-300 hover:border-b hover:border-gray-300  block  px-3 py-2 text-base font-medium text-gray-300">Account</a>
+                class="text-purple-950 hover:border-b hover:border-purple-950  block px-3 py-2 text-base font-medium text-purple-950">Account</a>
         </div>
     </div>
 </nav>

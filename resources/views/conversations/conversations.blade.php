@@ -19,7 +19,7 @@
                         <form class=" w-full" action="{{ route('conversations.index') }}" method="GET">
                             <div>
                                 <input id="text" name="query" type="text" placeholder="Search conversation"
-                                    class="form-control">
+                                    class="form-control bg-purple-100">
                             </div>
                         </form>
                         <form class="" action="{{ route('conversations.store') }}" method="POST">
@@ -80,7 +80,7 @@
                         <form class=" w-full" action="{{ route('conversations.index') }}" method="GET">
                             <div>
                                 <input id="text" name="query" type="text" placeholder="Search conversation"
-                                    class="form-control">
+                                    class="form-control bg-purple-100">
                             </div>
                         </form>
                         <form class="" action="{{ route('guests.store') }}" method="POST">
@@ -186,7 +186,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-span-6 h-full">
+        <div class="col-span-6 h-full bg-purple-50">
             <div
                 class=" w-full h-[500px] flex justify-center items-center {{ request()->routeIs('conversations.index') ? '' : 'hidden' }}">
                 <div class="flex justify-between text-purple-600 ">
