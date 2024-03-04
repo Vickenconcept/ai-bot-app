@@ -28,35 +28,35 @@
 
 
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 card-animate" x-show="hideSection" style="display: none">
-        <div class="rounded-md cursor-pointer hover:bg-purple-100 border border-purple-300  bg-purple-50  p-3"
+        <div class="rounded-2xl cursor-pointer hover:bg-purple-100 border border-purple-300  bg-gray-50  p-5 text-center space-y-8"
             @click="activeSection = 'section1'; hideSection=false">
-            <h1><i class='bx bx-pen text-2xl'></i></h1>
+            <h1 ><i class='bx bx-pen text-2xl bg-purple-200 px-3 py-2 rounded-md'></i></h1>
             <div>
-                <h1 class="font-semibold tracking-wider">Write</h1>
+                <h1 class="font-bold tracking-wider">Write</h1>
                 <p class="text-ray-400 text-sm">Write or copy paste your document</p>
             </div>
         </div>
-        <div class="rounded-md cursor-pointer hover:bg-red-100 border border-red-300  bg-red-50  p-3"
+        <div class="rounded-2xl cursor-pointer hover:bg-purple-100 border border-purple-300  bg-gray-50  p-5 text-center space-y-8"
             @click="activeSection = 'section2'; hideSection=false">
-            <h1><i class='bx bx-upload text-2xl'></i></h1>
+            <h1><i class='bx bx-upload text-2xl bg-purple-200 px-3 py-2 rounded-md'></i></h1>
             <div>
-                <h1 class="font-semibold tracking-wider">Upload</h1>
+                <h1 class="font-bold tracking-wider">Upload</h1>
                 <p class="text-ray-400 text-sm">PDF or Word Doc</p>
             </div>
         </div>
-        <div class="rounded-md cursor-pointer hover:bg-yellow-100 border border-yellow-300  bg-yellow-50  p-3"
+        <div class="rounded-2xl cursor-pointer hover:bg-purple-100 border border-purple-300  bg-gray-50  p-5 text-center space-y-8"
             @click="activeSection = 'section3'; hideSection=false">
-            <h1><i class='bx bx-link-alt text-2xl'></i></h1>
+            <h1><i class='bx bx-link-alt text-2xl bg-purple-200 px-3 py-2 rounded-md'></i></h1>
             <div>
-                <h1 class="font-semibold tracking-wider">Import Website</h1>
+                <h1 class="font-bold tracking-wider">Import Website</h1>
                 <p class="text-ray-400 text-sm">Web pages with text content</p>
             </div>
         </div>
     </div>
 
     <div x-show.transition.in="activeSection === 'section1'" class="card-animate space-y-4" style="display: none">
-        <button class="font-semibold" @click=" hideSection = true, activeSection = '' "><i
-                class='bx bx-chevron-left'></i> Options</button>
+        <button class="font-semibold" @click=" hideSection = true, activeSection = '' ">
+            <i class='bx bx-left-arrow-alt mr-2 rounded-full bg-purple-200 p-2' ></i> Back to options</button>
 
         <form>
             <div class="space-y-2 ">
@@ -82,8 +82,8 @@
     </div>
     {{--  --}}
     <div x-show="activeSection === 'section2'" class="card-animate space-y-4" style="display: none">
-        <button class="font-semibold" @click=" hideSection = true, activeSection = '' "><i
-                class='bx bx-chevron-left'></i> Options</button>
+        <button class="font-semibold" @click=" hideSection = true, activeSection = '' ">
+            <i class='bx bx-left-arrow-alt mr-2 rounded-full bg-purple-200 p-2' ></i> Back to options</button>
         <form class="space-y-3" wire:submit="saveUploadedDocument">
             {{-- <x-dropzone /> --}}
             {{-- <input type="file" name="" id="" wire:model.defer="file" class="cursor-pointer"> --}}
@@ -116,8 +116,8 @@
     </div>
     {{--  --}}
     <div x-show="activeSection === 'section3'" class="card-animate space-y-4" style="display: none">
-        <button class="font-semibold" @click=" hideSection = true, activeSection = '' "><i
-                class='bx bx-chevron-left'></i> Options</button>
+        <button class="font-semibold" @click=" hideSection = true, activeSection = '' ">
+            <i class='bx bx-left-arrow-alt mr-2 rounded-full bg-purple-200 p-2' ></i> Back to options</button>
         <label for="name" class="font-senibold block">Paste Web Url<span class="text-red-400 ml-1">*</span></label>
         <input id="name" type="text" wire:model.defer="webUrl" placeholder="https://www.example.com"
             class="form-control" autocomplete="false">

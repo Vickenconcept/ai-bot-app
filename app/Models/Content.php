@@ -8,6 +8,8 @@ use App\Models\User;
 use App\Models\Document;
 use App\Models\Bot;
 use App\Models\Scopes\ExemptionAccessScope;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class Content extends Model
 {
@@ -39,12 +41,14 @@ class Content extends Model
                     $contents->documents()->delete();
                 });
     }
-    // protected static function boot()
-    // {
-    //     parent::boot();
-
-    //     static::addGlobalScope(new DataAccessScope);
-    // }
+    protected function updatedAt(): Attribute
+    {
+        return Attribute::get(fn ($value) => Carbon::parse($value)->format('F j, Y, g:i A'));
+    }
+    protected function createdAt(): Attribute
+    {
+        return Attribute::get(fn ($value) => Carbon::parse($value)->format('F j, Y, g:i A'));
+    }
 
    
 }

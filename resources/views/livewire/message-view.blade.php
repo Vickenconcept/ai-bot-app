@@ -10,64 +10,49 @@
             </div>
         @endif
 
-        <ul class=" mb-32">
-            @foreach ($body as $content)
-                <div class="{{ $content->sender !== 'bot' ? 'bg-white' : 'bg-gray-100' }}">
-                    <div class="text-center text-xs ">
-                        <span class="border-b">{{ $content->created_at }}</span>
-                    </div>
-                    <div class="flex justify-between  py-10 w-[90%] md:w-[70%] mx-auto ">
-                        <div class=" flex space-x-5">
-                            <div class="text-gray-600">
-                                <span
-                                    class="h-8 w-8 rounded-full flex justify-center items-center font-bold  bg-blue-50 {{ $content->sender !== 'bot' ? '' : 'hidden' }}">
-                                    @if (auth()->check())
-                                        {{ strtoupper(substr(auth()->user()->name, 0, 1)) }}
-                                    @else
-                                        API
-                                    @endif
-                                </span>
-                                <span
-                                    class="h-8 w-8 rounded-full flex justify-center items-center font-bold  bg-green-50 {{ $content->sender !== 'bot' ? 'hidden' : '' }}"><i
-                                        class='bx bxs-bot text-xl '></i></span>
 
-                            </div>
+        <div class="mb-32 mt-10">
+            <div id="messages"
+                class="flex flex-col space-y-4 p-3 overflow-y-auto scrollbar-thumb-blue scrollbar-thumb-rounded scrollbar-track-blue-lighter scrollbar-w-2 scrolling-touch">
+                @foreach ($body as $content)
+                    <div class="chat-message">
+
+                        <div class="flex  items-end {{ $content->sender !== 'bot' ? 'justify-end' : '' }}">
                             <div
-                                class="grid grid-cols-8  py-2 pl-2 pr-4 rounded {{ $content->sender !== 'bot' ? '' : 'hover:bg-gray-200' }}">
-                                <li class="col col-span-7 text-justify " id="{{ $content->id }}">
-                                    {{ $content->message }}
-                                </li>
-                                <div class="text-right col-span-1">
+                                class="flex flex-col space-y-2 text-xs max-w-xs mx-2  {{ $content->sender !== 'bot' ? 'order-1 items-end' : ' order-2 items-start' }}">
+
+                                <div class="flex justify-end   w-full">
                                     <button
-                                        class="{{ $content->sender !== 'bot' ? 'hidden' : '' }} {{ auth()->check() ? '' : 'hidden' }} text-gray-400 hover:text-gray-700"
+                                        class="{{ $content->sender !== 'bot' ? 'hidden' : '' }} {{ auth()->check() ? '' : 'hidden' }} text-gray-400 hover:text-gray-700 "
                                         @click="openNote = true"
                                         onclick="addNote(document.getElementById('{{ $content->id }}'))">
-                                        <i class='bx bx-note '></i>
+                                        <i
+                                            class='bx bx-note bg-purple-300 rounded-full p-2  hover:bg-purple-200 text-purple-50'></i>
 
                                     </button>
+                                    <button class="block h-8 w-8 {{ $content->sender !== 'bot' ? 'hidden' : '' }}"
+                                        onclick="toCopy(document.getElementById('{{ $content->id }}'))">
+                                        <i
+                                            class='bx bx-copy-alt bg-purple-300 rounded-full p-2  hover:bg-purple-200 text-purple-50'></i>
+                                    </button>
+                                </div>
+
+                                <div>
+                                    <span id="{{ $content->id }}"
+                                        class="px-4 py-2 rounded-lg inline-block {{ $content->sender !== 'bot' ? 'rounded-br-none bg-purple-300' : 'rounded-bl-none bg-purple-200' }}   text-gray-700">{{ $content->message }}</span>
+                                </div>
+                                <div class="text-center text-xs ">
+                                    <span class="border-b">{{ $content->created_at }}</span>
                                 </div>
                             </div>
                         </div>
-                        <button class="block h-8 w-8 {{ $content->sender !== 'bot' ? 'hidden' : '' }}"
-                            onclick="toCopy(document.getElementById('{{ $content->id }}'))">
-                            <i class='bx bx-copy-alt text-gray-400'></i>
-                        </button>
+
                     </div>
-                </div>
-            @endforeach
-
-
-        </ul>
-        {{-- <div wire:loading
-            class="fixed items-center justify-center  overflow-auto flex top-0 left-0 mx-auto w-full h-full bg-gray-800 bg-opacity-20 z-10 transition duration-1000 ease-in-out">
-            <div class="">
-                Loading...
-                <img src="{{ asset('image/Blocks.gif') }}" class="h-16 w-16" alt="loading..">
+                @endforeach
             </div>
-        </div> --}}
+        </div>
 
 
-        {{--  --}}
 
         <div class=" w-[100%] md:w-[75%] bottom-5  fixed  ">
             <div class=" mx-auto w-32 animate-pulse font-semibold px-20" wire:loading>
@@ -95,34 +80,28 @@
                         </button>
 
                         <div class=" {{ request()->routeIs('conversations.show') ? 'hidden' : '' }}" wire:ignore></div>
-                        <div class="flex pl-0 space-x-1 sm:pl-2 {{ request()->routeIs('guests.show') ? 'hidden' : '' }}"
-                            wire:ignore>
-                            <div class="relative" x-data="{ isOpen: false }">
-                                <button type="button" @click="isOpen = !isOpen"
-                                    class="inline-flex justify-center items-center p-2 text-gray-900 rounded cursor-pointer hover:text-gray-900 hover:rotate-45 duration-500  ">
-                                    <i class='bx bx-cog'></i>
-                                </button>
-                                <button x-show="isOpen" @click.away="isOpen = false" wire:click="clearMessages"
-                                    class=" flex items-center shadow absolute -top-8 -left-12 ml-3 w-32 bg-white hover:bg-red-100 hover:text-red-500 px-4 py-1 rounded-lg">
-                                    <i class='bx bx-reset'></i> Clear chat
-                                </button>
+                        @if (auth()->check())
+                            <div class="flex pl-0 space-x-1 sm:pl-2
+                        {{-- {{ request()->routeIs('guests.show') ? 'hidden' : '' }} --}}
+                        "
+                                wire:ignore>
+                                <div class="relative" x-data="{ isOpen: false }">
+                                    <button type="button" @click="isOpen = !isOpen"
+                                        class="inline-flex justify-center items-center p-2 text-gray-900 rounded cursor-pointer hover:text-gray-900 hover:rotate-45 duration-500  ">
+                                        <i class='bx bx-cog'></i>
+                                    </button>
+                                    <button x-show="isOpen" @click.away="isOpen = false" wire:click="clearMessages"
+                                        class=" flex items-center shadow absolute -top-8 -left-12 ml-3 w-32 bg-white hover:bg-red-100 hover:text-red-500 px-4 py-1 rounded-lg">
+                                        <i class='bx bx-reset'></i> Clear chat
+                                    </button>
+                                </div>
+                                <button @click="openNote = !openNote"
+                                    class="bg-gray-50 border ml-2 border-gray-300 text-gray-900 text-sm rounded-lg  block  py-1 px-4  "><i
+                                        class='bx bx-note'></i> Note</span></button>
+                                <button @click="isOpen = true"
+                                    class="bg-gray-50 border ml-2 border-gray-300 text-gray-900 text-sm rounded-lg  block  py-1 px-4  ">{{ $conversationTitle->bot->name }}</button>
                             </div>
-
-
-
-                            {{-- <button
-                                class="bg-gray-50 border ml-2 border-gray-300 text-gray-900 text-sm rounded-lg  block  py-1 px-4  "><i
-                                    class='bx bx-target-lock'></i> Target</span></button> --}}
-                            <button @click="openNote = !openNote"
-                                class="bg-gray-50 border ml-2 border-gray-300 text-gray-900 text-sm rounded-lg  block  py-1 px-4  "><i
-                                    class='bx bx-note'></i> Note</span></button>
-                            <button @click="isOpen = true"
-                                class="bg-gray-50 border ml-2 border-gray-300 text-gray-900 text-sm rounded-lg  block  py-1 px-4  ">{{ $conversationTitle->bot->name }}</button>
-
-
-
-
-                        </div>
+                        @endif
                         <div wire:loading class="text-xl font-bold text-gray-400">
                             <button wire:click="generateContent"
                                 class="inline-flex items-center animate-pulse py-2.5 px-4 text-2xl font-medium text-center text-gray-400 rounded-lg hover:text-gray-500">
@@ -178,23 +157,15 @@
                     </div>
                 </div>
             </div>
-
-
-
-
         </div>
         {{-- modal2 --}}
-
         <div class="fixed items-center justify-center  overflow-auto flex z-50 top-0 left-0 mx-auto w-full h-full bg-gray-600 bg-opacity-20 transition duration-1000 ease-in-out"
             x-show="openSaveModal" style="display: none;">
             <div @click.away="openSaveModal = false"
                 class="bg-white w-[80%] lg:w-[50%] h-96  shadow-inner   border rounded-lg overflow-auto  pb-6 px-5 transition-all relative duration-700">
                 <div class="space-y-5 p-5 ">
-
                     <h1>Add To Document</h1>
-
                     <div class=" space-y-1">
-
                         <form action="{{ route('documents.store') }}" method="POST" class="space-y-3">
                             @csrf
                             <h1>Title <span class="text-red-400">*</span></h1>
@@ -228,10 +199,7 @@
                                 </div>
                                 <button type="submit" class="btn-primary">save</button>
                             </div>
-
                         </form>
-
-
                     </div>
                 </div>
             </div>
@@ -254,11 +222,7 @@
             <div id="note" class="overflow-y-auto h-full">
                 <p> </p>
             </div>
-
-
-
         </div>
-
 
         <script>
             // for coping text
@@ -284,7 +248,6 @@
             }
 
 
-
             function reloadPage() {
                 setTimeout(function() {
                     window.location.reload();
@@ -304,8 +267,6 @@
                 document.documentElement.scrollTop = document.documentElement.scrollHeight;
                 console.log('hello');
             }
-
-
 
 
             document.addEventListener('livewire:initialized', function() {
@@ -358,7 +319,6 @@
             function addSpace(final_transcript) {
                 return final_transcript + " "
             }
-
 
 
             function startButton(event) {

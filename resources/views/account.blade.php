@@ -239,11 +239,11 @@
                         </tbody>
                     </table>
                 </div>
-
+                {{-- moddal --}}
                 <div class="fixed items-center justify-center  flex top-0 left-0 mx-auto w-full h-full bg-gray-600 bg-opacity-20 z-10 transition duration-1000 ease-in-out"
                     x-show="isOpen" style="display: none;">
                     <div @click.away="isOpen = false"
-                        class="bg-white w-[70%] lg:w-[50%] shadow-inner  border rounded-lg overflow-auto  pb-6 px-5 transition-all relative duration-700">
+                        class="bg-purple-50 w-[70%] lg:w-[50%] shadow-inner  border rounded-lg overflow-auto  pb-6 px-5 transition-all relative duration-700">
                         <div class=" pt-5 ">
                             <div><button @click="isOpen = false"><i class="bx bx-x text-xl font-bold"></i></button>
                             </div>

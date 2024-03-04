@@ -15,7 +15,7 @@ class BotController extends Controller
      */
     public function index()
     {
-        $bots =  Bot::latest()->get();
+        $bots =  Bot::latest()->paginate(10);
         // dd($bots);
         $contents = Content::latest()->get();
         return view('bots.bot', compact('bots','contents'));

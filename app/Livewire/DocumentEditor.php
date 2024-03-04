@@ -20,6 +20,7 @@ class DocumentEditor extends Component
             'content' => 'required|max:3000',
         ]);
 
+        // dd($this->content);
         $preprocessedDocument = strip_tags($this->content);
 
         $this->content;

@@ -1,6 +1,5 @@
 <x-app-layout>
-
-    <div class="   m-4 lg:m-10 space-y-5 pb-50 " x-data="{ isOpen: false, bot: '', openModal: false }">
+    <div class="   m-4 lg:m-10 space-y-5 pb-50  " x-data="{ isOpen: false, bot: '', openModal: false }">
         @if ($errors->any())
             <div class="bg-red-50 text-red-300  p-3 border border-red-300 rounded">
                 <ul>
@@ -15,7 +14,7 @@
         </div>
         <div class="relative  shadow-md sm:rounded-lg ">
             <table class="w-full text-sm text-left text-gray-500 ">
-                <thead class="text-xs text-gray-700 uppercase bg-gray-50  ">
+                <thead class="text-xs text-gray-700 uppercase bg-purple-200  ">
                     <tr>
                         <th scope="col" class="px-6 py-3">
                             Bot name
@@ -36,7 +35,7 @@
                 </thead>
                 <tbody>
                     @foreach ($bots as $bot)
-                        <tr class="bg-white border-b  hover:bg-gray-50 ">
+                        <tr class=" border-b  hover:bg-purple-100 ">
                             <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap capitalize">
                                 {{ $bot->name }}
                             </th>
@@ -50,11 +49,11 @@
                                 {{ $bot->created_at }}
                             </td>
                             <td class="px-6 py-4 text-right ">
-                                <div class="flex rounded border  divide-x divide-slate-300 bg-purple-600  text-white"
+                                <div class="flex rounded border border-green-400  divide-x divide-green-400 bg-green-100  text-green-400"
                                     :class="'{{ $bot->name }}'
                                     === 'bot' ? 'hidden' : ''">
                                     <a href="{{ route('bots.show', $bot) }}"
-                                        class="font-medium  py-1 px-3 hover:bg-purple-700"><i
+                                        class="font-medium  py-1 px-3 hover:bg-green-200"><i
                                             class='bx bxs-share-alt mr-1'></i>share</a>
 
                                     <x-dropdown>
@@ -66,7 +65,8 @@
 
                                             <x-dropdown-link class="cursor-pointer ">
                                                 <div @click=" openModal= true; bot = @js($bot) "
-                                                    class="w-full text-left px-4 py-2">Edit <i class='bx bxs-edit-alt'></i></div>
+                                                    class="w-full text-left px-4 py-2">Edit <i
+                                                        class='bx bxs-edit-alt'></i></div>
 
                                             </x-dropdown-link>
                                             <x-dropdown-link class="cursor-pointer "
@@ -75,14 +75,15 @@
                                                         class='bx bx-message-rounded mr-1 text-sm'></i></div>
 
                                             </x-dropdown-link>
-                                          
+
                                             <x-dropdown-link>
                                                 <form class="w-full"
                                                     action="{{ route('bots.destroy', ['bot' => $bot->id]) }}"
                                                     method="POST">
                                                     @csrf
                                                     @method('DELETE')
-                                                    <button type="submit" class="w-full text-left px-4 py-2">{{ __('Delete') }}
+                                                    <button type="submit"
+                                                        class="w-full text-left px-4 py-2">{{ __('Delete') }}
                                                         <i class='bx bxs-message-rounded-x'></i></button>
                                                 </form>
                                             </x-dropdown-link>
@@ -97,12 +98,13 @@
 
                 </tbody>
             </table>
+            {{ $bots->links() }}
         </div>
         {{-- modal --}}
         <div class="fixed items-center justify-center m-0   overflow-auto flex top-0 left-0 mx-auto w-full h-full bg-gray-600 bg-opacity-20 z-10 transition duration-1000 ease-in-out"
             x-show="isOpen" style="display: none;">
             <div @click.away="isOpen = false"
-                class="bg-white w-[90%] lg:w-[70%] h-[500px]  shadow-inner   border rounded-lg overflow-auto  pb-6 px-5 transition-all relative duration-700">
+                class="bg-purple-100 w-[90%] lg:w-[70%] h-[500px]  shadow-inner   border rounded-2xl overflow-auto  pb-6 px-5 transition-all relative duration-700">
                 <div class="space-y-5 pt-5 ">
                     <button @click="isOpen = false"><i class="bx bx-x text-xl font-bold"></i></button>
 
@@ -116,11 +118,12 @@
                             </h1>
                             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2" x-data="{ selected: null }">
 
-                                <input type="radio" name="personality" id="factual" value="In providing factual information, I'll offer accurate and reliable details on various topics, helping you make informed decisions and broaden your knowledge. Let's explore the world of facts and information.
-                                " hidden
-                                    x-model="selected">
+                                <input type="radio" name="personality" id="factual"
+                                    value="In providing factual information, I'll offer accurate and reliable details on various topics, helping you make informed decisions and broaden your knowledge. Let's explore the world of facts and information.
+                                "
+                                    hidden x-model="selected">
                                 <label for="factual"
-                                    class="font-semibold capitalize bg-gray-100 border rounded p-2 cursor-pointer "
+                                    class="font-semibold capitalize bg-purple-200 border rounded p-2 cursor-pointer "
                                     :class="{
                                         'bg-purple-100 border border-purple-300': selected === 'factual',
                                         '': selected !==
@@ -130,13 +133,13 @@
                                 <input type="radio" name="personality" id="hr" value="hr" hidden
                                     x-model="selected">
                                 <label for="hr"
-                                    class="font-semibold upperase bg-gray-100 border rounded p-2 cursor-pointer"
+                                    class="font-semibold upperase bg-purple-200 border rounded p-2 cursor-pointer"
                                     :class="{ 'bg-purple-100 border border-purple-300': selected === 'hr', '': selected !== 'hr' }">HR</label>
 
                                 <input type="radio" name="personality" id="creative" value="creative" hidden
                                     x-model="selected">
                                 <label for="creative"
-                                    class="font-semibold capitalize bg-gray-100 border rounded p-2 cursor-pointer"
+                                    class="font-semibold capitalize bg-purple-200 border rounded p-2 cursor-pointer"
                                     :class="{
                                         'bg-purple-100 border border-purple-300': selected === 'creative',
                                         '': selected !==
@@ -146,7 +149,7 @@
                                 <input type="radio" name="personality" id="tranning" value="tranning" hidden
                                     x-model="selected">
                                 <label for="tranning"
-                                    class="font-semibold capitalize bg-gray-100 border rounded p-2 cursor-pointer"
+                                    class="font-semibold capitalize bg-purple-200 border rounded p-2 cursor-pointer"
                                     :class="{
                                         'bg-purple-100 border border-purple-300': selected === 'tranning',
                                         '': selected !==
@@ -156,7 +159,7 @@
                                 <input type="radio" name="personality" id="itSupport" value="itSupport" hidden
                                     x-model="selected">
                                 <label for="itSupport"
-                                    class="font-semibold capitalize bg-gray-100 border rounded p-2 cursor-pointer"
+                                    class="font-semibold capitalize bg-purple-200 border rounded p-2 cursor-pointer"
                                     :class="{
                                         'bg-purple-100 border border-purple-300': selected === 'itSupport',
                                         '': selected !==
@@ -167,7 +170,7 @@
                                 <input type="radio" name="personality" id="custormerSupport"
                                     value="custormerSupport" hidden x-model="selected">
                                 <label for="custormerSupport"
-                                    class="font-semibold capitalize bg-gray-100 border rounded p-2 cursor-pointer"
+                                    class="font-semibold capitalize bg-purple-200 border rounded p-2 cursor-pointer"
                                     :class="{
                                         'bg-purple-100 border border-purple-300': selected ===
                                             'custormerSupport',
@@ -208,21 +211,29 @@
                                 <div class="space-y-2 ">
                                     <h1 class=" font-bold mb-2 underline">Knowledge <span
                                             class="text-red-400 ml-1">*</span></h1>
+                                    <div x-data="{ showContent: false }">
+                                        <div class="rounded-md p-2 bg-gray-50 border cursor-pointer"
+                                            @click="showContent = !showContent">Contents <i class='bx bx-chevron-down ml-2'></i></div>
 
-                                    <div>
-
-                                        @forelse ($contents as $content)
-                                            <input type="checkbox" name="knowledge[]" id="{{ $content->id }}"
-                                                value="{{ $content->id }}">
-                                            <label for="{{ $content->id }}"
-                                                class="mr-3 cursor-pointer">{{ $content->title }}</label>
-                                        @empty
-                                            <div class="text-green-400 bg-green-50 border border-green-400 p-3 rounded  ">
-                                                <span>Add contents for the bot to function on. </span>
-                                                <a href="{{ route('contents.index') }}"
-                                                    class="text-gray-700 underline"> Go to contents</a>
-                                            </div>
-                                        @endforelse
+                                        <div x-show="showContent"
+                                            class=" h-32 overflow-y-auto border rounded-md space-y-2"
+                                            style="display: none">
+                                            @forelse ($contents as $content)
+                                            <label for="{{ $content->id }}" 
+                                                class="mr-3 cursor-pointer block bg-gray-50 p-2">
+                                                <input type="checkbox" class="" name="knowledge[]"
+                                                    id="{{ $content->id }}" value="{{ $content->id }}">
+                                                    {{ $content->title }}
+                                                </label>
+                                            @empty
+                                                <div
+                                                    class="text-green-400 bg-green-50 border border-green-400 p-3 rounded  ">
+                                                    <span>Add contents for the bot to function on. </span>
+                                                    <a href="{{ route('contents.index') }}"
+                                                        class="text-gray-700 underline"> Go to contents</a>
+                                                </div>
+                                            @endforelse
+                                        </div>
                                     </div>
 
 
@@ -231,8 +242,10 @@
                         </div>
                     </form>
                     <div class="space-x-3">
-                        <x-main-button type="submit" class="text-gray-50" onclick="document.getElementById('form').submit()">Create</x-main-button>
-                        <button class="bg-gray-50 text-purple-700 shadow-inner border items-center  px-3  text-center  rounded hover:shadow-lg transition duration-300 py-2 text-xs font-semibold   disabled:opacity-25  ease-in-out"
+                        <x-main-button type="submit" class="text-gray-50"
+                            onclick="document.getElementById('form').submit()">Create</x-main-button>
+                        <button
+                            class="bg-gray-50 text-purple-700 shadow-inner border items-center  px-3  text-center  rounded hover:shadow-lg transition duration-300 py-2 text-xs font-semibold   disabled:opacity-25  ease-in-out"
                             @click="isOpen = false">Cancle</button>
                     </div>
                 </div>
@@ -244,7 +257,7 @@
             <div class="fixed items-center justify-center my-0  flex top-0 left-0 mx-auto w-full h-full bg-gray-600 bg-opacity-20 z-10 transition duration-1000 ease-in-out"
                 x-show="openModal" style="display: none;">
                 <div
-                    class="bg-white w-[90%] lg:w-[70%]  shadow-inner  border rounded-lg overflow-auto  pb-6 px-5 transition-all relative duration-700">
+                    class="bg-purple-100 w-[90%] lg:w-[70%]  shadow-inner  border rounded-2xl overflow-auto  pb-6 px-5 transition-all relative duration-700">
                     <div class="space-y-5 pt-5 ">
                         <div><button @click="openModal = false"><i class="bx bx-x text-xl font-bold"></i></button>
                         </div>
@@ -271,31 +284,36 @@
                                         <h1 class=" font-bold mb-2 underline">Model <span
                                                 class="text-red-400 ml-1">*</span> </h1>
 
-                                        <label for="gpt-3" 
+                                        <label
                                             class="mx-2 bg-gray-50 cursor-pointer hover:bg-gray-100 rounded px-3 py-5 flex items-center">
-                                            <input type="radio" name="model" id="gpt-3"
-                                                value="gpt-3.5-turbo" class="mr-2">
+                                            <input type="radio" name="model" value="gpt-3.5-turbo"
+                                                class="mr-2">
                                             GPT-3.5
                                         </label>
-
-                                        <label for="gpt-4"
+                                        <label
                                             class="mx-2 bg-gray-50 cursor-pointer hover:bg-gray-100 rounded px-3 py-5 flex items-center">
-                                            <input type="radio" name="model" id="gpt-4" value="gpt-4"
-                                                class="mr-2">
+                                            <input type="radio" name="model" value="gpt-4" class="mr-2">
                                             GPT-4
                                         </label>
                                     </div>
                                     <div class="space-y-2 ">
                                         <h1 class=" font-bold mb-2 underline">Knowledge</h1>
 
-                                        <div>
-                                            @foreach ($contents as $content)
-                                                <input type="checkbox" name="knowledge[]" id="{{ $content->id }}"
-                                                    value="{{ $content->id }}" >
-                                                <label for="{{ $content->id }}"
-                                                    class="mr-3 cursor-pointer">{{ $content->title }}</label>
-                                            @endforeach
+                                        <div x-data="{ showContent2: false }">
+                                            <div class=" rounded-md p-2 bg-gray-50 border cursor-pointer "
+                                                @click="showContent2 = !showContent2">Contents <i class='bx bx-chevron-down ml-2'></i></div>
+                                            <div x-show="showContent2" class="h-32 overflow-y-auto space-y-2"
+                                                style="display: none">
+                                                @foreach ($contents as $content)
+                                                    <label
+                                                        class="mr-3 cursor-pointer block bg-gray-50 p-2">
+                                                        <input type="checkbox"  name="knowledge[]"
+                                                            value="{{ $content->id }}" class="">
+                                                        {{ $content->title }}
+                                                    </label>
+                                                @endforeach
 
+                                            </div>
                                         </div>
 
 
@@ -303,8 +321,9 @@
                                 </div>
                             </div>
                             <div class="space-x-3 mt-4">
-                                <x-main-button type="submit" class="text-gray-50" >Update</x-main-button>
-                                <button  type="button"  class="bg-gray-50 text-purple-700 shadow-inner border items-center  px-3  text-center  rounded hover:shadow-lg transition duration-300 py-2 text-xs font-semibold   disabled:opacity-25  ease-in-out"
+                                <x-main-button type="submit" class="text-gray-50">Update</x-main-button>
+                                <button type="button"
+                                    class="bg-gray-50 text-purple-700 shadow-inner border items-center  px-3  text-center  rounded hover:shadow-lg transition duration-300 py-2 text-xs font-semibold   disabled:opacity-25  ease-in-out"
                                     @click="openModal = false">Cancle</button>
                             </div>
                             {{-- <x-main-button type="submit" class="text-gray-50" >Update</x-main-button> --}}

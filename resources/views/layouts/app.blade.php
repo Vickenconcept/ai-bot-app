@@ -16,30 +16,30 @@
 
     {{-- <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script> --}}
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js " ></script>
-    
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js "></script>
+
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
 
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    {{-- <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
-    <link rel="stylesheet" href="{{ asset('build/assets/app-8d4c5195.css') }}"> --}}
-   
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+    <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-1105f430.css') }}">
+
 
     @livewireStyles
 </head>
 
 <body class="h-full">
-    <div id="ap" class="min-h-screen bg-gray- text-gray-700" x-data="{ openHelp: false }">
+    <div id="ap" class="min-h-screen bg-purple-50 text-gray-700" x-data="{ openHelp: false }">
 
         <x-header />
         <x-pre-loader />
         {{ $slot }}
-
+        <iframe id="myIframe" src="https://trust.test/campaign/component/dc27f900-1f45-4651-b253-068df22240be"
+            style=" position: relative;" width="100%" height="600"></iframe>
     </div>
-
 
     <script>
         function logout(e) {
@@ -47,89 +47,11 @@
             e.closest('form').submit();
         }
     </script>
-    {{-- <script>
-        // -------- //
 
-        function logout(e) {
-            localStorage.clear();
-            e.closest('form').submit();
-        }
-
-
-        const form = document.querySelector("#form-question");
-        const result = document.getElementById("result");
-        const question = document.getElementById("question");
-
-        // 
-        function appendMessage(message) {
-            let formattedMessage = "\n AI: " + message;
-            let newMessage = formattedMessage;
-            const newDiv = document.createElement('div');
-            newDiv.innerText = "\n" + formattedMessage;
-
-            result.appendChild(newDiv);
-
-            // result.innerText = newMessage;
-            result.scrollTop = result.scrollHeight;
-        }
-
-
-        function appendMessageForUser(message) {
-            const newDiv = document.createElement('div');
-            newDiv.innerText = "\n" + message;
-
-            result.appendChild(newDiv);
-        }
-        // 
-
-
-
-        form.addEventListener("submit", (event) => {
-            event.preventDefault();
-            const input = event.target.input.value;
-            if (input === "") return;
-
-            // question.innerText = input;
-            event.target.input.value = "";
-
-            appendMessageForUser("You: " + input);
-
-            const queryQuestion = encodeURIComponent(input);
-            const source = new EventSource("/ask?question=" + queryQuestion);
-            source.addEventListener("update", function(event) {
-                console.log(event);
-                if (event.data === "<END_STREAMING_SSE>") {
-                    source.close();
-                    return;
-                }
-
-            });
-            // -----
-            let accumulatedMessage = '';
-            source.onmessage = (event) => {
-                console.log('Received data: ', event.data);
-                // Handle the received data as needed
-                // result.innerText += event.data;
-
-                if (event.data === "<END_STREAMING_SSE>") {
-                    source.close();
-                    return;
-                }
-                accumulatedMessage += event.data + ' ';
-                appendMessage(accumulatedMessage)
-
-            };
-
-            source.onerror = (error) => {
-                console.error('EventSource failed: ', error);
-            };
-        });
-    </script> --}}
 
     @livewireScripts
-    {{-- <script src="{{ asset('build/assets/app-11155cd2.js') }}"></script> --}}
+    <script src="{{ asset('build/assets/app-11155cd2.js') }}"></script>
+
 </body>
-
-
 
 </html>

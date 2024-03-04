@@ -13,6 +13,7 @@ use App\Http\Controllers\InviteController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\ResellerController;
 use App\Models\Content;
 use App\Models\Conversation;
 use App\Services\GetResponseService;
@@ -73,6 +74,7 @@ Route::middleware(['auth'])->group(function () {
     Route::post('contents/update', [ContentController::class, 'updateName'])->name('updateName');
     Route::resource('contents', ContentController::class);
     Route::resource('account', AccountController::class);
+    Route::resource('reseller', ResellerController::class);
     Route::post('documents/updateData', [DocumentController::class, 'update'])->name('documents.updateData');
     Route::resource('documents', DocumentController::class);
     Route::get('invite', InviteController::class)->name('invite');

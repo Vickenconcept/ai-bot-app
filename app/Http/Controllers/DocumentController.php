@@ -96,6 +96,6 @@ class DocumentController extends Controller
         }
          
 
-        // return redirect()->back()->with('success', 'Document deleted successfully.');
+        return redirect('contents')->with('success', 'Document deleted successfully.');
     }
 }

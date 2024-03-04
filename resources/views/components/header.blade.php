@@ -1,4 +1,5 @@
 <nav class="bg-purple-200 sticky top-0 z-50" x-data="{ openMobileMenue: false, open: true }">
+{{-- <nav class="bg-purple-200 sticky top-0 z-50" x-data="{ openMobileMenue: false, open: true }"> --}}
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div class="relative flex h-16 items-center justify-between">
             <a href="{{ route('conversations.index') }}" class="text-xl hidden sm:block">
@@ -64,26 +65,29 @@
                             id="user-menu-button" aria-expanded="false" aria-haspopup="true">
                             <span class="absolute -inset-1.5"></span>
                             <span class="sr-only">Open user menu</span>
-                            <span
-                                class="h-8 w-8 rounded-full flex justify-center items-center font-bold  bg-blue-50 ">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span>
+                            {{-- <span
+                                class="h-8 w-8 rounded-full flex justify-center items-center font-bold  bg-blue-50 ">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span> --}}
                         </button>
+                        <p class="cursor-pointer" @click="isOpen = !isOpen"><b>welcome </b>, {{ auth()->user()->name }}</p>
                     </div>
 
                     <div x-show="isOpen" @click.away="isOpen = false" style="display: none"
                         class="absolute right-0 z-10 mt-2 w-48 origin-top-right  bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                         role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
                         <!-- Active: "bg-gray-100", Not Active: "" -->
-                        <a href="{{ route('profile') }}" class="block px-4 py-2 text-sm text-gray-700" role="menuitem"
+                        <a href="{{ route('profile') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200" role="menuitem"
                             tabindex="-1" id="user-menu-item-0">Your Profile</a>
 
                         <form action="{{ route('auth.logout') }}" method="POST">
                             @csrf
 
                             <a href="javascript:void(0)" onclick="logout(this)"
-                                class="block px-4 py-2 text-sm text-gray-700">Sign out</a>
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">Sign out</a>
                         </form>
                         <a href="{{ route('home') }}" 
-                                class="block px-4 py-2 text-sm text-gray-700">Dashboard</a>
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">Dashboard</a>
+                        <a href="{{ route('reseller.index') }}" 
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">Reseller</a>
                     </div>
                 </div>
             </div>

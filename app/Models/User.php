@@ -10,8 +10,11 @@ use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use App\Models\Conversation;
 use App\Models\Content;
+use App\Models\Reseller;
 use App\Models\Account;
 use App\Models\Bot;
+use Carbon\Carbon;
+use Illuminate\Database\Eloquent\Casts\Attribute;
 
 class User extends Authenticatable
 {
@@ -65,6 +68,10 @@ class User extends Authenticatable
     {
         return $this->hasMany(Conversation::class);
     }
+    public function resellers()
+    {
+        return $this->hasMany(Reseller::class);
+    }
     public function contents()
     {
 
@@ -111,5 +118,9 @@ class User extends Authenticatable
     public function referrals()
     {
         return $this->hasMany(User::class, 'referrer_id', 'id');
+    }
+    protected function createdAt(): Attribute
+    {
+        return Attribute::get(fn ($value) => Carbon::parse($value)->format('F j, Y, g:i A'));
     }
 }

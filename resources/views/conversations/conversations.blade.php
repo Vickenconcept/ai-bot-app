@@ -6,7 +6,7 @@
             <div class="col-span-2 p-3 bg-[#1a001a]  h-screen fixed  lg:block  lg:w-[315px] space-y-5 {{ request()->routeIs('conversations.show') ? 'hidden' : 'w-full' }}"
                 x-show="closeSidebar">
 
-                <hr class="hidden lg:block">
+                {{-- <hr class="hidden lg:block"> --}}
 
                 <div class="space-y-1" x-show="isGuest === false">
                     <div class="flex justify-between  mb-3">
@@ -32,7 +32,7 @@
                     <ul class="space-y-3 pt-5">
                         @foreach ($conversation as $conversation)
                             <li
-                                class="text-purple-200 font-normal  bg-slate-500 rounded p-2 bg-opacity-30 flex justify-between text-md tracking-wide capitalize">
+                                class="text-purple-200 font-normal  bg-slate-800 rounded p-2 bg-opacity-30 flex justify-between text-md tracking-wide capitalize">
                                 <a href="{{ route('conversations.show', $conversation->slug) }}">
                                     <i class='bx bxs-conversation mr-1 text-sm'></i>
                                     {{ $conversation->title }}
@@ -41,7 +41,7 @@
                                 <x-dropdown>
                                     <x-slot name="trigger">
                                         <button><i
-                                                class='bx bx-dots-vertical-rounded hover:bg-gray-50 hover:text-purple-900 transition duration-300 p-2 rounded'></i></button>
+                                                class='bx bx-dots-vertical-rounded hover:bg-purple-100 hover:text-purple-900 transition duration-300 p-2 rounded'></i></button>
                                     </x-slot>
                                     <x-slot name="content">
 
@@ -93,7 +93,7 @@
                     <ul class="space-y-3 pt-5">
                         @foreach ($guest as $guest)
                             <li
-                                class="text-purple-200 font-normal  bg-slate-500 rounded p-2 bg-opacity-30  flex justify-between text-md tracking-wide capitalize">
+                                class="text-purple-200 font-normal  bg-slate-800 rounded p-2 bg-opacity-30  flex justify-between text-md tracking-wide capitalize">
                                 <a href="{{ route('guests.show', $guest->uuid) }}">
                                     <i class='bx bxs-conversation mr-1 text-sm'></i>
                                     {{ $guest->title }}
@@ -102,7 +102,7 @@
                                 <x-dropdown>
                                     <x-slot name="trigger">
                                         <button><i
-                                                class='bx bx-dots-vertical-rounded hover:bg-gray-50 hover:text-purple-900 transition duration-300 p-2 rounded'></i></button>
+                                                class='bx bx-dots-vertical-rounded hover:bg-purple-100 hover:text-purple-900 transition duration-300 p-2 rounded'></i></button>
                                     </x-slot>
                                     <x-slot name="content">
 

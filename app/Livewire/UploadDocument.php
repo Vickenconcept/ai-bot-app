@@ -83,13 +83,11 @@ class UploadDocument extends Component
         // dd($this->file);
 
         if ($this->file->getClientOriginalExtension() === 'pdf') {
-            // $binpath = 'C:/Program Files/Git/mingw64/bin/pdftotext';
-            $binpath = base_path('bin/pdftotext');
+            $binpath = 'C:/Program Files/Git/mingw64/bin/pdftotext';
 
             $command = "which pdftotext";
             $pdftotext_path = shell_exec($command);
-            dd($pdftotext_path);
-            dd($binpath);
+            // dd($pdftotext_path);
             $this->textContent = Pdf::getText($this->file->getRealPath(), $binpath);
         } elseif ($this->file->getClientOriginalExtension() === 'docx') {
             $doc = IOFactory::load($this->file->getRealPath());
