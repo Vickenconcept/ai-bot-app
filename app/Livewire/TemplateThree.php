@@ -36,8 +36,7 @@ class TemplateThree extends Component
             $this->chat = $chat;
         }
 
-        // $this->bot =  Bot::latest()->get();
-        // $this->contents =  Content::latest()->get();
+        
     }
 
     public function nextResponse()

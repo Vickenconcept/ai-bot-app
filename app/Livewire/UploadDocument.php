@@ -80,7 +80,6 @@ class UploadDocument extends Component
         $this->validate([
             'file' => 'required|mimes:pdf,docx|max:2048',
         ]);
-        // dd($this->file);
 
         if ($this->file->getClientOriginalExtension() === 'pdf') {
             $binpath = 'C:/Program Files/Git/mingw64/bin/pdftotext';

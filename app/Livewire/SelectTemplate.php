@@ -67,6 +67,138 @@ class SelectTemplate extends Component
         $uuid = $this->guestChat->uuid;
         $this->conversation = Conversation::where('uuid', $uuid)->first();
     }
+    public function selectAvatar($avatar)
+    {
+        $data = [];
+
+        if ($avatar == 'avatar-1') {
+            $data = [
+                'image_url' => asset('video/preview (1).mp4'),
+                'gender' => 'male',
+            ];
+            
+        }
+        elseif ($avatar == 'avatar-2') {
+            $data = [
+                'image_url' => asset('video/preview (3).mp4'),
+                'gender' => 'female',
+            ];
+        }
+        elseif ($avatar == 'avatar-3') {
+            $data = [
+                'image_url' => asset('video/preview (5).mp4'),
+                'gender' => 'female',
+            ];
+        }
+        elseif ($avatar == 'avatar-4') {
+            $data = [
+                'image_url' => asset('video/preview (6).mp4'),
+                'gender' => 'male',
+            ];
+        }
+        elseif ($avatar == 'avatar-5') {
+            $data = [
+                'image_url' => asset('video/preview (7).mp4'),
+                'gender' => 'male',
+            ];
+        }
+        elseif ($avatar == 'avatar-6') {
+            $data = [
+                'image_url' => asset('video/preview (8).mp4'),
+                'gender' => 'male',
+            ];
+        }
+        elseif ($avatar == 'avatar-7') {
+            $data = [
+                'image_url' => asset('video/preview (12).mp4'),
+                'gender' => 'female',
+            ];
+        }
+        elseif ($avatar == 'avatar-8') {
+            $data = [
+                'image_url' => asset('video/preview (10).mp4'),
+                'gender' => 'male',
+            ];
+        }
+        elseif ($avatar == 'avatar-9') {
+            $data = [
+                'image_url' => asset('video/preview (14).mp4'),
+                'gender' => 'male',
+            ];
+        }
+        elseif ($avatar == 'avatar-10') {
+            $data = [
+                'image_url' => asset('video/preview (16).mp4'),
+                'gender' => 'female',
+            ];
+        }
+        elseif ($avatar == 'avatar-11') {
+            $data = [
+                'image_url' => asset('video/preview (20).mp4'),
+                'gender' => 'male',
+            ];
+        }
+        elseif ($avatar == 'avatar-12') {
+            $data = [
+                'image_url' => asset('video/preview (26).mp4'),
+                'gender' => 'male',
+            ];
+        }
+        elseif ($avatar == 'avatar-13') {
+            $data = [
+                'image_url' => asset('video/preview (27).mp4'),
+                'gender' => 'male',
+            ];
+        }
+        elseif ($avatar == 'avatar-14') {
+            $data = [
+                'image_url' => asset('video/preview (28).mp4'),
+                'gender' => 'female',
+            ];
+        }
+        elseif ($avatar == 'avatar-15') {
+            $data = [
+                'image_url' => asset('video/preview (5)v.mp4'),
+                'gender' => 'female',
+            ];
+        }
+        elseif ($avatar == 'avatar-16') {
+            $data = [
+                'image_url' => asset('video/preview (7)v.mp4'),
+                'gender' => 'female',
+            ];
+        }
+        elseif ($avatar == 'avatar-17') {
+            $data = [
+                'image_url' => asset('video/preview (8)v.mp4'),
+                'gender' => 'female',
+            ];
+        }
+        elseif ($avatar == 'avatar-18') {
+            $data = [
+                'image_url' => asset('video/preview (9)v.mp4'),
+                'gender' => 'female',
+            ];
+        }
+        elseif ($avatar == 'avatar-19') {
+            $data = [
+                'image_url' => asset('video/preview (11)v.mp4'),
+                'gender' => 'male',
+            ];
+        }
+        elseif ($avatar == 'avatar-20') {
+            $data = [
+                'image_url' => asset('video/preview (13)v.mp4'),
+                'gender' => 'female',
+            ];
+        }
+
+        $this->guestChat->avatar = $data;
+
+        $this->guestChat->update();
+
+        return back()->with('success', 'selected successfully');
+    }
 
     public function selectedTemplate($id)
     {

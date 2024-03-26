@@ -1,5 +1,6 @@
 <div class="mt-20 pb-10">
     <div class="w-full px-5 flex flex-col justify-between" x-data="{ isOpen: null, openLast: false, contactType: true }">
+
         <div class="flex flex-col mt-5">
 
             @foreach ($history as $key => $response)
@@ -13,6 +14,24 @@
                             {{ $response }}
                         </div>
                     </div>
+                    {{--  --}}
+                    @if ($key == 0)
+                        <div class="flex justify-end mb-4">
+                            <div
+                                class="mr-2 py-3 px-4 gap-3 text-gray-70 rounded-tl-3xl rounded-bl-3xl rounded-br-3xl  ">
+                                <button onclick="test()"
+                                    class="shadow-sm hover:shadow-md px-5 py-2 w-full bg-gray-50 rounded-md border font-semibold">Continue...</button>
+                                <button onclick="test()"
+                                    class="shadow-sm hover:shadow-md px-5 py-2 w-full bg-gray-50 rounded-md border font-semibold">Proceed...</button>
+                            </div>
+                            {{-- <span
+                                class="h-8
+                        w-8 rounded-full flex justify-center items-center font-bold bg-green-100 ">
+                                ME
+                            </span> --}}
+                        </div>
+                    @endif
+                    {{--  --}}
                     @if ($loop->iteration == $secondToLastIndex)
                         <div class="flex space-x-5 pl-10" x-show="contactType">
                             <x-main-button class="text-gray-50"
@@ -31,7 +50,7 @@
                                     <div class="flex-initial ml-1">
 
                                         @if ($email !== '' && $email !== null)
-                                            <x-main-button
+                                            <x-main-button onclick="lastResponse ()"
                                                 style="background-color: {{ $conversationTitle->nav_bg_color }}; color: {{ $conversationTitle->nav_col }}"
                                                 class="text-gray-50 " @click="openLast = true, isOpen=null"
                                                 wire:click="subscribe">Submit</x-main-button>
@@ -45,7 +64,7 @@
                                         placeholder="Enter your number here" />
                                     <div class="flex-initial ml-1">
                                         @if ($phoneNumber !== '' && $phoneNumber !== null)
-                                            <x-main-button
+                                            <x-main-button onclick="lastResponse ()"
                                                 style="background-color: {{ $conversationTitle->nav_bg_color }}; color: {{ $conversationTitle->nav_col }}"
                                                 class="text-gray-50 " @click="openLast = true, isOpen=null"
                                                 wire:click="subscribe">Submit</x-main-button>
@@ -78,77 +97,75 @@
             </div>
         </div>
     </div>
-    {{-- <x-main-button wire:click="nextResponse">Next Response</x-main-button> --}}
-
     <script>
-        var index = -2;
-        setInterval(() => {
-            // document.body.scrollTop = document.body.scrollHeight;
-            // document.documentElement.scrollTop = document.documentElement.scrollHeight;
+        var index = -2
+        var text = @json($chatData);
 
-            index += 1
-            var text = @json($chatData);
-            // console.log("'" + text[index] + "'");
-            if (index < text.length - 1) {
-                // console.log(index);
-                textToSpeech("'" + text[index] + "'")
-            } else {
-                console.log(index < text.length - 1);
-            }
+        function test() {
+            setInterval(() => {
+                if (text.length >= index + 2) {
+
+                    index += 1
+
+                    if (index <= text.length - 2) {
+
+                        textToSpeech("'" + text[index] + "'")
+                    }
+                   
+
+                    if (index > 0) {
+                        @this.dispatch('nextResponse');
+                    }
+                    // window.scrollTo(0, document.body.scrollHeight);
+                    document.body.scrollTop = document.body.scrollHeight;
+                    document.documentElement.scrollTop = document.documentElement.scrollHeight;
+                }
+            }, 4000);
+        }
+
+        function lastResponse (){
+            textToSpeech("'" + text[text.length - 1] + "'")
+        }
 
 
-            @this.dispatch('nextResponse');
-        }, 3000);
 
 
 
 
         // window.addEventListener('DOMContentLoaded', () => {
         // })
-        // setInterval(() => {
 
-        //     textToSpeech('hello world')
-        // }, 2000);
-
+        var gender = @json($conversationTitle->avatar['gender']);
 
         function textToSpeech(text) {
-            // Your speech synthesis code here
             var synthesis = window.speechSynthesis;
 
-            // Check if speech synthesis is supported
             if ('speechSynthesis' in window) {
-                // Create a new SpeechSynthesisUtterance
                 var utterance = new SpeechSynthesisUtterance(text);
 
-                // Set the voice and other properties
                 var voices = synthesis.getVoices();
 
                 if (voices.length === 0) {
                     synthesis.addEventListener('voiceschanged', function() {
                         voices = synthesis.getVoices();
-                        // Continue with your code using the updated 'voices' array
-                        console.log(voices);
                     });
                 } else {
-                    // Continue with your code using the 'voices' array
-                    // console.log(voices);
-                    console.log('heloo world');
 
 
+                    if (gender == 'female') {
+                        var selectedVoice = voices[2]
 
-                    var voice = voices.find(function(voice) {
-                        return voice.lang.includes('en');
-                    });
-                    console.log(voices);
+                    } else {
+                        var selectedVoice = voices[1]
+                    }
 
-                    if (voice) {
-                        utterance.voice = voice;
-                        utterance.lang = 'en'; // Set the language
+                    if (selectedVoice) {
+                        utterance.voice = selectedVoice;
+                        utterance.lang = selectedVoice.lang;
                         utterance.pitch = 1.5;
                         utterance.rate = 1.25;
                         utterance.volume = 0.8;
 
-                        // Speak the utterance
                         synthesis.speak(utterance);
                     } else {
                         console.error('No English voice found.');

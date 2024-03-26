@@ -1,13 +1,12 @@
 <div x-data="{ template: null, templateGallary: true }" class="space-y-5">
+    <x-select-avatar />
     <h1 class="font-bold text-2xl ">Select your Template</h1>
     <hr class="mb-10">
     <div class="grid sm:grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-2" x-show="templateGallary">
         @foreach ($templates as $template)
             <div class="max-w-sm rounded overflow-hidden shadow-lg cursor-pointer"
                 @click="$dispatch('selectedTemplate', { id: @js($template[0])}),template = @js($template[0]), templateGallary = false">
-                <img class="w-full"
-                    src="{{ $template[1] }}"
-                    alt="Sunset in the mountains">
+                <img class="w-full" src="{{ $template[1] }}" alt="Sunset in the mountains">
                 <div class="px-6 py-4">
                     <div class=" text-xl mb-2 capitalize">{{ $template[0] }}</div>
                 </div>
@@ -18,10 +17,13 @@
 
     <div class="space-y-4">
         <div>
-            <button @click="templateGallary = true, template = null" class="hover:underline font-semibold flex items-center"><i class='bx bx-chevron-left '></i> Back</button>
+            <button @click="templateGallary = true, template = null"
+                class="hover:underline font-semibold flex items-center"><i class='bx bx-chevron-left '></i>
+                Back</button>
         </div>
         <div x-show="template === 'template 1'">
-            <h1 class="font-bold tracking-wide text-2xl text-center">Trained Bot Converstion <span class="text-sm italic">(default)</span></h1>
+            <h1 class="font-bold tracking-wide text-2xl text-center">Trained Bot Converstion <span
+                    class="text-sm italic">(default)</span></h1>
             <livewire:customize-view :guestChat="$guestChat" />
         </div>
         <div x-show="template === 'template 2'" class=" w-[60%] mx-auto space-y-5">
@@ -49,6 +51,9 @@
         </div>
         <div x-show="template === 'template 3'" class="space-y-5">
             <h1 class="font-bold tracking-wide text-2xl text-center">Audio Conversation</h1>
+            {{-- <x-select-avatar /> --}}
+
+
             <p>Add desired sentence sequence to get users contact detail, either email or phone number </p>
             <div class="text-red-400 bg-red-50 border border-red-400 p-3 rounded  ">
                 <span>Note: Your CTA follows the second to the last sentence you input </span>
@@ -70,7 +75,8 @@
         </div>
         <div x-show="template === 'template 4'" class="space-y-5">
             <h1 class="font-bold tracking-wide text-2xl text-center">Chat with Images</h1>
-            <p>Add desired sentence sequence to get users contact detail. You can add image url to your chat template </p>
+            <p>Add desired sentence sequence to get users contact detail. You can add image url to your chat template
+            </p>
             <div class="text-red-400 bg-red-50 border border-red-400 p-3 rounded  ">
                 <span>Note: Your CTA follows the second to the last sentence you input </span>
 
@@ -92,7 +98,8 @@
         </div>
         <div x-show="template === 'template 5'" class="space-y-5">
             <h1 class="font-bold tracking-wide text-2xl text-center">Chat with videos</h1>
-            <p>Add desired sentence sequence to get users contact detail. You can add video url to your chat template </p>
+            <p>Add desired sentence sequence to get users contact detail. You can add video url to your chat template
+            </p>
             <div class="text-red-400 bg-red-50 border border-red-400 p-3 rounded  ">
                 <span>Note: Your CTA follows the second to the last sentence you input </span>
 
@@ -113,24 +120,24 @@
         </div>
         <div x-show="template === 'template 6'" class="space-y-5">
 
-            <h1 class="font-bold tracking-wide text-2xl text-center">Enter your desired Keywords and  response </p>
-            <div class="  grid lg:grid-cols-2 gap-5  mt-5">
+            <h1 class="font-bold tracking-wide text-2xl text-center">Enter your desired Keywords and response </p>
+                <div class="  grid lg:grid-cols-2 gap-5  mt-5">
 
-                @foreach ($tempSixDefaultData as $index => $value)
-                    <div class=" font-normal">
-                        <label for=""></label>
-                        <input type="text" wire:model="question.{{ $index }}" class="form-control"
-                            placeholder="Your keyword..">
-                        <input type="text" wire:model="answer.{{ $index }}" class="form-control  mt-2"
-                            placeholder="Your response..">
-                    </div>
-                @endforeach
-            </div>
+                    @foreach ($tempSixDefaultData as $index => $value)
+                        <div class=" font-normal">
+                            <label for=""></label>
+                            <input type="text" wire:model="question.{{ $index }}" class="form-control"
+                                placeholder="Your keyword..">
+                            <input type="text" wire:model="answer.{{ $index }}" class="form-control  mt-2"
+                                placeholder="Your response..">
+                        </div>
+                    @endforeach
+                </div>
 
-    
-            <x-main-button class="text-purple-50" wire:click="addToTemplateSix">+ Add </x-main-button>
-            <button wire:click="customizeTemplateSix" @click="templateGallary = true, template = null"
-                class="btn-primary mt-2">submit</button>
+
+                <x-main-button class="text-purple-50" wire:click="addToTemplateSix">+ Add </x-main-button>
+                <button wire:click="customizeTemplateSix" @click="templateGallary = true, template = null"
+                    class="btn-primary mt-2">submit</button>
         </div>
     </div>
 

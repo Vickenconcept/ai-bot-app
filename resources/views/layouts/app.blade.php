@@ -23,9 +23,9 @@
 
 
 
-    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
-    <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
-    <link rel="stylesheet" href="{{ asset('build/assets/app-1105f430.css') }}">
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+    {{-- <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-1105f430.css') }}"> --}}
 
 
     @livewireStyles
@@ -37,9 +37,101 @@
         <x-header />
         <x-pre-loader />
         {{ $slot }}
-        <iframe id="myIframe" src="https://trust.test/campaign/component/dc27f900-1f45-4651-b253-068df22240be"
-            style=" position: relative;" width="100%" height="600"></iframe>
+
+
+        <div>
+            <button class="btn" id="toggleIframe"
+                style="
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            color: white; border: 0px; cursor: pointer;
+            background-color: #1d98f7;
+            padding: 15px 20px;
+            box-shadow: 5px 2px 5px #ccc;
+            border-radius: 50px;">
+                <i class='bx bx-bot'></i>
+            </button>
+
+            <div class="" id="myIframe"
+                style="position: fixed; bottom: 70px; right: 20px; display: none; align-items: center; border-radius: 10px;">
+                <div style="flex: 1;">
+                    <video id="myVideo" autoplay loop muted style="max-width: 100%; height: auto;">
+                        <source src="http://127.0.0.1:8000/video/preview (9)v.mp4" type="video/mp4">
+                    </video>
+                </div>
+                <iframe id="myInnerIframe" src="http://127.0.0.1:8000/guests/c4573f67-6ad0-47fa-b97f-1e94c4607ec5"
+                    style="box-shadow: 3px 3px 6px lightgray; border: 3px solid darkpurple; border-radius: 10px; flex: 1;"
+                    height="400"></iframe>
+            </div>
+        </div>
+
+
+
+
+
+
     </div>
+
+    <script>
+        // window.addEventListener('DOMContentLoaded', () => {
+        //     test()
+        // })
+    </script>
+
+    <script>
+        const body = document.querySelector('body');
+        body.classList.add('top-window');
+        const btns = document.querySelectorAll('.btn');
+        btns.forEach(btn => {
+            btn.style.display = 'block';
+        });
+
+
+        function initializeEmbed() {
+            const container = document.getElementById('myIframe');
+            const toggleIcon = document.getElementById('toggleIframe');
+
+            toggleIcon.addEventListener('click', () => {
+                container.style.display = (container.style.display === 'none' || container.style.display === '') ?
+                    'flex' :
+                    'none';
+            });
+
+            if (window === window.top) {
+                document.body.classList.add('top-window');
+            }
+        }
+
+
+        initializeEmbed();
+    </script>
+
+    {{-- <script>
+    const body = document.querySelector('body');
+    body.classList.add('top-window');
+    const btns = document.querySelectorAll('.btn');
+    btns.forEach(btn => {
+        btn.style.display = 'block';
+    });
+
+    function initializeEmbed() {
+        const container = document.getElementById('myIframe');
+        const toggleIcon = document.getElementById('toggleIframe');
+
+        toggleIcon.addEventListener('click', () => {
+            container.style.display = (container.style.display === 'none' || container.style.display === '') ?
+                'flex' :
+                'none';
+        });
+
+        if (window === window.top) {
+            document.body.classList.add('top-window');
+        }
+    }
+
+    initializeEmbed();
+</script> --}}
 
     <script>
         function logout(e) {

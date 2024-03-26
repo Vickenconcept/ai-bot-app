@@ -16,6 +16,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ResellerController;
 use App\Models\Content;
 use App\Models\Conversation;
+use App\Services\AvatarService;
 use App\Services\GetResponseService;
 use App\Services\MailChimpService;
 use GuzzleHttp\Client;
@@ -26,6 +27,7 @@ use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Storage;
 use Stevebauman\Location\Facades\Location;
+use Illuminate\Support\Str;
 
 
 /*
@@ -106,7 +108,7 @@ Route::get('/clear', function () {
 });
 
 
-Route::get('test', function (Request $request) {
+Route::get('try', function (Request $request) {
     // bh9uA)v4RB@mO@a9GMq(!BO2D9LO$44
 
 
@@ -117,26 +119,28 @@ Route::get('test', function (Request $request) {
     // $getResponseService = app(GetResponseService::class);
     // dd($getResponseService->getAudience('pxck0psjdi8tipukr0w24fh1d9ct3vi6'));
     // ba68c47b0f22ebc09ecbe7b6df697ac2-us21
-    
-   
 
 
 
-    $location = Location::get($request->ip());
-    
-//    $ip = '192.168.98.220';
-//    $ip = '162.159.24.227';
-   $ip = '102.128.255.255';
-   $locale = App::currentLocale();
-   dd($locale);
+
+
+
+
+    // $location = Location::get($request->ip());
+
+    //    $ip = '192.168.98.220';
+    //    $ip = '162.159.24.227';
+    $ip = '102.128.255.255';
+    $locale = App::currentLocale();
+    dd($locale);
 
 
     try {
         $position = Location::get($ip);
         dd($position);
         echo 'Latitude: ' . $position->countryName;
-         return;
-    
+        return;
+
         if ($position !== false) {
             // Successfully retrieved position.
             echo $position->countryName;
@@ -151,3 +155,40 @@ Route::get('test', function (Request $request) {
     }
 })->withoutMiddleware(['auth'])->name('test');
 
+
+Route::get('test', function () {
+
+    // $avatarSevice = app(AvatarService::class);
+
+    // // $avatar = $avatarSevice->getAvaters();
+    // $creatclip = $avatarSevice->creatClip();
+    
+
+// Define the request parameters
+// $data = [
+//     'model' => 'tts-1',
+//     'input' => 'Today is a wonderful day to build something people love!',
+//     'voice' => 'alloy'
+// ];
+
+// // Make the request to the OpenAI API
+// $response = Http::withHeaders([
+//     'Authorization' => 'Bearer ' . env('OPENAI_API_KEY'),
+//     'Content-Type' => 'application/json',
+// ])->post('https://api.openai.com/v1/audio/speech', $data);
+
+// // Check if the request was successful
+// if ($response->successful()) {
+//     // Save the audio file to storage
+//     $audioFilePath = storage_path('app/'. Str::random().'.mp3');
+//     file_put_contents($audioFilePath, $response->body());
+
+// } else {
+//     // Handle the case where the request was not successful
+//     $errorMessage = $response->json()['error']['message'];
+//     // Handle or log the error message
+// }
+
+
+
+});

@@ -24,6 +24,7 @@ class Conversation extends Model
         'temp_four' => 'array',
         'temp_five' => 'array',
         'users_contact_info' => 'array',
+        'avatar' => 'array',
     ];
 
     public function user(){

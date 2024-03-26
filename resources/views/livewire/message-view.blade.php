@@ -346,6 +346,70 @@
             function checkTextAreaValue() {
                 console.log(final_span);
             }
+
+
+
+
+            var body = @json($body);
+            var gender = @json($conversationTitle->avatar['gender']);
+
+            const botMessages = body.filter(message => message.sender === 'bot');
+
+            if (botMessages.length > 0) {
+                // textToSpeech(botMessages[botMessages.length - 1].message);
+                let counter = 0;
+                const intervalId = setInterval(() => {
+                    if (counter < 2) {
+                        textToSpeech(botMessages[botMessages.length - 1].message);
+                        counter++;
+                    } else {
+                        clearInterval(intervalId);
+                    }
+                }, 2000);
+            } else {
+                console.log("No bot messages found.");
+            }
+
+
+            function textToSpeech(text) {
+                var synthesis = window.speechSynthesis;
+
+                if ('speechSynthesis' in window) {
+                    var utterance = new SpeechSynthesisUtterance(text);
+
+                    var voices = synthesis.getVoices();
+
+                    if (voices.length === 0) {
+                        synthesis.addEventListener('voiceschanged', function() {
+                            voices = synthesis.getVoices();
+
+                        });
+                    } else {
+
+
+                        if (gender == 'female') {
+                            var selectedVoice = voices[2]
+
+                        } else {
+                            var selectedVoice = voices[1]
+                        }
+
+                        if (selectedVoice) {
+                            utterance.voice = selectedVoice;
+                            utterance.lang = selectedVoice.lang;
+                            utterance.pitch = 1.5;
+                            utterance.rate = 1.25;
+                            utterance.volume = 0.8;
+
+                            synthesis.speak(utterance);
+                        } else {
+                            console.error('No English voice found.');
+                        }
+                    }
+                } else {
+                    console.error('Speech synthesis is not supported in this browser.');
+                }
+            }
         </script>
     </div>
 

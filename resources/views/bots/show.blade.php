@@ -100,7 +100,7 @@
                         <p id="para1"
                             class="bg-gray-800 text-gray-50 p-5 rounded shadow-inner {{ $guestChat->enabled === 1 ? '' : 'blur-sm' }}">
 
-                            &lt;div&gt;
+                            {{-- &lt;div&gt;
                             <br>
                             &lt;button class="btn" id="toggleIframe"
                             style="
@@ -153,7 +153,36 @@
                             <br>
                             width="300" height="500"&gt;&lt;/iframe&gt;
                             <br>
-                            &lt;/div&gt;
+                            &lt;/div&gt; --}}
+
+                            &lt;div&gt;<br>
+                            &lt;button class="btn" id="toggleIframe"<br>
+                            style="<br>
+                            position: fixed;<br>
+                            bottom: 20px;<br>
+                            right: 20px;<br>
+                            color: white; border: 0px; cursor: pointer;<br>
+                            background-color: #1d98f7;<br>
+                            padding: 15px 20px;<br>
+                            box-shadow: 5px 2px 5px #ccc;<br>
+                            border-radius: 50px;"&gt;<br>
+                            &lt;i class='bx bx-bot'&gt;&lt;/i&gt;<br>
+                            &lt;/button&gt;<br>
+                            <br>
+                            &lt;div class="" id="myIframe"
+                            style="position: fixed; bottom: 70px; right: 20px; display: none; align-items: center; border-radius: 10px;"&gt;<br>
+                            &lt;div style="flex: 1;"&gt;<br>
+                            &lt;video id="myVideo" autoplay loop muted style="max-width: 100%; height: auto;"&gt;<br>
+                            &lt;source src="{{ $guestChat->avatar['image_url'] }}" type="video/mp4"&gt;<br>
+                            &lt;/video&gt;<br>
+                            &lt;/div&gt;<br>
+                            &lt;iframe id="myInnerIframe"
+                            src="{{ route('guests.show', ['guest' => $guestChat->uuid]) }}"
+                            style="box-shadow: 3px 3px 6px lightgray; border: 3px solid darkpurple; border-radius: 10px; flex: 1;"
+                            height="400"&gt;&lt;/iframe&gt;<br>
+                            &lt;/div&gt;<br>
+                            &lt;/div&gt;<br>
+
                         </p>
                         <br>
                         <h3 class="italic text-sm ">Paste before the end of your body tag</h3>
@@ -166,7 +195,7 @@
                         <p id="para2"
                             class="bg-gray-800 text-gray-50 p-5 rounded shadow-inner {{ $guestChat->enabled === 1 ? '' : 'blur-sm' }}">
 
-                            &lt;script&gt;
+                            {{-- &lt;script&gt;
                             <br>
                             const body = document.querySelector('body');
                             <br>
@@ -214,7 +243,37 @@
                             <br>
                             initializeEmbed();
                             <br>
-                            &lt;/script&gt;
+                            &lt;/script&gt; --}}
+
+                            &lt;script&gt;<br>
+                            const body = document.querySelector('body');<br>
+                            body.classList.add('top-window');<br>
+                            const btns = document.querySelectorAll('.btn');<br>
+                            btns.forEach(btn => {<br>
+                            btn.style.display = 'block';<br>
+                            });<br>
+                            <br>
+                            <br>
+                            function initializeEmbed() {<br>
+                            const container = document.getElementById('myIframe');<br>
+                            const toggleIcon = document.getElementById('toggleIframe');<br>
+                            <br>
+                            toggleIcon.addEventListener('click', () => {<br>
+                            container.style.display = (container.style.display === 'none' || container.style.display
+                            === '') ?<br>
+                            'flex' :<br>
+                            'none';<br>
+                            });<br>
+                            <br>
+                            if (window === window.top) {<br>
+                            document.body.classList.add('top-window');<br>
+                            }<br>
+                            }<br>
+                            <br>
+                            <br>
+                            initializeEmbed();<br>
+                            &lt;/script&gt;<br>
+
                         </p>
                     </div>
 
@@ -245,17 +304,16 @@
         // })(jQuery);
 
         jQuery(document).ready(function($) {
-           
+
             function updateDiv() {
-            $("#here").load(window.location.href + " #here");
-        }
+                $("#here").load(window.location.href + " #here");
+            }
 
-        setInterval(() => {
-            updateDiv()
+            setInterval(() => {
+                updateDiv()
 
-        }, 2000);
+            }, 2000);
 
         });
-
     </script>
 </x-app-layout>
