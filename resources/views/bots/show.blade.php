@@ -54,6 +54,7 @@
 
         <livewire:select-language :guestChat="$guestChat" />
         <hr>
+      
         <section>
             <livewire:select-template :guestChat="$guestChat" />
         </section>
@@ -173,7 +174,9 @@
                             style="position: fixed; bottom: 70px; right: 20px; display: none; align-items: center; border-radius: 10px;"&gt;<br>
                             &lt;div style="flex: 1;"&gt;<br>
                             &lt;video id="myVideo" autoplay loop muted style="max-width: 100%; height: auto;"&gt;<br>
-                            &lt;source src="{{ $guestChat->avatar['image_url'] }}" type="video/mp4"&gt;<br>
+                            &lt;source src="@if ($guestChat->avatar)
+                            {{ $guestChat->avatar['image_url'] }}
+                            @endif" type="video/mp4"&gt;<br>
                             &lt;/video&gt;<br>
                             &lt;/div&gt;<br>
                             &lt;iframe id="myInnerIframe"

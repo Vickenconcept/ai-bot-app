@@ -89,6 +89,7 @@
             {{-- <input type="file" name="" id="" wire:model.defer="file" class="cursor-pointer"> --}}
             <label for="name" class="font-senibold block">Upload PDF or DOCX<span
                     class="text-red-400 ml-1">*</span></label>
+                    <input type="file" name="" id=""  wire:model="file">
             <div class="flex items-center justify-center w-full">
                 <label for="dropzone-file"
                     class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50  hover:bg-gray-100 ">

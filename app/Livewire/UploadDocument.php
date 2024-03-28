@@ -77,15 +77,17 @@ class UploadDocument extends Component
 
     public function saveUploadedDocument(ChatGptService $chatGptService)
     {
-        $this->validate([
-            'file' => 'required|mimes:pdf,docx|max:2048',
-        ]);
+        
+        dd('hello');
+        // $this->validate([
+        //     'file' => 'required|mimes:pdf,docx|max:2048',
+        // ]);
 
         if ($this->file->getClientOriginalExtension() === 'pdf') {
             $binpath = 'C:/Program Files/Git/mingw64/bin/pdftotext';
 
             $command = "which pdftotext";
-            $pdftotext_path = shell_exec($command);
+            // $pdftotext_path = shell_exec($command);
             // dd($pdftotext_path);
             $this->textContent = Pdf::getText($this->file->getRealPath(), $binpath);
         } elseif ($this->file->getClientOriginalExtension() === 'docx') {

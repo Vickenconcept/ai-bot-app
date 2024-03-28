@@ -350,10 +350,10 @@
 
 
 
-            var body = @json($body);
-            var gender = @json($conversationTitle->avatar['gender']);
+            var backendBody = @json($body);
+            var gender = @json( optional($conversationTitle->avatar)['gender']);
 
-            const botMessages = body.filter(message => message.sender === 'bot');
+            const botMessages = backendBody.filter(message => message.sender === 'bot');
 
             if (botMessages.length > 0) {
                 // textToSpeech(botMessages[botMessages.length - 1].message);
@@ -390,9 +390,11 @@
                         if (gender == 'female') {
                             var selectedVoice = voices[2]
 
-                        } else {
+                        } 
+                        if (gender == 'male') {
                             var selectedVoice = voices[1]
-                        }
+
+                        } 
 
                         if (selectedVoice) {
                             utterance.voice = selectedVoice;
@@ -403,7 +405,7 @@
 
                             synthesis.speak(utterance);
                         } else {
-                            console.error('No English voice found.');
+                            // console.error('No English voice found.');
                         }
                     }
                 } else {

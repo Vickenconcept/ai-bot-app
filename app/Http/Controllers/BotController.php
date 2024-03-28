@@ -36,10 +36,6 @@ class BotController extends Controller
     {
         $user = auth()->user();
         $uuid = Str::uuid()->toString();
-      
-
-       
-
 
         $validated = $request->validate([
             'name' => 'required',
@@ -50,7 +46,7 @@ class BotController extends Controller
             'uuid_chat' => 'sometimes',
         ]);
         $validated['uuid_chat'] = $uuid;
-    //    dd( $validated['model'] );
+   
         $validated['knowledge'] = json_encode($validated['knowledge']);
 
         $message = $user->bots()->create($validated);
@@ -65,6 +61,10 @@ class BotController extends Controller
             'uuid' => $uuid,
             'title' => $title,
             'type' => 'guest',
+            'avatar' => [
+                'image_url' => asset('video/preview (1).mp4'),
+                'gender' => 'male',
+            ],
             'bot_id' => $defaultBot->id
         ]);
 

@@ -171,23 +171,7 @@ Route::get('test', function () {
 //     'voice' => 'alloy'
 // ];
 
-// // Make the request to the OpenAI API
-// $response = Http::withHeaders([
-//     'Authorization' => 'Bearer ' . env('OPENAI_API_KEY'),
-//     'Content-Type' => 'application/json',
-// ])->post('https://api.openai.com/v1/audio/speech', $data);
 
-// // Check if the request was successful
-// if ($response->successful()) {
-//     // Save the audio file to storage
-//     $audioFilePath = storage_path('app/'. Str::random().'.mp3');
-//     file_put_contents($audioFilePath, $response->body());
-
-// } else {
-//     // Handle the case where the request was not successful
-//     $errorMessage = $response->json()['error']['message'];
-//     // Handle or log the error message
-// }
 
 
 

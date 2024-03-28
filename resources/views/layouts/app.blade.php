@@ -23,9 +23,9 @@
 
 
 
-    @vite(['resources/css/app.css', 'resources/js/app.js'])
-    {{-- <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
-    <link rel="stylesheet" href="{{ asset('build/assets/app-1105f430.css') }}"> --}}
+    {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
+    <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-18e95c7c.css') }}">
 
 
     @livewireStyles
@@ -37,8 +37,6 @@
         <x-header />
         <x-pre-loader />
         {{ $slot }}
-
-
         <div>
             <button class="btn" id="toggleIframe"
                 style="
@@ -57,7 +55,7 @@
                 style="position: fixed; bottom: 70px; right: 20px; display: none; align-items: center; border-radius: 10px;">
                 <div style="flex: 1;">
                     <video id="myVideo" autoplay loop muted style="max-width: 100%; height: auto;">
-                        <source src="http://127.0.0.1:8000/video/preview (9)v.mp4" type="video/mp4">
+                        <source src=" http://127.0.0.1:8000/video/preview (20).mp4 " type="video/mp4">
                     </video>
                 </div>
                 <iframe id="myInnerIframe" src="http://127.0.0.1:8000/guests/c4573f67-6ad0-47fa-b97f-1e94c4607ec5"
@@ -68,16 +66,7 @@
 
 
 
-
-
-
     </div>
-
-    <script>
-        // window.addEventListener('DOMContentLoaded', () => {
-        //     test()
-        // })
-    </script>
 
     <script>
         const body = document.querySelector('body');
@@ -106,6 +95,13 @@
 
         initializeEmbed();
     </script>
+
+    <script>
+        // window.addEventListener('DOMContentLoaded', () => {
+        //     test()
+        // })
+    </script>
+
 
     {{-- <script>
     const body = document.querySelector('body');

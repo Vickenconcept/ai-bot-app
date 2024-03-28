@@ -15,7 +15,7 @@
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
 
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
-    <link rel="stylesheet" href="{{ asset('build/assets/app-1105f430.css') }}">
+    <link rel="stylesheet" href="{{ asset('build/assets/app-18e95c7c.css') }}">
     <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
     
 
