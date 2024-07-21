@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Jobs\SubscribeToMailchimpJob;
+use App\Models\Appointment;
 use App\Models\Conversation;
 use App\Services\MailChimpService;
 use GuzzleHttp\Exception\ClientException;
@@ -17,6 +18,17 @@ class DashboardController extends Controller
         $usersContacts = Conversation::where('type', 'guest')->latest()->get();
         $user = auth()->user()->mailchimp;
         $mailchimpData = json_decode($user);
+
+        $events = [];
+
+        $appointments = Appointment::all();
+        foreach ($appointments as $appointment) {
+            $events[] = [
+                'title' => $appointment->email,
+                'start' => $appointment->start_date,
+                'end' => $appointment->end_date,
+            ];
+        }
         
         $errorMessage = null;
             $mailchimp = app(MailChimpService::class);
@@ -29,16 +41,16 @@ class DashboardController extends Controller
 
             if (!$mailLists == []) {
 
-                return view('dashboard', compact('usersContacts', 'mailchimpData', 'mailLists','errorMessage'));
+                return view('dashboard', compact('events','usersContacts', 'mailchimpData', 'mailLists','errorMessage'));
             }elseif($mailLists === null){
                 $errorMessage = 'Submit Mailchimp Credentials';
                 
-                return view('dashboard', compact('usersContacts', 'mailchimpData', 'mailLists','errorMessage'));
+                return view('dashboard', compact('events','usersContacts', 'mailchimpData', 'mailLists','errorMessage'));
             }
             else {
                 $errorMessage = 'Incorrect Mailchimp Credentials';
                 
-                return view('dashboard', compact('usersContacts', 'mailchimpData', 'mailLists','errorMessage'));
+                return view('dashboard', compact('events','usersContacts', 'mailchimpData', 'mailLists','errorMessage'));
             }
             
     }

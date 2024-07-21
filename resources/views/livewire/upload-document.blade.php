@@ -8,7 +8,14 @@
             </ul>
         </div>
     @endif
-    <div wire:loading  class="card-animate flex justify-start   ">
+
+    <div id="hiddenText" class=" flex items-center my-3 hidden">
+        <span > <i
+            class='bx bx-loader-alt animate-spin text-purple-600 text-3xl'></i></span>
+            <span>Learning...</span>
+
+    </div>
+    <div wire:loading class="card-animate flex justify-start   ">
 
         <div role="status">
             <svg aria-hidden="true" class="w-8 h-8 mr-2 text-gray-200 animate-spin fill-purple-600" viewBox="0 0 100 101"
@@ -30,7 +37,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-3 gap-5 card-animate" x-show="hideSection" style="display: none">
         <div class="rounded-2xl cursor-pointer hover:bg-purple-100 border border-purple-300  bg-gray-50  p-5 text-center space-y-8"
             @click="activeSection = 'section1'; hideSection=false">
-            <h1 ><i class='bx bx-pen text-2xl bg-purple-200 px-3 py-2 rounded-md'></i></h1>
+            <h1><i class='bx bx-pen text-2xl bg-purple-200 px-3 py-2 rounded-md'></i></h1>
             <div>
                 <h1 class="font-bold tracking-wider">Write</h1>
                 <p class="text-ray-400 text-sm">Write or copy paste your document</p>
@@ -56,7 +63,7 @@
 
     <div x-show.transition.in="activeSection === 'section1'" class="card-animate space-y-4" style="display: none">
         <button class="font-semibold" @click=" hideSection = true, activeSection = '' ">
-            <i class='bx bx-left-arrow-alt mr-2 rounded-full bg-purple-200 p-2' ></i> Back to options</button>
+            <i class='bx bx-left-arrow-alt mr-2 rounded-full bg-purple-200 p-2'></i> Back to options</button>
 
         <form>
             <div class="space-y-2 ">
@@ -71,9 +78,8 @@
                     </textarea>
                 </div>
 
-                <button type="submit" wire:loading.attr="disabled"  wire:click="saveWrittenDocument"
-                    @click=" hideSection = true, activeSection = '' "
-                    {{-- {{ !is_null($content) && !empty($content) && (!is_null($title) && !empty($title)) ? '' : 'disabled' }} --}}
+                <button type="submit" wire:loading.attr="disabled" wire:click="saveWrittenDocument"
+                    @click=" hideSection = true, activeSection = '' " {{-- {{ !is_null($content) && !empty($content) && (!is_null($title) && !empty($title)) ? '' : 'disabled' }} --}}
                     class="inline-flex items-center bg-purple-600 text-gray-50 py-2.5 px-4 text-xs shadow font-medium text-center  rounded hover:shadow-lg">
                     Create
                 </button>
@@ -83,13 +89,37 @@
     {{--  --}}
     <div x-show="activeSection === 'section2'" class="card-animate space-y-4" style="display: none">
         <button class="font-semibold" @click=" hideSection = true, activeSection = '' ">
-            <i class='bx bx-left-arrow-alt mr-2 rounded-full bg-purple-200 p-2' ></i> Back to options</button>
-        <form class="space-y-3" wire:submit="saveUploadedDocument">
-            {{-- <x-dropzone /> --}}
-            {{-- <input type="file" name="" id="" wire:model.defer="file" class="cursor-pointer"> --}}
-            <label for="name" class="font-senibold block">Upload PDF or DOCX<span
+            <i class='bx bx-left-arrow-alt mr-2 rounded-full bg-purple-200 p-2'></i> Back to options</button>
+
+
+        <form class="space-y-3" method="post" action="{{ route('uploadfile') }}" enctype="multipart/form-data">
+            @csrf
+            <label for="file" class="font-senibold block">Upload PDF or DOCX<span
                     class="text-red-400 ml-1">*</span></label>
-                    <input type="file" name="" id=""  wire:model="file">
+
+            <label for="dropzone-file"
+            class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50  hover:bg-gray-100 ">
+            <div class="flex flex-col items-center justify-center pt-5 pb-6">
+                <svg class="w-8 h-8 mb-4 text-gray-500 " aria-hidden="true" xmlns="http://www.w3.org/2000/svg"
+                    fill="none" viewBox="0 0 20 16">
+                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2" />
+                </svg>
+                <p class="mb-2 text-sm text-gray-500 "><span class="font-semibold">Click to
+                        upload</span> or drag and drop</p>
+                <p class="text-xs text-gray-500 ">DOC, PDF</p>
+            </div>
+            <input id="dropzone-file" type="file" class="hidden"  name="file"  />
+        </label>
+            <input type="hidden" id="" name="content_id" value="{{ $contentTitle->id }}">
+            <button type="submit" @click=" hideSection = true, activeSection = '' " {{-- {{ !is_null($file) && !empty($file) && in_array($file->extension(), ['pdf', 'docx']) ? '' : 'disabled' }} --}}
+                class="inline-flex items-center bg-purple-600 text-gray-50 py-2.5 px-4 text-xs shadow font-medium text-center  rounded hover:shadow-lg">
+                Create
+            </button>
+        </form>
+
+        {{-- <form class="space-y-3" wire:submit="saveUploadedDocument" enctype="multipart/form-data">
+
             <div class="flex items-center justify-center w-full">
                 <label for="dropzone-file"
                     class="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50  hover:bg-gray-100 ">
@@ -107,26 +137,24 @@
                 </label>
             </div>
 
-            <button type="submit"  @click=" hideSection = true, activeSection = '' "
-                {{-- {{ !is_null($file) && !empty($file) && in_array($file->extension(), ['pdf', 'docx']) ? '' : 'disabled' }} --}}
+            <button type="submit" @click=" hideSection = true, activeSection = '' "
                 class="inline-flex items-center bg-purple-600 text-gray-50 py-2.5 px-4 text-xs shadow font-medium text-center  rounded hover:shadow-lg">
                 Create
             </button>
-        </form>
+        </form> --}}
 
     </div>
     {{--  --}}
     <div x-show="activeSection === 'section3'" class="card-animate space-y-4" style="display: none">
         <button class="font-semibold" @click=" hideSection = true, activeSection = '' ">
-            <i class='bx bx-left-arrow-alt mr-2 rounded-full bg-purple-200 p-2' ></i> Back to options</button>
+            <i class='bx bx-left-arrow-alt mr-2 rounded-full bg-purple-200 p-2'></i> Back to options</button>
         <label for="name" class="font-senibold block">Paste Web Url<span class="text-red-400 ml-1">*</span></label>
         <input id="name" type="text" wire:model.defer="webUrl" placeholder="https://www.example.com"
             class="form-control" autocomplete="false">
         {{-- @error('webUrl') <span class="error">{{ $message }}</span> @enderror --}}
 
         <div>
-            <button type="submit" wire:click="scrapeWebsite" 
-                @click=" hideSection = true, activeSection = '' "
+            <button type="submit" wire:click="scrapeWebsite" @click=" hideSection = true, activeSection = '' "
                 {{-- {{ !is_null($webUrl) && !empty($webUrl) && filter_var($webUrl, FILTER_VALIDATE_URL) ? '' : 'disabled' }} --}}
                 class="inline-flex items-center bg-purple-600 text-gray-50 py-2.5 px-4 text-xs shadow font-medium text-center  rounded hover:shadow-lg">
                 Create
@@ -137,13 +165,14 @@
 
     <div>
         <div class=" bg-gray-200 rounded-full my-3  w-full shadow-inner">
-            <div class=" bg-green-700  text-center p-0.5 text-xs font-semibold rounded-full text-gray-50 " id="btn">
+            <div class=" bg-green-700  text-center p-0.5 text-xs font-semibold rounded-full text-gray-50 "
+                id="btn">
                 {{ $totalDocumentCount }}
             </div>
         </div>
         <div class="flex justify-between">
-        <h1>Documents you have currently stored out of your allowed quota.</h1>
-        <h1>{{ $totalDocumentCount }}/{{ $documentLimit }}</h1>
+            <h1>Documents you have currently stored out of your allowed quota.</h1>
+            <h1>{{ $totalDocumentCount }}/{{ $documentLimit }}</h1>
 
         </div>
     </div>
@@ -168,7 +197,7 @@
                     callbacks: {
                         onChange: function(contents, $editable) {
                             @this.set('content', contents);
-                            
+
                         },
                     }
                 });
@@ -184,5 +213,10 @@
             // }, 6000);
             // console.log('done');
         }
+
+    window.addEventListener('beforeunload', function(event) {
+        var hiddenText = document.getElementById('hiddenText');
+        hiddenText.classList.remove('hidden');
+    });
     </script>
 </div>

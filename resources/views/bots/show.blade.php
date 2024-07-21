@@ -18,7 +18,7 @@
                 <div class=" bg-gray-800 text-gray-50 rounded-tl rounded-bl">
                     <p id="{{ $guestChat->id }}"
                         class="w-full  p-2  text-sm font-semibold shadow-inner {{ $guestChat->enabled === 1 ? '' : 'blur-sm' }}  ">
-                        {{ route('guests.show', ['guest' => $guestChat->uuid]) }}</p>
+                        {{ route('get_one_guest', ['uuid' => $guestChat->uuid]) }}</p>
                 </div>
                 <div class="">
                     <button onclick="toCopy(document.getElementById('{{ $guestChat->id }}'))"
@@ -54,7 +54,7 @@
 
         <livewire:select-language :guestChat="$guestChat" />
         <hr>
-      
+
         <section>
             <livewire:select-template :guestChat="$guestChat" />
         </section>
@@ -89,6 +89,23 @@
                         base</h3>
 
 
+                    <div class="text-xs">
+                        <h3 class="italic text-sm ">Paste in the head tag</h3>
+                        <div class=" text-right">
+                            <button onclick="toCopy(document.getElementById('para4'))"
+                                class="  px-4 py-2 text-purple-600  text-md font-semibold  hover:text-purple-800 "
+                                {{ $guestChat->enabled === 1 ? '' : 'disabled' }}>copy <i
+                                    class='bx bxs-copy-alt'></i></button>
+                        </div>
+                        <p id="para4"
+                            class="bg-gray-800 text-gray-50 p-5 rounded shadow-inner {{ $guestChat->enabled === 1 ? '' : 'blur-sm' }}">
+                            &lt;link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'&gt;
+                          
+                        </p>
+                    </div>
+
+
+
 
                     <div class="text-xs">
                         <h3 class="italic text-sm ">Paste in your body tag</h3>
@@ -101,61 +118,6 @@
                         <p id="para1"
                             class="bg-gray-800 text-gray-50 p-5 rounded shadow-inner {{ $guestChat->enabled === 1 ? '' : 'blur-sm' }}">
 
-                            {{-- &lt;div&gt;
-                            <br>
-                            &lt;button class="btn" id="toggleIframe"
-                            style="
-                            <br>
-                      position: fixed;
-                      <br>
-                      bottom: 20px;
-                      <br>
-                      {{ $guestChat->position }}: 20px;
-                      <br>
-                      color: white;
-                      border: 0px;
-                      cursor: pointer;
-                      <br>
-                      background-color: {{ $guestChat->launcher_color }};
-                      <br>
-                      padding: {{ $guestChat->launcher_size }};
-                      <br>
-                      box-shadow: 5px 2px 5px #ccc;
-                      <br>
-                      border-radius: 50px;"&gt;
-                            <br>
-                            &lt;i class='bx {{ $guestChat->launcher_icon }}'&gt;&lt;/i&gt;&lt;/button&gt;
-
-                            <br>
-                            <br>
-                            <br>
-                            &lt;iframe id="myIframe"
-                            src="{{ route('guests.show', ['guest' => $guestChat->uuid]) }}"
-                            <br>
-                            style="
-                      position: fixed;
-                      <br>
-                      bottom: 70px;
-                      <br>
-                      
-                      {{ $guestChat->position }}: 20px;
-                      <br>
-                      box-shadow: 3px 3px 6px lightgray ; 
-                      <br>
-                      border: 3px solid darkpurple; 
-                      <br>
-                      border-radius: 10px;
-                      <br>
-                      display: none;
-                      <br>
-                      background-color: #fff;
-                      <br>
-                      box-shadow: 3px 6px 5px gray;"
-                            <br>
-                            width="300" height="500"&gt;&lt;/iframe&gt;
-                            <br>
-                            &lt;/div&gt; --}}
-
                             &lt;div&gt;<br>
                             &lt;button class="btn" id="toggleIframe"<br>
                             style="<br>
@@ -163,7 +125,7 @@
                             bottom: 20px;<br>
                             right: 20px;<br>
                             color: white; border: 0px; cursor: pointer;<br>
-                            background-color: #1d98f7;<br>
+                            background-color: {{ $guestChat->launcher_color }} ;<br>
                             padding: 15px 20px;<br>
                             box-shadow: 5px 2px 5px #ccc;<br>
                             border-radius: 50px;"&gt;<br>
@@ -174,9 +136,11 @@
                             style="position: fixed; bottom: 70px; right: 20px; display: none; align-items: center; border-radius: 10px;"&gt;<br>
                             &lt;div style="flex: 1;"&gt;<br>
                             &lt;video id="myVideo" autoplay loop muted style="max-width: 100%; height: auto;"&gt;<br>
-                            &lt;source src="@if ($guestChat->avatar)
-                            {{ $guestChat->avatar['image_url'] }}
-                            @endif" type="video/mp4"&gt;<br>
+                            &lt;source
+                            src="@if ($guestChat->avatar)
+{{ $guestChat->avatar['image_url'] }}
+@endif"
+                            type="video/mp4"&gt;<br>
                             &lt;/video&gt;<br>
                             &lt;/div&gt;<br>
                             &lt;iframe id="myInnerIframe"
@@ -197,56 +161,6 @@
                         </div>
                         <p id="para2"
                             class="bg-gray-800 text-gray-50 p-5 rounded shadow-inner {{ $guestChat->enabled === 1 ? '' : 'blur-sm' }}">
-
-                            {{-- &lt;script&gt;
-                            <br>
-                            const body = document.querySelector('body');
-                            <br>
-                            body.classList.add('top-window');
-                            <br>
-
-                            const btns = document.querySelectorAll('.btn');
-                            <br>
-                            btns.forEach(btn => {
-                            <br>
-                            btn.style.display = 'block';
-                            <br>
-                            });
-                            <br>
-
-                            <br>
-                            function initializeEmbed() {
-                            <br>
-                            const iframe = document.getElementById('myIframe');
-                            <br>
-                            const toggleIcon = document.getElementById('toggleIframe');
-                            <br>
-                            <br>
-                            toggleIcon.addEventListener('click', () => {
-                            <br>
-                            iframe.style.display = (iframe.style.display === 'none' || iframe.style.display
-                            === '') ?
-                            <br>
-                            'block' :
-                            <br>
-                            'none';
-                            <br>
-                            });
-                            <br>
-                            <br>
-
-                            if (window === window.top) {
-                            <br>
-                            document.body.classList.add('top-window');
-                            <br>
-                            }
-                            <br>
-                            }
-                            <br>
-                            <br>
-                            initializeEmbed();
-                            <br>
-                            &lt;/script&gt; --}}
 
                             &lt;script&gt;<br>
                             const body = document.querySelector('body');<br>

@@ -27,7 +27,7 @@ return new class extends Migration
             $table->json('temp_five')->nullable();
             $table->json('temp_six')->nullable();
             $table->json('users_contact_info')->nullable();
-            $table->enum('template', ['temp1', 'temp2', 'temp3', 'temp4', 'temp5', 'temp6'])->default('temp1');
+            $table->enum('template', ['temp1', 'temp2', 'temp3', 'temp4', 'temp5', 'temp6','temp7'])->default('temp1');
             $table->text('layout')->nullable();
             $table->text('nav_bg_color')->nullable();
             $table->text('nav_col')->nullable();
@@ -40,7 +40,6 @@ return new class extends Migration
             $table->text('logo')->nullable();
             $table->boolean('enabled')->default(true);
             $table->timestamps();
-            // $table->engine = 'InnoDB';
         });
     }
 

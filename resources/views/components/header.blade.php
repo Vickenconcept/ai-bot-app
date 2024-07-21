@@ -1,5 +1,5 @@
 <nav class="bg-purple-200 sticky top-0 z-50" x-data="{ openMobileMenue: false, open: true }">
-{{-- <nav class="bg-purple-200 sticky top-0 z-50" x-data="{ openMobileMenue: false, open: true }"> --}}
+    {{-- <nav class="bg-purple-200 sticky top-0 z-50" x-data="{ openMobileMenue: false, open: true }"> --}}
     <div class="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
         <div class="relative flex h-16 items-center justify-between">
             <a href="{{ route('conversations.index') }}" class="text-xl hidden sm:block">
@@ -30,16 +30,17 @@
                 <div class="hidden sm:block">
                     <div class="flex space-x-4">
                         <a href="{{ route('conversations.index') }}"
-                            class=" hover:border-b hover:border-purple-950   px-3 py-2 text-sm font-medium text-purple-950 {{ request()->routeIs('conversations.index')||request()->routeIs('conversations.show') ? 'border-b border-purple-950 bg-purple-300 rounded bg-opacity-30 ' : '' }}" aria-current="page">
+                            class=" hover:border-b hover:border-purple-950   px-3 py-2 text-sm font-medium text-purple-950 {{ request()->routeIs('conversations.index') || request()->routeIs('conversations.show') ? 'border-b border-purple-950 bg-purple-300 rounded bg-opacity-30 ' : '' }}"
+                            aria-current="page">
                             <i class='bx bx-conversation mr-1 text-sm'></i>
                             Chat
                         </a>
                         <a href="{{ route('bots.index') }}"
-                            class=" hover:border-b hover:border-purple-950  px-3 py-2 text-sm font-medium text-purple-950 {{ request()->routeIs('bots.index')||request()->routeIs('bots.show') ? 'border-b border-purple-950 bg-purple-300 rounded bg-opacity-30 ' : '' }}">
+                            class=" hover:border-b hover:border-purple-950  px-3 py-2 text-sm font-medium text-purple-950 {{ request()->routeIs('bots.index') || request()->routeIs('bots.show') ? 'border-b border-purple-950 bg-purple-300 rounded bg-opacity-30 ' : '' }}">
                             <i class='bx bx-bot mr-1 text-sm'></i>
                             Bots</a>
                         <a href="{{ route('contents.index') }}"
-                            class=" hover:border-b hover:border-purple-950  px-3 py-2 text-sm font-medium text-purple-950 {{ request()->routeIs('contents.index')||request()->routeIs('contents.show') ? 'border-b border-purple-950 bg-purple-300 rounded bg-opacity-30 ' : '' }}">
+                            class=" hover:border-b hover:border-purple-950  px-3 py-2 text-sm font-medium text-purple-950 {{ request()->routeIs('contents.index') || request()->routeIs('contents.show') ? 'border-b border-purple-950 bg-purple-300 rounded bg-opacity-30 ' : '' }}">
                             <i class='bx bx-file mr-1 text-sm'></i>
                             Contents</a>
                         <a href="{{ route('account.index') }}"
@@ -52,8 +53,8 @@
             <div class="absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0">
                 <a href="{{ route('support') }}">
                     <button type="button"
-                        class="relative rounded-full text-sm px-2 bg-gray-800 py-1 text-gray-400 hover:text-purple-950 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 {{ request()->routeIs('support') ? 'border-2 border-gray-50' : '' }}">
-                        Get Help
+                        class="relative rounded-full text-sm px-2 bg-gray-800 py-1 text-gray-400 hover:text-purple-50 focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 {{ request()->routeIs('support') ? 'border-2 border-gray-50' : '' }}">
+                    Training Videos
                     </button>
                 </a>
 
@@ -68,14 +69,16 @@
                             {{-- <span
                                 class="h-8 w-8 rounded-full flex justify-center items-center font-bold  bg-blue-50 ">{{ strtoupper(substr(auth()->user()->name, 0, 1)) }}</span> --}}
                         </button>
-                        <p class="cursor-pointer" @click="isOpen = !isOpen"><b>welcome </b>, {{ auth()->user()->name }}</p>
+                        <p class="cursor-pointer" @click="isOpen = !isOpen"><b>welcome </b>, {{ auth()->user()->name }}
+                        </p>
                     </div>
 
                     <div x-show="isOpen" @click.away="isOpen = false" style="display: none"
                         class="absolute right-0 z-10 mt-2 w-48 origin-top-right  bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 focus:outline-none"
                         role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button" tabindex="-1">
                         <!-- Active: "bg-gray-100", Not Active: "" -->
-                        <a href="{{ route('profile') }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200" role="menuitem"
+                        <a href="{{ route('profile') }}"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200" role="menuitem"
                             tabindex="-1" id="user-menu-item-0">Your Profile</a>
 
                         <form action="{{ route('auth.logout') }}" method="POST">
@@ -84,10 +87,50 @@
                             <a href="javascript:void(0)" onclick="logout(this)"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">Sign out</a>
                         </form>
-                        <a href="{{ route('home') }}" 
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">Dashboard</a>
-                        <a href="{{ route('reseller.index') }}" 
+                        <a href="{{ route('home') }}"
+                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">Dashboard</a>
+
+                        @role(['Bundle', 'frontend'])
+                            <a href="{{ route('reseller.index') }}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">Reseller</a>
+                            <a href="{{ route('affiliate_marketing') }}"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">Affiliate
+                                Marketing Coaching </a>
+                            <a href="{{ route('reseller_license') }}"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">Reseller License </a>
+                            <a href="{{ route('dfy_traffic') }}"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">DFY Unlimited Traffic</a>
+                            <a href="{{ route('dfy_ai') }}"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">DFY Ai Automation
+                                Marketing Agency</a>
+                        @endrole
+
+                        @role(['oto1'])
+                        @endrole
+                        @role(['oto2'])
+                        @endrole
+                        @role(['oto3'])
+                            <a href="{{ route('dfy_ai') }}"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">DFY Ai Automation
+                                Marketing Agency</a>
+                        @endrole
+                        @role(['oto4'])
+                            <a href="{{ route('dfy_traffic') }}"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">DFY Unlimited Traffic</a>
+                        @endrole
+                        @role(['oto5'])
+                            <a href="{{ route('reseller_license') }}"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">Reseller License </a>
+                            <a href="{{ route('reseller.index') }}"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">Reseller</a>
+                        @endrole
+                        @role(['oto6'])
+                            <a href="{{ route('affiliate_marketing') }}"
+                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">Affiliate
+                                Marketing Coaching </a>
+                        @endrole
+
+
                     </div>
                 </div>
             </div>

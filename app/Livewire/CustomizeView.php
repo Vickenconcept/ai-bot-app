@@ -3,24 +3,65 @@
 namespace App\Livewire;
 
 use Livewire\Component;
+use Livewire\WithFileUploads;
+use Cloudinary\Cloudinary;
+use Illuminate\Http\Request;
 
 class CustomizeView extends Component
 {
+    // use WithFileUploads;
+
+    public $logo;
+
     public $selected,
         $guestChat,
-        $navColor = '#1d98f7',
+        $navColor = '#8600b3',
         $textColor,
         $title = 'hello',
         $subTitle = 'ask me something',
         $size = '15px 20px',
         $position = 'right',
         $launcherIcon = 'bx-bot',
-        $launcherColor = '#1d98f7',
-        $message ;
+        $launcherColor = '#8600b3',
+        $message;
     public function mount($guestChat)
     {
         $this->guestChat = $guestChat;
     }
+
+    public function saveLogo(Request $request)
+    {
+        $request->validate([
+            'logo' => 'required|mimes:jpg,png|max:2048',
+        ]);
+
+
+        if ($request->file('logo')) {
+            $cloudinary = new Cloudinary();
+            $cloudinaryResponse = $cloudinary->uploadApi()->upload($request->file('logo')->getRealPath());
+
+            $imageUrl = $cloudinaryResponse['secure_url'];
+
+            $user = auth()->user();
+            $customizeUpdate = $user->conversations()->find($request->guestId);
+            $data = [
+                'logo' => $imageUrl,
+            ];
+
+            $customizeUpdate->update($data);
+            session()->flash('message', 'Logo uploaded successfully.');
+        } else {
+            session()->flash('message', 'Upload  failed.');
+        }
+
+        return back();
+
+
+
+        // Save $path to the database or perform other operations
+
+    }
+
 
 
     public function selectedCustom()

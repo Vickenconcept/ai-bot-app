@@ -9,7 +9,7 @@
                         <span class="h-8 w-8 rounded-full flex justify-center items-center font-bold  bg-green-100 "><i
                                 class='bx bxs-bot text-2xl '></i></span>
                         <div id="chatCol1"
-                            class="ml-2 py-3 px-4 text-purple-900 rounded-br-3xl rounded-bl-3xl rounded-tr-3xl"
+                            class="ml-2 py-3 px-4 text-purple-50 rounded-br-3xl rounded-bl-3xl rounded-tr-3xl" 
                             style="background-color: {{ $conversationTitle->nav_bg_color }}; color: {{ $conversationTitle->nav_col }}">
                             {{ $response }}
                         </div>
@@ -90,7 +90,7 @@
             <div class="flex justify-start mb-4" x-show="openLast">
                 <span class="h-8 w-8 rounded-full flex justify-center items-center font-bold  bg-green-100 "><i
                         class='bx bxs-bot text-2xl '></i></span>
-                <div class="ml-2 py-3 px-4 bg-purple-200 text-purple-900 rounded-br-3xl rounded-bl-3xl rounded-tr-3xl "
+                <div class="ml-2 py-3 px-4 bg-purple-200 text-purple-50 rounded-br-3xl rounded-bl-3xl rounded-tr-3xl "
                     style="background-color: {{ $conversationTitle->nav_bg_color }}; color: {{ $conversationTitle->nav_col }}">
                     {{ $chatData[$secondToLastIndex] }}
                 </div>
@@ -126,11 +126,6 @@
         function lastResponse (){
             textToSpeech("'" + text[text.length - 1] + "'")
         }
-
-
-
-
-
 
         // window.addEventListener('DOMContentLoaded', () => {
         // })

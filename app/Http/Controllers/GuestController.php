@@ -13,7 +13,7 @@ class GuestController extends Controller
     public function __construct()
     {
 
-        $this->middleware('checkRouteStatus')->only('show');
+        $this->middleware('checkRouteStatus')->only('show','get_one_guest');
     }
     public function index(Request $request)
     {
@@ -51,6 +51,11 @@ class GuestController extends Controller
      * Display the specified resource.
      */
 
+    public function get_one_guest($uuid)
+    {
+        $guestChat = Conversation::where('uuid', $uuid)->first();
+        return view('conversations.guest-with-iframe', compact('uuid','guestChat'));
+    }
     public function show($uuid)
     {
         $body = Conversation::where('uuid', $uuid)->first();

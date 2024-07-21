@@ -21,6 +21,10 @@
     <link href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
+    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid/main.css" rel="stylesheet" />
+
 
 
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
@@ -37,6 +41,7 @@
         <x-header />
         <x-pre-loader />
         {{ $slot }}
+
         <div>
             <button class="btn" id="toggleIframe"
                 style="
@@ -55,10 +60,10 @@
                 style="position: fixed; bottom: 70px; right: 20px; display: none; align-items: center; border-radius: 10px;">
                 <div style="flex: 1;">
                     <video id="myVideo" autoplay loop muted style="max-width: 100%; height: auto;">
-                        <source src=" http://127.0.0.1:8000/video/preview (20).mp4 " type="video/mp4">
+                        <source src="https://avatarcrewapp.com/video/preview (1).mp4 " type="video/mp4">
                     </video>
                 </div>
-                <iframe id="myInnerIframe" src="http://127.0.0.1:8000/guests/c4573f67-6ad0-47fa-b97f-1e94c4607ec5"
+                <iframe id="myInnerIframe" src="https://avatarcrewapp.com/guests/c5b18c84-14c6-4e4f-9968-c6a35f2a813f"
                     style="box-shadow: 3px 3px 6px lightgray; border: 3px solid darkpurple; border-radius: 10px; flex: 1;"
                     height="400"></iframe>
             </div>
@@ -66,44 +71,43 @@
 
 
 
-    </div>
 
-    <script>
-        const body = document.querySelector('body');
-        body.classList.add('top-window');
-        const btns = document.querySelectorAll('.btn');
-        btns.forEach(btn => {
-            btn.style.display = 'block';
-        });
-
-
-        function initializeEmbed() {
-            const container = document.getElementById('myIframe');
-            const toggleIcon = document.getElementById('toggleIframe');
-
-            toggleIcon.addEventListener('click', () => {
-                container.style.display = (container.style.display === 'none' || container.style.display === '') ?
-                    'flex' :
-                    'none';
+        <script>
+            const body = document.querySelector('body');
+            body.classList.add('top-window');
+            const btns = document.querySelectorAll('.btn');
+            btns.forEach(btn => {
+                btn.style.display = 'block';
             });
 
-            if (window === window.top) {
-                document.body.classList.add('top-window');
+
+            function initializeEmbed() {
+                const container = document.getElementById('myIframe');
+                const toggleIcon = document.getElementById('toggleIframe');
+
+                toggleIcon.addEventListener('click', () => {
+                    container.style.display = (container.style.display === 'none' || container.style.display === '') ?
+                        'flex' :
+                        'none';
+                });
+
+                if (window === window.top) {
+                    document.body.classList.add('top-window');
+                }
             }
-        }
 
 
-        initializeEmbed();
-    </script>
+            initializeEmbed();
+        </script>
 
-    <script>
-        // window.addEventListener('DOMContentLoaded', () => {
-        //     test()
-        // })
-    </script>
+        <script>
+            // window.addEventListener('DOMContentLoaded', () => {
+            //     test()
+            // })
+        </script>
 
 
-    {{-- <script>
+        {{-- <script>
     const body = document.querySelector('body');
     body.classList.add('top-window');
     const btns = document.querySelectorAll('.btn');
@@ -129,16 +133,16 @@
     initializeEmbed();
 </script> --}}
 
-    <script>
-        function logout(e) {
-            localStorage.clear();
-            e.closest('form').submit();
-        }
-    </script>
+        <script>
+            function logout(e) {
+                localStorage.clear();
+                e.closest('form').submit();
+            }
+        </script>
 
 
-    @livewireScripts
-    <script src="{{ asset('build/assets/app-11155cd2.js') }}"></script>
+<script src="{{ asset('build/assets/app-11155cd2.js') }}"></script>
+@livewireScripts
 
 </body>
 

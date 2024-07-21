@@ -14,20 +14,25 @@ use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ResellerController;
+use App\Http\Controllers\UploadFileController;
+use App\Http\Controllers\WarriorPlusWebhookController;
+use App\Livewire\CustomizeView;
 use App\Models\Content;
 use App\Models\Conversation;
+use App\Models\User;
 use App\Services\AvatarService;
+use App\Services\ChatGptService;
 use App\Services\GetResponseService;
 use App\Services\MailChimpService;
 use GuzzleHttp\Client;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Artisan;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
-use Illuminate\Support\Facades\Storage;
-use Stevebauman\Location\Facades\Location;
-use Illuminate\Support\Str;
+use App\Notifications\UpdateUserPassword;
+
 
 
 /*
@@ -61,6 +66,7 @@ Route::middleware('guest')->group(function () {
 });
 
 Route::resource('guests', GuestController::class);
+Route::get('guest/view/{uuid}', [GuestController::class, 'get_one_guest'])->name('get_one_guest');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/home', [DashboardController::class, 'index'])->name('home');
@@ -83,11 +89,22 @@ Route::middleware(['auth'])->group(function () {
     Route::get("/ask", AskController::class);
     Route::view('support', 'support')->name('support');
     Route::view('profile', 'profile')->name('profile');
+
+    Route::view('affiliate_marketing', 'management.affiliate_marketing')->name('affiliate_marketing');
+    Route::view('reseller_license', 'management.reseller_license')->name('reseller_license');
+    Route::view('dfy_traffic', 'management.dfy_traffic')->name('dfy_traffic');
+    Route::view('dfy_ai', 'management.dfy_ai')->name('dfy_ai');
+
     Route::post('profile/name', [ProfileController::class, 'changeName'])->name('changeName');
     Route::post('profile/password', [ProfileController::class, 'changePassword'])->name('changePassword');
     Route::post('auth/logout', [AuthController::class, 'logout'])->name('auth.logout');
+
+
+    Route::post('uploadfile', UploadFileController::class)->name('uploadfile');
+    Route::post('saveLogo', [CustomizeView::class, 'saveLogo'])->name('save_logo');
 });
 
+Route::post('/ipn/warriorplus', [WarriorPlusWebhookController::class, 'WPlus']);
 
 Route::get('test/{id}', function () {
     $contents =  Content::latest()->get();
@@ -111,47 +128,12 @@ Route::get('/clear', function () {
 Route::get('try', function (Request $request) {
     // bh9uA)v4RB@mO@a9GMq(!BO2D9LO$44
 
-
-    // https://themewagon.com/theme-tag/hotel-template/
-    // https://themewagon.github.io/keto/index.html
+    $user = Auth::user();
 
 
-    // $getResponseService = app(GetResponseService::class);
-    // dd($getResponseService->getAudience('pxck0psjdi8tipukr0w24fh1d9ct3vi6'));
-    // ba68c47b0f22ebc09ecbe7b6df697ac2-us21
-
-
-
-
-
-
-
-    // $location = Location::get($request->ip());
-
-    //    $ip = '192.168.98.220';
-    //    $ip = '162.159.24.227';
-    $ip = '102.128.255.255';
-    $locale = App::currentLocale();
-    dd($locale);
-
-
-    try {
-        $position = Location::get($ip);
-        dd($position);
-        echo 'Latitude: ' . $position->countryName;
-        return;
-
-        if ($position !== false) {
-            // Successfully retrieved position.
-            echo $position->countryName;
-            dd($position->countryName);
-        } else {
-            // IP geolocation lookup failed.
-            dd('IP geolocation lookup failed');
-        }
-    } catch (\Exception $e) {
-        // Other exceptions
-        dd('Error: ' . $e->getMessage());
+    if ($user->hasRole('Bundle')) {
+        echo "User is an admin.";
+        dd($user->getAllPermissions());
     }
 })->withoutMiddleware(['auth'])->name('test');
 
@@ -162,17 +144,37 @@ Route::get('test', function () {
 
     // // $avatar = $avatarSevice->getAvaters();
     // $creatclip = $avatarSevice->creatClip();
-    
-
-// Define the request parameters
-// $data = [
-//     'model' => 'tts-1',
-//     'input' => 'Today is a wonderful day to build something people love!',
-//     'voice' => 'alloy'
-// ];
 
 
+    // Define the request parameters
+    // $data = [
+    //     'model' => 'tts-1',
+    //     'input' => 'Today is a wonderful day to build something people love!',
+    //     'voice' => 'alloy'
+    // ];
 
 
 
+
+
+});
+
+Route::get('users', function () {
+    return User::all();
+});
+Route::get('update/users', function () {
+
+    $user = User::where('email', 'vicken408@gmail.com')->first();
+    if ($user) {
+        # code...
+        $password = 'pass1234';
+        $user->password = bcrypt($password);
+        $user->update();
+        $userInfo = [
+            'username' => $user->name,
+            'password' => $password
+        ];
+
+        $user->notify(new UpdateUserPassword($userInfo));
+    }
 });

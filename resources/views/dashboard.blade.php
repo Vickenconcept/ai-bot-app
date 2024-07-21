@@ -1,14 +1,19 @@
 <x-app-layout>
     <x-notification />
-    <div class="text-gray-700" x-data="{ isOpen: 'contacts', openContact: null }">
+    <div class="text-gray-700" x-data="{ openPage: 'appointments', openContact: null }">
         <hr>
         <div class="bg-purple-700 px-10 ">
             <ul class=" flex py-2 space-x-5">
-                {{-- <a href="#" @click="isOpen = 'contacts'">
+                <a href="#" @click="openPage = 'contacts'">
                     <li class="py-0.5 px-2 rounded-md text-sm bg-purple-50 hover:bg-purple-300 text-gray-900">Users
                         contacts
                     </li>
-                </a> --}}
+                </a>
+                <a href="#" @click="openPage = 'appointments'">
+                    <li class="py-0.5 px-2 rounded-md text-sm bg-purple-50 hover:bg-purple-300 text-gray-900">Users
+                        appointments
+                    </li>
+                </a>
                 <div class="relative ml-3" x-data="{ isOpen: false }">
                     <div>
                         <button type="button" @click="isOpen = !isOpen">
@@ -65,7 +70,7 @@
             @endif
         </div>
         <div class="px-10">
-            <div style="display:none" x-show="isOpen === 'contacts' " style="display: none" class="py-5 space-y-5">
+            <div  x-show="openPage === 'contacts' " style="display: none" class="py-5 space-y-5">
                 <h1 class="font-medium text-2xl tracking-widest">Chat contact info</h1>
                 <div class=" text-sm font-medium text-gray-900  border border-gray-200 rounded-lg   bg-white ">
                     @foreach ($usersContacts as $key => $contact)
@@ -147,6 +152,28 @@
             </div>
          
         </div>
+
+        <section class="px-10 bg-white" x-show="openPage === 'appointments' " style="display: none">
+            
+
+            <div id="calendar"></div>
+        </section>
+
+
+            
+        <script src="https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js"></script>
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                var calendarEl = document.getElementById('calendar');
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'timeGridWeek',
+                    slotMinTime: '8:00:00',
+                    slotMaxTime: '19:00:00',
+                    events: @json($events),
+                });
+                calendar.render();
+            });
+        </script>
 
 
         <script>

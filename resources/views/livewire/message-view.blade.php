@@ -399,9 +399,9 @@
                         if (selectedVoice) {
                             utterance.voice = selectedVoice;
                             utterance.lang = selectedVoice.lang;
-                            utterance.pitch = 1.5;
-                            utterance.rate = 1.25;
-                            utterance.volume = 0.8;
+                            utterance.pitch = 0.7;
+                            utterance.rate = 0.75;
+                            utterance.volume = 0.6;
 
                             synthesis.speak(utterance);
                         } else {

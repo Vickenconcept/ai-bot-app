@@ -75,6 +75,13 @@
                                                         class='bx bx-message-rounded mr-1 text-sm'></i></div>
 
                                             </x-dropdown-link>
+                                            <x-dropdown-link class="cursor-pointer "
+                                                href="{{ route('bots.show', $bot) }}">
+                                                <div class="w-full text-left px-4 py-2">Customize 
+                                                    <i class='bx bxs-customize mr-1 text-sm'></i>
+                                                    </div>
+
+                                            </x-dropdown-link>
 
                                             <x-dropdown-link>
                                                 <form class="w-full"
@@ -246,7 +253,7 @@
                             onclick="document.getElementById('form').submit()">Create</x-main-button>
                         <button
                             class="bg-gray-50 text-purple-700 shadow-inner border items-center  px-3  text-center  rounded hover:shadow-lg transition duration-300 py-2 text-xs font-semibold   disabled:opacity-25  ease-in-out"
-                            @click="isOpen = false">Cancle</button>
+                            @click="isOpen = false">cancel</button>
                     </div>
                 </div>
             </div>
@@ -324,7 +331,7 @@
                                 <x-main-button type="submit" class="text-gray-50">Update</x-main-button>
                                 <button type="button"
                                     class="bg-gray-50 text-purple-700 shadow-inner border items-center  px-3  text-center  rounded hover:shadow-lg transition duration-300 py-2 text-xs font-semibold   disabled:opacity-25  ease-in-out"
-                                    @click="openModal = false">Cancle</button>
+                                    @click="openModal = false">cancel</button>
                             </div>
                             {{-- <x-main-button type="submit" class="text-gray-50" >Update</x-main-button> --}}
                         </form>

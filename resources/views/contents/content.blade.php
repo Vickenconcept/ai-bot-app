@@ -96,7 +96,7 @@
                                     <x-main-button type="submit" class="text-gray-50">Update</x-main-button>
                                     <button
                                         class="bg-gray-50 px-2 py-1 rounded hover:shadow text-purple-700 shadow-inner border"
-                                        @click="openModal = false">Cancle</button>
+                                        @click="openModal = false">cancel</button>
                                 </div>
                             </div>
                         </form>

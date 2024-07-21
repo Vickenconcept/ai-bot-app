@@ -47,14 +47,21 @@
 
                     </label>
                 </div>
-                <div>
+                <form  method="post" action="{{ route('save_logo') ,}}" enctype="multipart/form-data">
+                    @csrf
                     <h1 class=" text-md capitalize mb-2">Logo</h1>
                     <label for="logo" class="cursor-pointer rounded-full  ">
-                        <i
-                            class='bx bx-upload text-3xl  bg-gray-200 rounded-full  px-2 py-1'></i>
-                        <input type="file" name="logo" id="logo" hidden>
+                       @if ($this->guestChat->logo)
+                       <img src="{{ $this->guestChat->logo }}" alt="" class="w-12 rounded-full">
+                       @else
+                       <i class='bx bx-upload text-3xl  bg-gray-200 rounded-full  px-2 py-1'></i>
+                       
+                       @endif
+                        <input type="file" name="logo" id="logo"  hidden>
+                        <input type="text" name="guestId" value="{{ $this->guestChat->id }}"  hidden>
                     </label>
-                </div>
+                    <button type="submit" wire:click="saveLogo">Upload</button>
+                </form>
 
                 <div>
                     <h1 class=" text-md capitalize">Background Color</h1>
@@ -271,9 +278,9 @@
                     </label>
 
                 </div>
-                <div class="text-red-400 bg-red-50 border border-red-400 p-3 rounded  mt-5 w-full">
+                {{-- <div class="text-red-400 bg-red-50 border border-red-400 p-3 rounded  mt-5 w-full">
                     <span>After customizating your widget, remember to close window </span>
-                </div>
+                </div> --}}
 
             </div>
 
@@ -283,9 +290,12 @@
             <div class="rounded-lg lg:sticky top-20 shadow" >
                 <nav class=" px-5 py-3 rounded-t-lg flex  shadow"
                     style="background-color: {{ $navColor }}; color: {{ $textColor }}">
-                    <img class="h-10 w-10 rounded-xl mr-2"
-                                        src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80"
-                                        alt="">
+
+                    @if ($this->guestChat->logo)
+                    <img src="{{ $this->guestChat->logo }}" alt="" class="h-10 w-10 rounded-xl mr-2">
+                    @else 
+                    <img class="h-10 w-10 rounded-xl mr-2" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="">
+                    @endif
                     <div class="flex-grow">
                         <ul class="capitalize" style="text-align:  {{ $selected }}">
                             <li class="font-bold text-xl">{{ $title }}</li>

@@ -28,6 +28,5 @@ class AppServiceProvider extends ServiceProvider
     {
         Schema::defaultStringLength(191);
         Conversation::observe(ConversationObserver::class);
-        
     }
 }

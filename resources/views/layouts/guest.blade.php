@@ -13,10 +13,15 @@
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 
     <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/flowbite.min.css" rel="stylesheet" />
 
     {{-- @vite(['resources/css/app.css', 'resources/js/app.js']) --}}
     <link rel="stylesheet" href="{{ asset('build/assets/app-18e95c7c.css') }}">
     <link rel="stylesheet" href="{{ asset('build/assets/app-a461d729.css') }}">
+
+    {{-- <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/core/main.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/daygrid/main.css" rel="stylesheet" />
+    <link href="https://cdn.jsdelivr.net/npm/@fullcalendar/timegrid/main.css" rel="stylesheet" /> --}}
     
 
 </head>
@@ -25,6 +30,7 @@
     {{ $slot }}
 
 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/flowbite/2.3.0/datepicker.min.js"></script>
     <script src="{{ asset('build/assets/app-11155cd2.js') }}"></script>
 </body>
 
@@ -63,4 +69,6 @@
     
 </script>
 
+
+@stack('scripts')
 </html>

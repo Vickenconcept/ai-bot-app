@@ -15,10 +15,12 @@ use App\Models\Account;
 use App\Models\Bot;
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\SoftDeletes;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, SoftDeletes, HasRoles;
 
     /**
      * The attributes that are mass assignable.
@@ -49,7 +51,7 @@ class User extends Authenticatable
         'mailchimp' => 'array'
     ];
 
-    protected $appends = ['referral_link'];
+    // protected $appends = ['referral_link'];
 
     /**
      * Get the user's referral link.
@@ -58,9 +60,9 @@ class User extends Authenticatable
      */
     public function generateReferralLink()
     {
-
          $referral_link = route('register', ['ref' => $this->username]);
-        return $this->referral_link = $referral_link;
+        // return $this->referral_link = $referral_link;
+        return  $referral_link;
 
     }
 

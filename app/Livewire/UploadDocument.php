@@ -86,9 +86,6 @@ class UploadDocument extends Component
         if ($this->file->getClientOriginalExtension() === 'pdf') {
             $binpath = 'C:/Program Files/Git/mingw64/bin/pdftotext';
 
-            $command = "which pdftotext";
-            // $pdftotext_path = shell_exec($command);
-            // dd($pdftotext_path);
             $this->textContent = Pdf::getText($this->file->getRealPath(), $binpath);
         } elseif ($this->file->getClientOriginalExtension() === 'docx') {
             $doc = IOFactory::load($this->file->getRealPath());
@@ -162,7 +159,6 @@ class UploadDocument extends Component
 
 
         $res = $chatGptService->generateContent($name, $model, $system, $combinedPrompt, $document);
-        // dd($res);
 
         $user = auth()->user()->contents()->find($this->contentTitle->id);
 

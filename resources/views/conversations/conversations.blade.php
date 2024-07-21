@@ -94,7 +94,7 @@
                         @foreach ($guest as $guest)
                             <li
                                 class="text-purple-200 font-normal  bg-slate-800 rounded p-2 bg-opacity-30  flex justify-between text-md tracking-wide capitalize">
-                                <a href="{{ route('guests.show', $guest->uuid) }}">
+                                <a href="{{ route('get_one_guest', $guest->uuid) }}">
                                     <i class='bx bxs-conversation mr-1 text-sm'></i>
                                     {{ $guest->title }}
                                 </a>
@@ -150,7 +150,7 @@
                                     <x-main-button type="submit" class="text-gray-50">Update</x-main-button>
                                     <button
                                         class="bg-gray-50 rounded hover:shadow-md px-2 py-1 text-purple-700 shadow-inner border"
-                                        @click="openModal = false">Cancle</button>
+                                        @click="openModal = false">cancel</button>
                                 </div>
                             </div>
                         </form>
@@ -177,7 +177,7 @@
                                     <x-main-button type="submit" class="text-gray-50">Update</x-main-button>
                                     <button
                                         class="bg-gray-50 rounded hover:shadow-md px-2 py-1 text-purple-700 shadow-inner border"
-                                        @click="openModal2 = false">Cancle</button>
+                                        @click="openModal2 = false">cancel</button>
                                 </div>
                             </div>
                         </form>

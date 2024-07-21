@@ -28,8 +28,6 @@ class AuthController extends Controller
         // $referrer = $request->session()->get('referrer');
         $referrer = User::whereUsername(session()->pull('referrer'))->first();
 
-        
-        
         try {
             $data = $request->validate([
                 'name' => 'required|string',
@@ -39,6 +37,7 @@ class AuthController extends Controller
                 'role' => 'sometimes',
                 'referrer_id' => 'sometimes'
             ]);
+            
             $data['role'] = 'user';
             $data['referrer_id'] = $referrer ? $referrer->id : null;
             // dd($data);
@@ -50,7 +49,6 @@ class AuthController extends Controller
                 return redirect()->back()->withInput()->withErrors(['error' => 'A duplicate entry error occurred. Please try again.']);
             }
         
-            // Handle other database errors if needed
         }
 
 
