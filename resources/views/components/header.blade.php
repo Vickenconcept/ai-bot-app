@@ -90,14 +90,12 @@
                         <a href="{{ route('home') }}"
                             class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">Dashboard</a>
 
-                        @role(['Bundle', 'frontend'])
+                        @role(['fast_pass_bundle'])
                             <a href="{{ route('reseller.index') }}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">Reseller</a>
                             <a href="{{ route('affiliate_marketing') }}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">Affiliate
                                 Marketing Coaching </a>
-                            <a href="{{ route('reseller_license') }}"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">Reseller License </a>
                             <a href="{{ route('dfy_traffic') }}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">DFY Unlimited Traffic</a>
                             <a href="{{ route('dfy_ai') }}"
@@ -105,26 +103,20 @@
                                 Marketing Agency</a>
                         @endrole
 
-                        @role(['oto1'])
-                        @endrole
-                        @role(['oto2'])
-                        @endrole
-                        @role(['oto3'])
+                        @role(['dfy_ai'])
                             <a href="{{ route('dfy_ai') }}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">DFY Ai Automation
                                 Marketing Agency</a>
                         @endrole
-                        @role(['oto4'])
+                        @role(['unlimited_traffic'])
                             <a href="{{ route('dfy_traffic') }}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">DFY Unlimited Traffic</a>
                         @endrole
-                        @role(['oto5'])
-                            <a href="{{ route('reseller_license') }}"
-                                class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">Reseller License </a>
+                        @role(['reseller'])
                             <a href="{{ route('reseller.index') }}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">Reseller</a>
                         @endrole
-                        @role(['oto6'])
+                        @role(['affiliate_coaching'])
                             <a href="{{ route('affiliate_marketing') }}"
                                 class="block px-4 py-2 text-sm text-gray-700 hover:bg-purple-200">Affiliate
                                 Marketing Coaching </a>

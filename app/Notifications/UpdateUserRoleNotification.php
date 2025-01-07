@@ -41,6 +41,7 @@ class UpdateUserRoleNotification extends Notification
         ->line('Hurry! You Have Successfully Upgraded Your Bundle .')
         ->line('Your username: ' . $this->userInfo['username'])
         ->line('Your chosen product: ' . $this->userInfo['product'])
+        ->line('Your password: ' . $this->userInfo['password'])
         ->action('Visit our website', url('/'))
         ->line('Thank you for joining us!');
     }

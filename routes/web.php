@@ -10,6 +10,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\DocumentController;
 use App\Http\Controllers\GuestController;
 use App\Http\Controllers\InviteController;
+use App\Http\Controllers\JVZooWebhookController;
 use App\Http\Controllers\MessageController;
 use App\Http\Controllers\PasswordResetController;
 use App\Http\Controllers\ProfileController;
@@ -32,8 +33,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Route;
 use App\Notifications\UpdateUserPassword;
-
-
+use App\Notifications\UpdateUserRoleNotification;
 
 /*
 |--------------------------------------------------------------------------
@@ -105,6 +105,8 @@ Route::middleware(['auth'])->group(function () {
 });
 
 Route::post('/ipn/warriorplus', [WarriorPlusWebhookController::class, 'WPlus']);
+Route::post('/ipn/jvzoo', [JVZooWebhookController::class, 'JVZoo']);
+
 
 Route::get('test/{id}', function () {
     $contents =  Content::latest()->get();
@@ -138,26 +140,39 @@ Route::get('try', function (Request $request) {
 })->withoutMiddleware(['auth'])->name('test');
 
 
-Route::get('test', function () {
 
-    // $avatarSevice = app(AvatarService::class);
+// Route::get('/reset-users-password', function () {
+//     $date = '2024-12-17'; // Specify the date
+//     $newPassword = '?X33YY212h!z'; 
 
-    // // $avatar = $avatarSevice->getAvaters();
-    // $creatclip = $avatarSevice->creatClip();
+//     $users = User::whereDate('created_at', $date)->get();
+
+//     if ($users->isEmpty()) {
+//         return response()->json(['message' => 'No users found for the specified date.']);
+//     }
+
+//     // Reset password for each user
+//     foreach ($users as $user) {
+//         $user->password = \Illuminate\Support\Facades\Hash::make($newPassword); // Hash the password
+//         $user->save();
+
+//         $userInfo = [
+//             'username' => $user->name,
+//             'product' => 'AvaterCrew',
+//             'password' => $newPassword,
+//         ];
+
+//         $user->notify(new UpdateUserPassword($userInfo));
+//         $user->notify(new UpdateUserRoleNotification($userInfo));
+//     }
+
+//     return response()->json([
+//         'message' => 'Passwords reset successfully.',
+//         'user_count' => $users->count(),
+//     ]);
+// });
 
 
-    // Define the request parameters
-    // $data = [
-    //     'model' => 'tts-1',
-    //     'input' => 'Today is a wonderful day to build something people love!',
-    //     'voice' => 'alloy'
-    // ];
-
-
-
-
-
-});
 
 Route::get('users', function () {
     return User::all();
@@ -170,11 +185,69 @@ Route::get('update/users', function () {
         $password = 'pass1234';
         $user->password = bcrypt($password);
         $user->update();
+        // $userInfo = [
+        //     'username' => $user->name,
+        //     'password' => $password
+        // ];
         $userInfo = [
             'username' => $user->name,
-            'password' => $password
+            'product' => 'hello',
+            'password' => 'pass1234',
         ];
 
-        $user->notify(new UpdateUserPassword($userInfo));
+        // $user->notify(new UpdateUserPassword($userInfo));
+        $user->notify(new UpdateUserRoleNotification($userInfo));
     }
+});
+
+Route::get('/create-bot', function () {
+    $date = '2024-12-16'; // Specify the date
+
+    $users = User::whereDate('created_at', $date)->get();
+
+    if ($users->isEmpty()) {
+        return response()->json(['message' => 'No users found for the specified date.']);
+    }
+
+    foreach ($users as $user) {
+        // Create a bot for the user
+        $user->bots()->create([
+            'name' => 'bot',
+            'personality' => '',
+            'description' => 'an intelligent bot, for all times',
+            'knowledge' => '',
+            'model' => 'gpt-4',
+        ]);
+    }
+
+    return response()->json([
+        'message' => 'Bots created successfully.',
+        'user_count' => $users->count(),
+    ]);
+});
+
+
+Route::get('/updat_plan', function () {
+    $user = User::whereEmail('shon@shonjimenez.com')->get();
+
+    $productID = '414107';
+    $role = \App\Models\Product::where('product_id', $productID)->first();
+
+    if (!$role) {
+        return response()->json(['message' => 'Product not found!']);
+    }
+
+    if ($user) {
+        $user->syncRoles([$role->funnel]);
+    }
+
+    $userInfo = [
+        'username' => $user->name,
+        'product' => $role->funnel,
+        'password' => ''
+    ];
+
+    $user->notify(new UpdateUserRoleNotification($userInfo));
+
+    return response()->json(['message' => 'User role updated successfully!']);
 });

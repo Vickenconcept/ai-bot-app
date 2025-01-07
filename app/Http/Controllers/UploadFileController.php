@@ -15,9 +15,12 @@ class UploadFileController extends Controller
 
     public function __invoke(Request $request, ChatGptService $chatGptService)
     {
+        try {
+            //code...
+        
         
         $request->validate([
-            'file' => 'required|mimes:pdf,docx|max:2048',
+            'file' => 'required|mimes:pdf,docx|max:10000',
         ]);
         
         if ($request->file->getClientOriginalExtension() === 'pdf') {
@@ -65,12 +68,22 @@ class UploadFileController extends Controller
         ]);
 
         
-        if ($document) {
-            
-            return back();
-        }
-        // dd($cleanInvalidUtf8);
 
-        return;
+        if ($document) {
+            return response()->json([
+                'success' => true,
+                'message' => 'File uploaded and processed successfully.',
+                'document' => $document
+            ]);
+        }
+
+    } catch (\Exception $e) {
+        //throw $th;
+        return response()->json([
+            'success' => false,
+            'message' => $e->getMessage()
+        ]);
+    }
+    
     }
 }
